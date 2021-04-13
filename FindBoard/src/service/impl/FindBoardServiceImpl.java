@@ -9,25 +9,64 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-
-
 import common.JDBCTemplate;
 import dao.face.FindBoardDao;
 import dao.impl.FindBoardDaoImpl;
 import dto.FindBoard;
 import dto.FindImg;
 import service.face.FindBoardService;
+import util.Paging;
 
-public class FindBoardServiceImpl implements FindBoardService {
-
-	//FindDao 객체 생성
+public class FindBoardServiceImpl implements FindBoardService{
+	
+	//FindBoardDao 객체 생성
 	private FindBoardDao findBoardDao = new FindBoardDaoImpl();
+
+	@Override
+	public List<FindBoard> getList() {
+		return findBoardDao.selectAll(JDBCTemplate.getConnection());
+	}
 	
-	
+	@Override
+	public List<FindBoard> getList(Paging paging) {
+		return findBoardDao.selectAll(JDBCTemplate.getConnection(), paging);
+	}
+
+	@Override
+	public Paging getPaging(HttpServletRequest req) {
+		//전달파라미터 curPage 파싱
+		String param = req.getParameter("curPage");
+		int curPage = 0;
+		if(param != null && !"".equals(param)) {
+			curPage = Integer.parseInt(param);
+		}
+		
+		//Board 테이블의 총 게시글 수를 조회한다
+		int totalCount = findBoardDao.selectCntAll(JDBCTemplate.getConnection());
+
+		//Paging객체 생성
+		Paging paging = new Paging(totalCount, curPage);
+		
+		return paging;
+	}
+
+	@Override
+	public FindBoard views(FindBoard find_no) {
+		Connection conn = JDBCTemplate.getConnection();
+
+		//조회수 증가
+		if( findBoardDao.updateViews(conn, find_no) >= 0 ) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		//게시글 조회
+		FindBoard board = findBoardDao.selectBoardByFindno(conn, find_no); 
+		
+		return board;
+	}
+
 	@Override
 	public FindBoard getParam(HttpServletRequest req) {
 		
@@ -238,5 +277,6 @@ public class FindBoardServiceImpl implements FindBoardService {
 		}
 		
 	} //write() END
-
+	
+			
 }
