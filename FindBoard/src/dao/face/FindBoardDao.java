@@ -2,12 +2,54 @@ package dao.face;
 
 import java.sql.Connection;
 
+import java.util.List;
+
 import dto.FindBoard;
 import dto.FindImg;
+import util.Paging;
 
 public interface FindBoardDao {
+
+	/**
+	 * FindBoard테이블 전체 조회 (페이징 없음)
+	 * 
+	 * @return List<FindBoard> - FindBoard테이블 전체 조회 결과 리스트
+	 */
+	public List<FindBoard> selectAll(Connection conn);
 	
 	
+	/**
+	 * FindBoard테이블 전체 조회
+	 * 페이징 처리 추가
+	 * 
+	 * 
+	 * @param paging - 페이징 정보 객체
+	 * @return List<FindBoard> - FindBoard테이블 전체 조회 결과 리스트
+	 */
+	public List<FindBoard> selectAll(Connection conn, Paging paging);
+
+	/**
+	 * 총 게시글 수 조회
+	 * 
+	 * @return 총 게시글 수
+	 */
+	public int selectCntAll(Connection connection);
+
+	/**
+	 * 특정 게시글 조회
+	 * 
+	 * @param find_no - 조회할 find_no 가진 객체
+	 * @return FindBoard - 조회된 결과 객체
+	 */
+	public FindBoard selectBoardByFindno(Connection conn, FindBoard find_no);
+
+	/**
+	 * 조회된 게시글 조회수 증가
+	 * 
+	 * @param find_no - 조회된 게시글 번호를 가진 객체
+	 */
+	public int updateViews(Connection conn, FindBoard find_no);
+
 	/**
 	 *  선택한 게시글 조회
 	 *  
@@ -67,8 +109,7 @@ public interface FindBoardDao {
 	 * @return		삽입된 행의 수
 	 */
 	int insertImg(Connection conn, FindImg findImg);
+	
 
-	
-	
 
 }
