@@ -10,7 +10,7 @@ public class FindImg {
 	
 	@Override
 	public String toString() {
-		return "FimdImg [imgNum=" + imgNum + ", findNo=" + findNo + ", originImg=" + originImg + ", sotredImg="
+		return "FimdImg [imgNum=" + imgNum + ", findNo=" + findNo + ", originImg=" + originImg + ", storedImg="
 				+ storedImg + "]";
 	}
 	
@@ -36,8 +36,8 @@ public class FindImg {
 	public String getSotredImg() {
 		return storedImg;
 	}
-	public void setSotredImg(String sotredImg) {
-		this.storedImg = sotredImg;
+	public void setStoredImg(String storedImg) {
+		this.storedImg = storedImg;
 	}
 	
 	
