@@ -5,13 +5,13 @@ public class FindImg {
 	private int imgNum;
 	private int findNo;
 	private String originImg;
-	private String sotredImg;
+	private String storedImg;
 	
 	
 	@Override
 	public String toString() {
-		return "FimdImg [imgNum=" + imgNum + ", findNo=" + findNo + ", originImg=" + originImg + ", sotredImg="
-				+ sotredImg + "]";
+		return "FimdImg [imgNum=" + imgNum + ", findNo=" + findNo + ", originImg=" + originImg + ", storedImg="
+				+ storedImg + "]";
 	}
 	
 	
@@ -33,13 +33,11 @@ public class FindImg {
 	public void setOriginImg(String originImg) {
 		this.originImg = originImg;
 	}
-	public String getSotredImg() {
-		return sotredImg;
+	public String getStoredImg() {
+		return storedImg;
 	}
-	public void setSotredImg(String sotredImg) {
-		this.sotredImg = sotredImg;
+	public void setStoredImg(String storedImg) {
+		this.storedImg = storedImg;
 	}
 	
-	
-
 }

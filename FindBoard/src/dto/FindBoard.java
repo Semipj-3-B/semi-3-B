@@ -5,7 +5,7 @@ import java.util.Date;
 public class FindBoard {
 	
 	private int findNo;
-	private int userNO;
+	private int userNo;
 	private String title;
 	private Date createDate;
 	private Date updateDate;
@@ -19,7 +19,7 @@ public class FindBoard {
 	
 	@Override
 	public String toString() {
-		return "FindBoard [findNo=" + findNo + ", userNO=" + userNO + ", title=" + title + ", createDate=" + createDate
+		return "FindBoard [findNo=" + findNo + ", userNO=" + userNo + ", title=" + title + ", createDate=" + createDate
 				+ ", updateDate=" + updateDate + ", views=" + views + ", petName=" + petName + ", petKinds=" + petKinds
 				+ ", petAge=" + petAge + ", loc=" + loc + ", content=" + content + ", boardDiv=" + boardDiv + "]";
 	}
@@ -31,11 +31,11 @@ public class FindBoard {
 	public void setFindNo(int findNo) {
 		this.findNo = findNo;
 	}
-	public int getUserNO() {
-		return userNO;
+	public int getUserNo() {
+		return userNo;
 	}
-	public void setUserNO(int userNO) {
-		this.userNO = userNO;
+	public void setUserNo(int userNo) {
+		this.userNo = userNo;
 	}
 	public String getTitle() {
 		return title;
