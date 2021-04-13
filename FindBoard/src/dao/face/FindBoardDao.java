@@ -6,7 +6,43 @@ import dto.FindBoard;
 import dto.FindImg;
 
 public interface FindBoardDao {
+	
+	
+	/**
+	 *  선택한 게시글 조회
+	 *  
+	 * @param conn
+	 * @param findNo
+	 * @return
+	 */
+	public int updateHit(Connection conn, FindBoard findNo);
+	
+	/**
+	 * 게시글 조회
+	 * 
+	 * @param conn
+	 * @param findNo
+	 * @return
+	 */
+	public FindBoard selectFind(Connection conn, FindBoard findNo);
 
+	/**
+	 * 닉네임 userNo 통해 얻어오기
+	 * @param connection
+	 * @param viewFindBoard
+	 * @return
+	 */
+	public String selectNickByUserNo(Connection connection, FindBoard viewFindBoard);
+
+	/**
+	 * 첨부파일 조회
+	 * 
+	 * @param connection
+	 * @param viewFindBoard
+	 * @return
+	 */
+	public FindImg selectFile(Connection connection, FindBoard viewFindBoard);
+	
 	/**
 	 * FindBoard 테이블 시퀀스의 nextval을 조회한다.
 	 * @param conn	DB 연결 객체
@@ -32,6 +68,7 @@ public interface FindBoardDao {
 	 */
 	int insertImg(Connection conn, FindImg findImg);
 
-
+	
+	
 
 }

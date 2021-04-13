@@ -14,6 +14,7 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
+
 import common.JDBCTemplate;
 import dao.face.FindBoardDao;
 import dao.impl.FindBoardDaoImpl;
@@ -22,9 +23,58 @@ import dto.FindImg;
 import service.face.FindBoardService;
 
 public class FindBoardServiceImpl implements FindBoardService {
-	
-	private FindBoardDao findBoardDao = new FindBoardDaoImpl();
 
+	//FindDao 객체 생성
+	private FindBoardDao findBoardDao = new FindBoardDaoImpl();
+	
+	
+	@Override
+	public FindBoard getParam(HttpServletRequest req) {
+		
+		//FindBoardno를 저장할 객체 생성
+		FindBoard findNo = new FindBoard();
+		
+		//FindBoardno 전달 파라미터 검증
+		String param = req.getParameter("findNo");
+		if(param!=null && !"".equals(param)) {
+			
+			//Findboardno 전달파라미터 추출
+			findNo.setFindNo( Integer.parseInt(param) );
+		}
+				
+		// 결과 반환
+		return findNo;
+	}
+
+	@Override
+	public FindBoard read(FindBoard findNo) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+
+		//조회수 증가
+		if( findBoardDao.updateHit(conn, findNo) >= 0 ) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		//게시글 조회
+		FindBoard board = findBoardDao.selectFind(conn, findNo); 
+		
+		return board;
+	}
+
+	
+	@Override
+	public String getnick(FindBoard viewFindBoard) {
+		return findBoardDao.selectNickByUserNo(JDBCTemplate.getConnection(), viewFindBoard);
+	}
+
+	@Override
+	public FindImg viewFile(FindBoard viewFindBoard) {
+		return findBoardDao.selectFile(JDBCTemplate.getConnection(), viewFindBoard);
+	}
+	
 	@Override
 	public void write(HttpServletRequest req) {
 		/* <<INSER DATA>>
