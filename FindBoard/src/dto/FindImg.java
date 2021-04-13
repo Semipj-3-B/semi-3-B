@@ -33,13 +33,11 @@ public class FindImg {
 	public void setOriginImg(String originImg) {
 		this.originImg = originImg;
 	}
-	public String getSotredImg() {
+	public String getStoredImg() {
 		return storedImg;
 	}
 	public void setStoredImg(String storedImg) {
 		this.storedImg = storedImg;
 	}
 	
-	
-
 }
