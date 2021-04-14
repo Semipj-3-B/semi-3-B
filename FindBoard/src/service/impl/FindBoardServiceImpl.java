@@ -9,6 +9,11 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+
 import common.JDBCTemplate;
 import dao.face.FindBoardDao;
 import dao.impl.FindBoardDaoImpl;
@@ -163,18 +168,9 @@ public class FindBoardServiceImpl implements FindBoardService{
 			
 			if(item.isFormField()) {
 				String key = item.getFieldName();
-				
-				//NOT NULL 데이터 먼저 처리 (NOT NULL: userno, title, petkinds, loc)
+
+				//NOT NULL 파라미터 먼저 처리 (NOT NULL: title, petkinds, loc)
 				if(key != null && !"".equals(key)) {
-					if("userno".equals(key)) {
-						try {
-							findBoard.setUserNo(Integer.parseInt(item.getString("UTF-8")));
-						} catch (NumberFormatException e) {
-							e.printStackTrace();
-						} catch (UnsupportedEncodingException e) {
-							e.printStackTrace();
-						}
-					} //if(userno.key) END
 					
 					if("title".equals(key)) {
 						try {
@@ -255,6 +251,13 @@ public class FindBoardServiceImpl implements FindBoardService{
 		
 		Connection conn = JDBCTemplate.getConnection();
 		
+		
+		String usernoString = (String)req.getSession().getAttribute("userno");
+		if(usernoString != null && !"".equals(usernoString)) {
+			findBoard.setUserNo(Integer.parseInt(usernoString));
+		}
+		
+		System.out.println(req.getParameter("petkinds"));
 		int findno = findBoardDao.selectFindno(conn);
 		if(findBoard != null) {
 			findBoard.setFindNo(findno);
