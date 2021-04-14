@@ -161,7 +161,8 @@ public class FindBoardServiceImpl implements FindBoardService{
 		ServletFileUpload upload = new ServletFileUpload(factory);
 		
 		//업로드 용량 제한
-		upload.setFileSizeMax(10 * MEM_SIZE);	//10MB
+		final int MAX_SIZE = 10 * 1024 * 1024;	//10MB
+		upload.setFileSizeMax(MAX_SIZE);	
 		
 		//전달 데이터 파싱
 		List<FileItem> items = null;
@@ -306,6 +307,10 @@ public class FindBoardServiceImpl implements FindBoardService{
 				JDBCTemplate.rollback(conn);
 			}
 		}
+		
+		System.out.println(findImg.getFindNo());
+		System.out.println(findImg.getOriginImg());
+		System.out.println(findImg.getStoredImg());
 		
 	} //write() END
 	
