@@ -10,6 +10,7 @@ import java.util.List;
 import dao.face.FindBoardDao;
 import dto.FindBoard;
 import dto.FindImg;
+import oracle.net.aso.f;
 import util.Paging;
 import common.JDBCTemplate;
 
@@ -465,5 +466,32 @@ public class FindBoardDaoImpl implements FindBoardDao {
 		}
 		
 		return result;
+	}
+
+	@Override
+	public int selectUserno(Connection conn, String userid) {
+		String sql = "";
+		sql += "SELECT user_no FROM usertb";
+		sql += " WHERE user_id = ? ";
+		
+		int userno = -1;
+
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, userid);
+			rs = ps.executeQuery();
+			
+			
+			while(rs.next()) {
+				userno = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rs);
+			JDBCTemplate.close(ps);
+		}
+		
+		return userno;
 	}
 }

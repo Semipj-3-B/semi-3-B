@@ -128,31 +128,42 @@ public class FindBoardServiceImpl implements FindBoardService{
 		 * 첨부사진: imgnum, findno, originimg, storedimg 
 		 */
 		
+		//새 게시글, 첨부파일 데이터를 저장할 객체 선언
 		FindBoard findBoard = null;
 		FindImg findImg = null;
 		
+		//파일업로드 형태의 데이터가 맞는지 검사
 		boolean isMutltipart = false;
 		isMutltipart = ServletFileUpload.isMultipartContent(req);
 		
 		if(!isMutltipart) {
 			System.err.println("multipart/form-data 형식이 아닙니다.");
-			return;
+			return;	//fileupload() 메소드 실행 중지
 		}
 		
+		//multipart/form-data일 때 인스턴스 생성
 		findBoard = new FindBoard();
 		
+		//DiskFileItemFactory: FileItem 오브젝트 생성 및 메모리/HDD에서의 데이터 처리 기능을 가진다.
 		DiskFileItemFactory factory = new DiskFileItemFactory();
-		final int MEM_SIZE = 1 * 1024; 	//1KB
-		factory.setSizeThreshold(MEM_SIZE);
 		
+		//메모리 처리 사이즈 지정
+		final int MEM_SIZE = 1 * 1024; 	//1KB
+		factory.setSizeThreshold(MEM_SIZE);	
+		
+		//임시 저장소(name: tmp) 설정
 		File repository = new File(req.getServletContext().getRealPath("tmp"));
 		repository.mkdir();
 		
 		factory.setRepository(repository);
 		
+		//파일업로드 객체 생성
 		ServletFileUpload upload = new ServletFileUpload(factory);
+		
+		//업로드 용량 제한
 		upload.setFileSizeMax(10 * MEM_SIZE);	//10MB
 		
+		//전달 데이터 파싱
 		List<FileItem> items = null;
 		try {
 			items = upload.parseRequest(req);
@@ -160,18 +171,25 @@ public class FindBoardServiceImpl implements FindBoardService{
 			e.printStackTrace();
 		}
 		
+		//추출된 전달파라미터 처리 반복자
 		Iterator<FileItem> iter = items.iterator();
+		
+		//모든 요청 정보 처리하기
 		while(iter.hasNext()) {
 			FileItem item = iter.next();
 			
+			//빈 파일 처리
 			if(item.getSize() <= 0)	continue;
 			
+			//일반적인 요청 데이터 처리
 			if(item.isFormField()) {
+				//name 값으로 키 추출
 				String key = item.getFieldName();
 
 				//NOT NULL 파라미터 먼저 처리 (NOT NULL: title, petkinds, loc)
 				if(key != null && !"".equals(key)) {
 					
+					//전달 파라미터 name이 "title"
 					if("title".equals(key)) {
 						try {
 							findBoard.setTitle(item.getString("UTF-8"));
@@ -224,11 +242,16 @@ public class FindBoardServiceImpl implements FindBoardService{
 			} //if(isFormField) END
 			
 			
+			//파일 처리
 			if(!item.isFormField()) {
+				//UUID 생성
 				UUID uuid = UUID.randomUUID();
 				String uid = uuid.toString().split("-")[0];
+				
+				//파일이 저장될 이름을 설정(originName_xxxxxxxx)
 				String storedName = item.getName() + "_" + uid;
 				
+				//로컬 저장소에 파일 객체(upload 폴더) 생성
 				File uploFolder = new File(req.getServletContext().getRealPath("upload"));
 				uploFolder.mkdir();
 				
@@ -238,9 +261,10 @@ public class FindBoardServiceImpl implements FindBoardService{
 				findImg.setOriginImg(item.getName());
 				findImg.setStoredImg(storedName);
 				
+				//처리가 완료된 파일 업로드
 				try {
-					item.write(upFile);
-					item.delete();
+					item.write(upFile);	//실제 업로드
+					item.delete();		//임시 파일 삭제
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -251,13 +275,17 @@ public class FindBoardServiceImpl implements FindBoardService{
 		
 		Connection conn = JDBCTemplate.getConnection();
 		
+		String userid = (String) req.getSession().getAttribute("userid");
+		if(userid != null && !"".equals(userid)) {
+			int userno = findBoardDao.selectUserno(JDBCTemplate.getConnection(), userid);
+			findBoard.setUserNo(userno);
+		}
 		
 		String usernoString = (String)req.getSession().getAttribute("userno");
 		if(usernoString != null && !"".equals(usernoString)) {
 			findBoard.setUserNo(Integer.parseInt(usernoString));
 		}
 		
-		System.out.println(req.getParameter("petkinds"));
 		int findno = findBoardDao.selectFindno(conn);
 		if(findBoard != null) {
 			findBoard.setFindNo(findno);

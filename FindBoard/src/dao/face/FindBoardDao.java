@@ -109,6 +109,15 @@ public interface FindBoardDao {
 	 * @return		삽입된 행의 수
 	 */
 	int insertImg(Connection conn, FindImg findImg);
+
+
+	/**
+	 * 새 게시글을 작성한 회원의 아이디로 회원번호를 조회한다.
+	 * @param conn		DB 연결 객체
+	 * @param userid	회원의 아이디 데이터가 담긴 전달 파라미터
+	 * @return 		회원번호 조회
+	 */
+	public int selectUserno(Connection conn, String userid);
 	
 
 
