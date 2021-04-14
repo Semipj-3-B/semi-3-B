@@ -48,7 +48,7 @@ public class FindBoardServiceImpl implements FindBoardService {
 		findBoard = new FindBoard();
 		
 		DiskFileItemFactory factory = new DiskFileItemFactory();
-		final int MEM_SIZE = 1 * 1024 * 1024; 	//1MB
+		final int MEM_SIZE = 1 * 1024; 	//1KB
 		factory.setSizeThreshold(MEM_SIZE);
 		
 		File repository = new File(req.getServletContext().getRealPath("tmp"));
