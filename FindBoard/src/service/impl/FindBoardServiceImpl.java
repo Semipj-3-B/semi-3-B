@@ -115,6 +115,11 @@ public class FindBoardServiceImpl implements FindBoardService{
 	public String getnick(FindBoard viewFindBoard) {
 		return findBoardDao.selectNickByUserNo(JDBCTemplate.getConnection(), viewFindBoard);
 	}
+	
+	@Override
+	public String getemail(FindBoard viewFindBoard) {
+		return findBoardDao.selectEmailByUserNo(JDBCTemplate.getConnection(), viewFindBoard);
+	}
 
 	@Override
 	public FindImg viewFile(FindBoard viewFindBoard) {
@@ -315,6 +320,10 @@ public class FindBoardServiceImpl implements FindBoardService{
 		System.out.println(findImg.getStoredImg());
 		
 	} //write() END
+
+
+
+
 	
 			
 }

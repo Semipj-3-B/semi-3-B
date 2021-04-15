@@ -70,6 +70,16 @@ public interface FindBoardDao {
 	 * @return
 	 */
 	public String selectNickByUserNo(Connection conn, FindBoard viewFindBoard);
+	
+	/**
+	 * 
+	 * userNo로 email 얻어오기
+	 * 
+	 * @param conn
+	 * @param viewFindBoard
+	 * @return
+	 */
+	public String selectEmailByUserNo(Connection conn, FindBoard viewFindBoard);
 
 	/**
 	 * 첨부파일 조회
@@ -113,6 +123,9 @@ public interface FindBoardDao {
 	 * @return 		회원번호 조회
 	 */
 	public int selectUserno(Connection conn, String userid);
+
+
+
 	
 
 

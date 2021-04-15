@@ -33,6 +33,9 @@ public class FindReadController extends HttpServlet {
 		//닉네임 전달
 		req.setAttribute("nick", findboardService.getnick(viewFindBoard));
 		
+		//이메일 전달
+		req.setAttribute("email", findboardService.getemail(viewFindBoard));
+		
 		//조회결과 MODEL값 전달
 		req.setAttribute("viewFindBoard", viewFindBoard);
 		

@@ -144,7 +144,7 @@ $(document).ready(function() {
 	<div id="findinfo1">반려동물 이름 : <%=b.getPetName() %></div>
 	<div id="findinfo1">반려동물 나이 : <%=b.getPetAge() %></div>
 	<div id="findinfo1">잃어버린 위치 : <%=b.getLoc() %></div>
-	<div id="findinfo1">이메일 : </div>
+	<div id="findinfo1">이메일 : <%=request.getAttribute("email") %></div>
 </div>
 
 
