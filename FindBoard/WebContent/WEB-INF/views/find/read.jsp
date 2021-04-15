@@ -30,7 +30,7 @@ $(document).ready(function() {
 <%-- 			$(location).attr("href", "/board/delete?boardno=<%=b.getBoardno() %>"); --%>
 // 		}
 		
-	});
+// 	});
 	
 });
 </script>
@@ -140,11 +140,11 @@ $(document).ready(function() {
 </div>
 
 <div id="findinfo">		
-	<div id="findinfo1">반려동물 종류 : PetName</div>
-	<div id="findinfo1">반려동물 이름 : PetKinds</div>
-	<div id="findinfo1">반려동물 나이 : PetAge</div>
-	<div id="findinfo1">잃어버린 위치 : loc</div>
-	<div id="findinfo1">이메일 : email</div>
+	<div id="findinfo1">반려동물 종류 : <%=b.getPetKinds() %></div>
+	<div id="findinfo1">반려동물 이름 : <%=b.getPetName() %></div>
+	<div id="findinfo1">반려동물 나이 : <%=b.getPetAge() %></div>
+	<div id="findinfo1">잃어버린 위치 : <%=b.getLoc() %></div>
+	<div id="findinfo1">이메일 : </div>
 </div>
 
 
@@ -168,7 +168,7 @@ $(document).ready(function() {
 		</td>
 </table>
 
-<p style="width: 1100px; height: 300px; border: 1px solid; margin: 10px 0 10px 0;">content</p>
+<p style="width: 1100px; height: 300px; border: 1px solid; margin: 10px 0 10px 0;"><%=b.getContent() %></p>
 
 
 

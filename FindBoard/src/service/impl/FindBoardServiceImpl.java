@@ -56,6 +56,24 @@ public class FindBoardServiceImpl implements FindBoardService{
 	}
 
 	@Override
+	public FindBoard getParam(HttpServletRequest req) {
+		
+		//FindBoardno를 저장할 객체 생성
+		FindBoard findNo = new FindBoard();
+		
+		//FindBoardno 전달 파라미터 검증
+		String param = req.getParameter("FindNo");
+		if(param!=null && !"".equals(param)) {
+			
+			//Findboardno 전달파라미터 추출
+			findNo.setFindNo( Integer.parseInt(param) );
+		}
+				
+		// 결과 반환
+		return findNo;
+	}
+	
+	@Override
 	public FindBoard views(FindBoard find_no) {
 		Connection conn = JDBCTemplate.getConnection();
 
@@ -72,23 +90,7 @@ public class FindBoardServiceImpl implements FindBoardService{
 		return board;
 	}
 
-	@Override
-	public FindBoard getParam(HttpServletRequest req) {
-		
-		//FindBoardno를 저장할 객체 생성
-		FindBoard findNo = new FindBoard();
-		
-		//FindBoardno 전달 파라미터 검증
-		String param = req.getParameter("find_no");
-		if(param!=null && !"".equals(param)) {
-			
-			//Findboardno 전달파라미터 추출
-			findNo.setFindNo( Integer.parseInt(param) );
-		}
-				
-		// 결과 반환
-		return findNo;
-	}
+
 
 //	@Override
 //	public FindBoard read(FindBoard findNo) {

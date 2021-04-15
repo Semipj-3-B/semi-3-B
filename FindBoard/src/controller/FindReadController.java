@@ -28,7 +28,7 @@ public class FindReadController extends HttpServlet {
 		FindBoard findno = findboardService.getParam(req);
 
 		//상세보기 결과 
-		FindBoard viewFindBoard = findboardService.read(findno);
+		FindBoard viewFindBoard = findboardService.views(findno);
 		
 		//닉네임 전달
 		req.setAttribute("nick", findboardService.getnick(viewFindBoard));
@@ -38,10 +38,11 @@ public class FindReadController extends HttpServlet {
 		
 		//첨부파일 정보 VIEW에 전달
 		FindImg findImg = findboardService.viewFile(viewFindBoard);
-		req.setAttribute("boardFile", findImg);
+		req.setAttribute("findFile", findImg);
 
 		// VIEW 지정 및 응답 - forward
-		req.getRequestDispatcher("/WEB-INF/views/board/view.jsp").forward(req, resp);
+		req.getRequestDispatcher("/WEB-INF/views/find/read.jsp")
+			.forward(req, resp);
 		
 	}
 
