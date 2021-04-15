@@ -30,9 +30,8 @@ $(document).ready(function() {
 <%-- 			$(location).attr("href", "/board/delete?boardno=<%=b.getBoardno() %>"); --%>
 // 		}
 		
-	});
-	
 });
+	
 </script>
 
 <style type="text/css">
