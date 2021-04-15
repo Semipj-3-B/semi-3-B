@@ -43,15 +43,10 @@ public interface FindBoardDao {
 	 */
 	public FindBoard selectBoardByFindno(Connection conn, FindBoard find_no);
 
-	/**
-	 * 조회된 게시글 조회수 증가
-	 * 
-	 * @param find_no - 조회된 게시글 번호를 가진 객체
-	 */
-	public int updateViews(Connection conn, FindBoard find_no);
+
 
 	/**
-	 *  선택한 게시글 조회
+	 *  
 	 *  
 	 * @param conn
 	 * @param findNo
@@ -66,7 +61,7 @@ public interface FindBoardDao {
 	 * @param findNo
 	 * @return
 	 */
-	public FindBoard selectFind(Connection conn, FindBoard findNo);
+//	public FindBoard selectFind(Connection conn, FindBoard findNo);
 
 	/**
 	 * 닉네임 userNo 통해 얻어오기
@@ -74,7 +69,7 @@ public interface FindBoardDao {
 	 * @param viewFindBoard
 	 * @return
 	 */
-	public String selectNickByUserNo(Connection connection, FindBoard viewFindBoard);
+	public String selectNickByUserNo(Connection conn, FindBoard viewFindBoard);
 
 	/**
 	 * 첨부파일 조회

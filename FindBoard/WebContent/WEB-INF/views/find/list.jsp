@@ -33,7 +33,7 @@
 	
 	
 
-	#container{width:900px;  margin:0 auto; }
+	#container{width:900px; height:850px; margin:0 auto; }
 	#container .click_box{width:100%; 
 		height:40px; 
 		line-height:40px; 
@@ -104,7 +104,7 @@
 		</div>
 		<%	for(int i=0; i<list.size(); i++) { %>
 			<div class="pet_list">
-				<p class="img_box" ><a href="/find/view?FindNo=<%=list.get(i).getFindNo() %>">img</a></p>
+				<p class="img_box" ><a href="/find/read?FindNo=<%=list.get(i).getFindNo() %>">img</a></p>
 				<p><%=list.get(i).getTitle() %></p>
 				<p><%=list.get(i).getLoc() %></p>
 				<p><%=list.get(i).getPetKinds() %></p>

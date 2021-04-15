@@ -46,7 +46,7 @@ public interface FindBoardService {
 	
 	/**
 	 *  find_no를 이용하여 게시글 조회
-	 * 	조회된 게시글의 조회수를 1증가시킨다
+	 * 	
 	 * 
 	 * @param find_no  - find_no를 가지고 있는 객체
 	 * @return FindBoard - 조회된 게시글
@@ -62,14 +62,14 @@ public interface FindBoardService {
 	public FindBoard getParam(HttpServletRequest req);
 	
 	
-	/**
-	 * findNo를 이용하여 게시글 조회
-	 * + 조회수 증가
-	 * 
-	 * @param findNo -> findNo를 가지고 있는 객체
-	 * @return	조회된 찾기 게시글
-	 */
-	public FindBoard read(FindBoard findNo);
+//	/**
+//	 * findNo를 이용하여 게시글 조회
+//	 * + 조회수 증가
+//	 * 
+//	 * @param findNo -> findNo를 가지고 있는 객체
+//	 * @return	조회된 찾기 게시글
+//	 */
+//	public FindBoard read(FindBoard findNo);
 
 	/**
 	 * FindBoard의 userid를 이용해 닉네임 조회

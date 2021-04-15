@@ -34,7 +34,7 @@ public class FindListController extends HttpServlet {
 
 
 		//게시글 전체 조회
-		List<FindBoard> findList = findboardService.getList();
+//		List<FindBoard> findList = findboardService.getList();
 		
 		//페이징을 적용한 게시글 전체 조회
 		List<FindBoard> findboardList = findboardService.getList(paging);
@@ -44,7 +44,7 @@ public class FindListController extends HttpServlet {
 		req.setAttribute("paging", paging);
 		
 //		//조회결과 MODEL값 전달
-		req.setAttribute("boardList", findboardList);
+		req.setAttribute("findList", findboardList);
 //		
 //		//VIEW 지정 및 응답 - forward
 		req.getRequestDispatcher("/WEB-INF/views/find/list.jsp").forward(req, resp);		
