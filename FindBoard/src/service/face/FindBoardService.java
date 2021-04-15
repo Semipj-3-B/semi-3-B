@@ -91,13 +91,6 @@ public interface FindBoardService {
 	 * @param req	작성된 게시글 데이터를 담은 요청 파라미터
 	 */
 	void write(HttpServletRequest req);
-
-	/**
-	 * 이메일 얻어오기
-	 * @param viewFindBoard 조회할 게시글
-	 * @return 이메일
-	 */
-	public String getemail(FindBoard viewFindBoard);
 	
 
 }

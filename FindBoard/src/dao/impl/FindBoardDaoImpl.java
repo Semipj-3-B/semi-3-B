@@ -308,39 +308,6 @@ public class FindBoardDaoImpl implements FindBoardDao {
 		//최종 결과 반환
 		return nick;
 	}
-	
-	@Override
-	public String selectEmailByUserNo(Connection conn, FindBoard viewFindBoard) {
-			//SQL
-			String sql = "";
-			sql += "SELECT email FROM user_tb";
-			sql += " WHERE user_no = ?";
-				
-			//결과
-			String email = null;
-				
-			try {
-				ps = conn.prepareStatement(sql); //SQL수행 객체
-				ps.setInt(1, viewFindBoard.getUserNo()); //조회할 id 적용
-					
-				rs = ps.executeQuery(); //SQL 수행 및 결과집합 저장
-					
-				//조회 결과 처리
-				while(rs.next()) {
-					email = rs.getString("email");
-				}
-					
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} finally {
-				//DB객체 닫기
-				JDBCTemplate.close(rs);
-				JDBCTemplate.close(ps);
-			}
-				
-			//최종 결과 반환
-			return email;
-	}
 
 
 	@Override
@@ -494,6 +461,4 @@ public class FindBoardDaoImpl implements FindBoardDao {
 		
 		return userno;
 	}
-
-
 }
