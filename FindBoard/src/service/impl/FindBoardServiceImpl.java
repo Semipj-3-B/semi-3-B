@@ -60,7 +60,7 @@ public class FindBoardServiceImpl implements FindBoardService{
 		Connection conn = JDBCTemplate.getConnection();
 
 		//조회수 증가
-		if( findBoardDao.updateViews(conn, find_no) >= 0 ) {
+		if( findBoardDao.updateHit(conn, find_no) >= 0 ) {
 			JDBCTemplate.commit(conn);
 		} else {
 			JDBCTemplate.rollback(conn);
@@ -79,7 +79,7 @@ public class FindBoardServiceImpl implements FindBoardService{
 		FindBoard findNo = new FindBoard();
 		
 		//FindBoardno 전달 파라미터 검증
-		String param = req.getParameter("findNo");
+		String param = req.getParameter("find_No");
 		if(param!=null && !"".equals(param)) {
 			
 			//Findboardno 전달파라미터 추출
@@ -90,23 +90,23 @@ public class FindBoardServiceImpl implements FindBoardService{
 		return findNo;
 	}
 
-	@Override
-	public FindBoard read(FindBoard findNo) {
-		
-		Connection conn = JDBCTemplate.getConnection();
-
-		//조회수 증가
-		if( findBoardDao.updateHit(conn, findNo) >= 0 ) {
-			JDBCTemplate.commit(conn);
-		} else {
-			JDBCTemplate.rollback(conn);
-		}
-		
-		//게시글 조회
-		FindBoard board = findBoardDao.selectFind(conn, findNo); 
-		
-		return board;
-	}
+//	@Override
+//	public FindBoard read(FindBoard findNo) {
+//		
+//		Connection conn = JDBCTemplate.getConnection();
+//
+//		//조회수 증가
+//		if( findBoardDao.updateHit(conn, findNo) >= 0 ) {
+//			JDBCTemplate.commit(conn);
+//		} else {
+//			JDBCTemplate.rollback(conn);
+//		}
+//		
+//		//게시글 조회
+//		FindBoard board = findBoardDao.selectFind(conn, findNo); 
+//		
+//		return board;
+//	}
 
 	
 	@Override

@@ -3,6 +3,7 @@
 <%@page import="dto.Usertb"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
 <%  Usertb u = (Usertb) request.getAttribute("param"); %>
 <%	FindBoard b = (FindBoard) request.getAttribute("viewFindBoard"); %>
 <%	FindImg findImg = (FindImg) request.getAttribute("findFile"); %>
@@ -139,10 +140,10 @@ $(document).ready(function() {
 </div>
 
 <div id="findinfo">		
-	<div id="findinfo1">반려동물 이름 : PetName</div>
-	<div id="findinfo1">반려동물 종류 : PetKinds</div>
+	<div id="findinfo1">반려동물 종류 : PetName</div>
+	<div id="findinfo1">반려동물 이름 : PetKinds</div>
 	<div id="findinfo1">반려동물 나이 : PetAge</div>
-	<div id="findinfo1">잃어버린 곳 : loc</div>
+	<div id="findinfo1">잃어버린 위치 : loc</div>
 	<div id="findinfo1">이메일 : email</div>
 </div>
 

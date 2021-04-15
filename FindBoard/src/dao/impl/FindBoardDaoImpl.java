@@ -39,18 +39,18 @@ public class FindBoardDaoImpl implements FindBoardDao {
 				FindBoard f = new FindBoard(); //결과값 저장 객체
 				
 				//결과값 한 행 처리
-				f.setFindNo( rs.getInt("findNo") );
-				f.setUserNo( rs.getInt("userNo") );
+				f.setFindNo( rs.getInt("find_No") );
+				f.setUserNo( rs.getInt("user_No") );
 				f.setTitle( rs.getString("title") );
-				f.setCreateDate( rs.getDate("createDate") );
-				f.setUpdateDate( rs.getDate("updateDate") );
+				f.setCreateDate( rs.getDate("create_Date") );
+				f.setUpdateDate( rs.getDate("update_Date") );
 				f.setViews( rs.getInt("views") );
-				f.setPetName( rs.getString("petName") );
-				f.setPetKinds( rs.getString("petKinds") );
-				f.setPetAge( rs.getInt("petAge") );
+				f.setPetName( rs.getString("pet_Name") );
+				f.setPetKinds( rs.getString("pet_Kinds") );
+				f.setPetAge( rs.getInt("pet_Age") );
 				f.setLoc( rs.getString("loc") );
 				f.setContent( rs.getString("content"));
-				f.setBoardDiv( rs.getInt("boardDiv") );
+				f.setBoardDiv( rs.getInt("board_Div") );
 				
 				//리스트에 결과값 저장
 				findboardList.add(f);
@@ -125,18 +125,18 @@ public class FindBoardDaoImpl implements FindBoardDao {
 				FindBoard f = new FindBoard(); //결과값 저장 객체
 				
 				//결과값 한 행 처리
-				f.setFindNo( rs.getInt("findNo") );
-				f.setUserNo( rs.getInt("userNo") );
+				f.setFindNo( rs.getInt("find_No") );
+				f.setUserNo( rs.getInt("user_No") );
 				f.setTitle( rs.getString("title") );
-				f.setCreateDate( rs.getDate("createDate") );
-				f.setUpdateDate( rs.getDate("updateDate") );
+				f.setCreateDate( rs.getDate("create_Date") );
+				f.setUpdateDate( rs.getDate("update_Date") );
 				f.setViews( rs.getInt("views") );
-				f.setPetName( rs.getString("petName") );
-				f.setPetKinds( rs.getString("petKinds") );
-				f.setPetAge( rs.getInt("petAge") );
+				f.setPetName( rs.getString("pet_Name") );
+				f.setPetKinds( rs.getString("pet_Kinds") );
+				f.setPetAge( rs.getInt("pet_Age") );
 				f.setLoc( rs.getString("loc") );
 				f.setContent( rs.getString("content"));
-				f.setBoardDiv( rs.getInt("boardDiv") );
+				f.setBoardDiv( rs.getInt("board_Div") );
 				
 				//리스트에 결과값 저장
 				findboardList.add(f);
@@ -176,18 +176,18 @@ public class FindBoardDaoImpl implements FindBoardDao {
 				viewsBoard = new FindBoard(); //결과값 저장 객체
 				
 				//결과값 한 행 처리
-				viewsBoard.setFindNo( rs.getInt("findNo") );
-				viewsBoard.setUserNo( rs.getInt("userNo") );
+				viewsBoard.setFindNo( rs.getInt("find_No") );
+				viewsBoard.setUserNo( rs.getInt("user_No") );
 				viewsBoard.setTitle( rs.getString("title") );
-				viewsBoard.setCreateDate( rs.getDate("createDate") );
-				viewsBoard.setUpdateDate( rs.getDate("updateDate") );
+				viewsBoard.setCreateDate( rs.getDate("create_Date") );
+				viewsBoard.setUpdateDate( rs.getDate("update_Date") );
 				viewsBoard.setViews( rs.getInt("views") );
-				viewsBoard.setPetName( rs.getString("petName") );
-				viewsBoard.setPetKinds( rs.getString("petKinds") );
-				viewsBoard.setPetAge( rs.getInt("petAge") );
+				viewsBoard.setPetName( rs.getString("pet_Name") );
+				viewsBoard.setPetKinds( rs.getString("pet_Kinds") );
+				viewsBoard.setPetAge( rs.getInt("pet_Age") );
 				viewsBoard.setLoc( rs.getString("loc") );
 				viewsBoard.setContent( rs.getString("content"));
-				viewsBoard.setBoardDiv( rs.getInt("boardDiv") );
+				viewsBoard.setBoardDiv( rs.getInt("board_Div") );
 				
 			}
 			
@@ -203,35 +203,7 @@ public class FindBoardDaoImpl implements FindBoardDao {
 		return viewsBoard;
 	}
 
-	@Override
-	public int updateViews(Connection conn, FindBoard find_no) {
-		//DB연결 객체
-		conn = JDBCTemplate.getConnection();
-		
-		//SQL 작성
-		String sql = "";
-		sql += "UPDATE find_no";
-		sql += " SET views = views + 1";
-		sql += " WHERE find_no = ?";
-		
-		int res = 0;
-		
-		try {
-			ps = conn.prepareStatement(sql); //SQL수행 객체
-			
-			ps.setInt(1, find_no.getFindNo()); //조회할 게시글 번호 적용
-			
-			res = ps.executeUpdate(); //SQL 수행
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			//DB객체 닫기
-			JDBCTemplate.close(ps);
-		}
-		
-		return res;
-	}
+
 
 	@Override
 	public int updateHit(Connection conn, FindBoard findNo) {
@@ -240,7 +212,7 @@ public class FindBoardDaoImpl implements FindBoardDao {
 		String sql = "";
 		sql += "SELECT * FROM findboard";
 		sql += " SET views = views + 1";
-		sql += " WHERE findno = ?";
+		sql += " WHERE find_no = ?";
 
 		int res = 0;
 
@@ -249,7 +221,7 @@ public class FindBoardDaoImpl implements FindBoardDao {
 
 			ps.setInt(1, findNo.getFindNo()); // 조회할 게시글 번호 적용
 
-			rs = ps.executeQuery(); // SQL 수행 및 결과집합 저장
+//			rs = ps.executeQuery(); // SQL 수행 및 결과집합 저장
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -268,7 +240,7 @@ public class FindBoardDaoImpl implements FindBoardDao {
 		//SQL 작성
 		String sql = "";
 		sql += "SELECT * FROM findboard";
-		sql += " WHERE findno = ?";
+		sql += " WHERE find_no = ?";
 		
 		//결과 저장할 Board객체
 		FindBoard viewFindBoard = null;
@@ -287,9 +259,9 @@ public class FindBoardDaoImpl implements FindBoardDao {
 				//결과값 한 행 처리
 				viewFindBoard.setTitle( rs.getString("title") );
 				viewFindBoard.setCreateDate( rs.getDate("create_Date") );
-				viewFindBoard.setPetName( rs.getString("petName") );
-				viewFindBoard.setPetKinds( rs.getString("petKinds") );
-				viewFindBoard.setPetAge( rs.getInt("petAge") );
+				viewFindBoard.setPetName( rs.getString("pet_Name") );
+				viewFindBoard.setPetKinds( rs.getString("pet_Kinds") );
+				viewFindBoard.setPetAge( rs.getInt("pet_Age") );
 				viewFindBoard.setLoc( rs.getString("loc") );
 				viewFindBoard.setContent( rs.getString("content") );
 								
@@ -309,18 +281,18 @@ public class FindBoardDaoImpl implements FindBoardDao {
 
 
 	@Override
-	public String selectNickByUserNo(Connection connection, FindBoard viewFindBoard) {
+	public String selectNickByUserNo(Connection conn, FindBoard viewFindBoard) {
 				
 		//SQL
 		String sql = "";
-		sql += "SELECT nick FROM usertb";
-		sql += " WHERE userno = ?";
+		sql += "SELECT nick FROM user_tb";
+		sql += " WHERE user_no = ?";
 		
 		//결과
 		String nick = null;
 		
 		try {
-			ps = connection.prepareStatement(sql); //SQL수행 객체
+			ps = conn.prepareStatement(sql); //SQL수행 객체
 			ps.setInt(1, viewFindBoard.getUserNo()); //조회할 id 적용
 			
 			rs = ps.executeQuery(); //SQL 수행 및 결과집합 저장
@@ -349,7 +321,7 @@ public class FindBoardDaoImpl implements FindBoardDao {
 		//SQL 작성
 		String sql = "";
 		sql += "SELECT * FROM findimg";
-		sql += " WHERE findno = ?";
+		sql += " WHERE find_no = ?";
 		
 		//결과 저장할 BoardFile 객체
 		FindImg findImg = null;

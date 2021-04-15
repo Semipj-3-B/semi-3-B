@@ -77,7 +77,7 @@
 					<option value="cat">고양이</option>
 					<option value="etc">기타</option>
 				</select>
-				<select name="lc"">
+				<select name="lc">
 					<option value="" selected>지역선택</option>
 					<option value="1">서울특별시</option>
 					<option value="2">경기도</option>
@@ -104,7 +104,7 @@
 		</div>
 		<%	for(int i=0; i<list.size(); i++) { %>
 			<div class="pet_list">
-				<p class="img_box" ><a href="/find/view?FindNo=<%=list.get(i).getFindNo() %>">img</a></p>
+				<p class="img_box" ><a href="/find/read?FindNo=<%=list.get(i).getFindNo() %>">img</a></p>
 				<p><%=list.get(i).getTitle() %></p>
 				<p><%=list.get(i).getLoc() %></p>
 				<p><%=list.get(i).getPetKinds() %></p>
