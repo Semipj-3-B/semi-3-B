@@ -46,7 +46,7 @@ public interface FindBoardDao {
 
 
 	/**
-	 *  선택한 게시글 조회
+	 *  
 	 *  
 	 * @param conn
 	 * @param findNo
@@ -61,7 +61,7 @@ public interface FindBoardDao {
 	 * @param findNo
 	 * @return
 	 */
-	public FindBoard selectFind(Connection conn, FindBoard findNo);
+//	public FindBoard selectFind(Connection conn, FindBoard findNo);
 
 	/**
 	 * 닉네임 userNo 통해 얻어오기

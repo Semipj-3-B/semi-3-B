@@ -46,7 +46,7 @@ public interface FindBoardService {
 	
 	/**
 	 *  find_no를 이용하여 게시글 조회
-	 * 	조회된 게시글의 조회수를 1증가시킨다
+	 * 	
 	 * 
 	 * @param find_no  - find_no를 가지고 있는 객체
 	 * @return FindBoard - 조회된 게시글

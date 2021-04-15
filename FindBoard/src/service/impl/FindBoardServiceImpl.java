@@ -59,7 +59,7 @@ public class FindBoardServiceImpl implements FindBoardService{
 	public FindBoard views(FindBoard find_no) {
 		Connection conn = JDBCTemplate.getConnection();
 
-		//조회수 증가
+		//
 		if( findBoardDao.updateHit(conn, find_no) >= 0 ) {
 			JDBCTemplate.commit(conn);
 		} else {
@@ -79,7 +79,7 @@ public class FindBoardServiceImpl implements FindBoardService{
 		FindBoard findNo = new FindBoard();
 		
 		//FindBoardno 전달 파라미터 검증
-		String param = req.getParameter("find_No");
+		String param = req.getParameter("find_no");
 		if(param!=null && !"".equals(param)) {
 			
 			//Findboardno 전달파라미터 추출
