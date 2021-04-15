@@ -33,7 +33,7 @@
 	
 	
 
-	#container{width:900px;  margin:0 auto; }
+	#container{width:900px; height:850px; margin:0 auto; }
 	#container .click_box{width:100%; 
 		height:40px; 
 		line-height:40px; 
@@ -77,7 +77,7 @@
 					<option value="cat">고양이</option>
 					<option value="etc">기타</option>
 				</select>
-				<select name="lc">
+				<select name="lc"">
 					<option value="" selected>지역선택</option>
 					<option value="1">서울특별시</option>
 					<option value="2">경기도</option>
