@@ -18,15 +18,14 @@ function submitContents(elClickedObj) {
 <script type="text/javascript">
 $(document).ready(function () {
 
-	$("#upfile").bind('change', function () {
-		if(this.files.length < 4) {
-			checkFiles(this.files)
-		} else {
-			alert('사진은 최대 4개 업로드할 수 있습니다.')
-			this.files.value = 0
-			this.files.name = ""
-		}
+	const upBtn = document.querySelector('.browse')
+	const realupInput = document.querySelector('#upfile')
+
+	upBtn.addEventListener('click', function () {
+		realupInput.click()
 	})
+
+	$("#upfile").on('change', uploadImg)
 	
 	$("#write").click(function () {
 		submitContents( $("#write"))
@@ -35,99 +34,125 @@ $(document).ready(function () {
 	
 })
 
-//등록할 전체 파일의크기
-var totalFileSize = 0;	
-
-//파일, 파일크기 List
-var fileList = new Array()
-var fileSizeList = new Array()
-
-var maxUploadSize = 10 * 1024 * 1024	//등록 가능한 총 파일 크기 10MB
-var maxNumOfFiles = 4					//등록 가능한 파일 총 개수
-
-function checkFiles(fileObject) {
+function uploadImg(e) {
+	//이미지 영역 초기화
+	$("#mainimg").empty()	
+	$("#subimg1").empty()	
+	$("#subimg2").empty()	
+	$("#subimg3").empty()	
+	
 	var files = null
-	
-	if(fileObject != null) {
-		files = fileObject
+	if(e.target.files != null) {
+		files = e.target.files
 	}
-
-	if(files != null) {
-		for(var i = 0; i < maxNumOfFiles; i++) {
-			//파일+확장자
-			var fileFullName = files[i].name
-			console.log("파일.확장자: " + fileFullName)
-			
-			//이름만 추출
-			var lastDot = fileFullName.lastIndexOf('.')
-			var fileName = fileFullName.substring(0, lastDot)
-			console.log("파일이름: " + fileName)
-			
-			//확장자 추출
-			var ext = fileFullName.substring(lastDot + 1, fileFullName.length).toLowerCase()
-			console.log("확장자: " + ext)
-		
-			//파일 byte 단위 크기
-			var fileSize = files[i].size
-			console.log("FileSize: " + fileSize)
-			
-			if(fileSize <= 0) {
-				console.log("0KB file return")
-				return
-			}
-			
-			var fileSizeKb = fileSize / 1024	//KB단위 파일 크기
-			var fileSizeMb = fileSizeKb / 1024	//MB단위 파일 크기
-			
-			if(fileSize >= (1024 * 1024)) {	//파일이 1MB 이상일 때
-				console.log("FileSizeMB: " + fileSizeMb.toFixed(2) + "MB")
-			}
-			if(fileSize >= 1024) {	//파일이 1KB 이상일 때
-				console.log("FileSizeKB: " + fileSizeKb.toFixed(2) + "KB")
-			}
-			console.log("FileSize: " + parseInt(fileSize) + "byte")
-		
-			//확장자 유효 검사
-			if($.inArray(ext, ['png', 'jpg', 'jpeg']) < 0) {//이미지 형식 아닐 때
-				console.log("이미지는 .png .jpg .jpeg만 등록 가능합니다.")
-				return
-			}
-			
-			//파일 크기 검사
-			if(fileSizeMb > maxUploadSize) {
-				alert("최대 10MB까지 업로드 가능")
-				return
-			}
-			
-			totalFileSize += fileSizeMb
-			fileList[i] = files[i]
-			fileSizeList[i] = fileSizeMb
+	
+	//파일 개수 검사
+	if(files.length > 4 ) {
+		alert('최대 4장까지 업로드 할 수 있습니다.')
+		e.target.value = null	/* 파일 업로드 초기화 */
+		return false
+	}
+	
+	for(var i = 0; i < files.length; i++) {
+		//확장자 검사
+		if(!files[i].type.match("image/jpeg")) {
+			alert('jpg 또는 jpeg 확장자만 업로드 가능합니다.')
+			e.target.value = null
+			return false
 		}
-	}
-}
+		
+		//크기 검사
+		var fileSize = files[i].size
+		var sizeKb = fileSize / 1024
+		var sizeMb = sizeKb / 1024
+		var totalMaxSize = 10 * 1024 * 1024
+		var totalFileSize = 0
+		
+		//파일이 1KB 미만일 때
+		if(fileSize < 1024) {
+			alert('1KB 이상의 사진을 업로드 할 수 있습니다.')
+			return false
+		}
+		
+		//파일이 10MB 이하일 때
+		if(fileSize < totalMaxSize) {
+			totalFileSize += fileSize
+		}
+		
+		//모든 파일 합의 크기가 10MB 초과일 때
+		if(totalFileSize > totalMaxSize) {
+			alert('10MB까지 업로드 할 수 있습니다.')
+			return false
+		}
+		
+		//이미지 미리보기
+		var reader = new FileReader()
+		switch(i) {
+			case 0:
+				reader.onload = function(ev){
+					$("#mainimg").attr({
+						"src" : ev.target.result
+						, "width" : "300px"
+						, "height" : "300px"
+					})
+				}
+				break
+			case 1:
+				reader.onload = function(ev){
+					$("#subimg1").attr({
+						"src" : ev.target.result
+						, "width" : "150px"
+						, "height" : "150px"
+					})
+				}
+				break
+			case 2:
+				reader.onload = function(ev){
+					$("#subimg2").attr({
+						"src" : ev.target.result
+						, "width" : "150px"
+						, "height" : "150px"
+					})
+				}
+				break
+			case 3:
+				reader.onload = function(ev){
+					$("#subimg3").attr({
+						"src" : ev.target.result
+						, "width" : "150px"
+						, "height" : "150px"
+					})
+				}
+				break
+			default: return false
+			
+			} //switch END
+			
+		reader.readAsDataURL(files[i])
+		
+	} //for() END
 	
-	/* var formData = new FormData($("#upload")[0]);
-	console.log(formData)
+} //uploadImg() END
+
 	
-	$.ajax({ 
-		type: "POST"
-		, enctype: 'multipart/form-data'
-		, url: '/file/add'
-		, data: formData
-		, processData: false
-		, contentType: false
-		, cache: false
-		, dataType: 'json'
-		, success: function (result) { cosole.log("성공") }
-		, error: function (e) { console.log("실패")} }); */
+var formData = new FormData($("#upload")[0]);
+console.log(formData)
+	
+/* $.ajax({ 
+	type: "POST"
+	, enctype: 'multipart/form-data'
+	, url: '/file/add'
+	, data: fileList
+	, processData: false
+	, contentType: false
+	, cache: false
+	, dataType: 'json'
+	, success: function (result) { cosole.log("성공") }
+	, error: function (e) { console.log("실패")} 
+}); */
 
 </script>
 <style type="text/css">
-.container {
-	width: 1200px;
-	margin: 0 auto;
-}
-
 div#title {
 	padding: 0 292.5px;
 }
@@ -141,27 +166,30 @@ input#title {
 	margin: 0 0 10px 0;
 }
 
-ul li { list-style: none; }
-
-
-.pet-info .test1 .test2 {
-    overflow: hidden;
-    position: relative;
+#mainimg{
+		width: 500px;
+		height: 300px;
+		float: left;
 }
 
-img.img-lg {
-	border: 1px solid black;
-	width: 300px;
-	height: 300px;
-	margin: 5px 0 0 8%;
-	position: absolute
-}
-
-img.img-sm {
-	border: 1px solid black;
-	width: 150px;
+table table tr td img{
+	border:1px solid;
+	width: 100px;
 	height: 100px;
-	margin: 0 5px 5px 370px ;
+	float: left;
+	margin: 5px 5px 5px 5px;
+}
+
+#findinfo{
+	width: 450px;
+	float: right;
+	margin: 2%;
+}
+#findinfo1{
+	border:1px solid;
+	margin: 10px 3px 10px 3px;
+	padding: 2%;
+	text-align: center;
 }
 
 input.pat {
@@ -171,7 +199,6 @@ input.pat {
 
 textarea {
 	width: 1000px;
-	margin: 0 0 0 5%;
 	height: 400px;
 }
 
@@ -182,41 +209,76 @@ textarea {
 
 <div id="title"><input id="title" name="title" /></div>
 
-<div class="pet-info">
-	<img class="img-lg">
-<ul class="test1">
-	<li class="test2">
-	<img class="img-sm">
-		<input class="pat" type="text" id="petname" name="petname" placeholder="반려동물 이름"/>
-		<label><input type="radio" value="dog" name="petkinds" />강아지</label>
-		<label><input type="radio" value="cat" name="petkinds" />고양이</label>
-		<label><input type="radio" value="etc" name="petkinds" />기타 동물</label>
-	</li>
-	<li>
-	<img class="img-sm">
-		<input class="pat" type="text" id="petage" name="petage" placeholder="반려동물 나이"/>
+<div id="findinfo">		
+	<div id="findinfo1">
+		<label for="patname">반려동물이름</label>
+		<input class="pat" type="text" id="petname" name="petname"/>
+	</div>
+	<div id="findinfo1">
+		<input type="radio" value="dog" name="petkinds" />강아지
+		<input type="radio" value="cat" name="petkinds" />고양이
+		<input type="radio" value="etc" name="petkinds" />기타 동물
+	</div>
+	<div id="findinfo1">
+	<label for="petage">반려동물나이</label>
+	<input class="pat" type="text" id="petage" name="petage"/></div>
+	<div id="findinfo1">
+		<label for="detail-loc">잃어버린 곳</label>
 		<select name="loc">
 			<option value="0"  selected = "selected">지역</option>
-			<option value="1">서울</option>
-			<option value="2">경기</option>
+			<option value="1">서울특별시</option>
+			<option value="2">경기도</option>
+			<option value="3">강원도</option>
+			<option value="4">충청북도</option>
+			<option value="5">충청남도</option>
+			<option value="6">경상북도</option>
+			<option value="7">경상남도</option>
+			<option value="8">전라북도</option>
+			<option value="9">전라남도</option>
+			<option value="10">대전광역시</option>
+			<option value="11">광주광역시</option>
+			<option value="12">인천광역시</option>
+			<option value="13">부산광역시</option>
+			<option value="14">대구광역시</option>
+			<option value="15">울산광역시</option>
+			<option value="16">세종시</option>
+			<option value="17">제주시</option>
 		</select>
-			<input type="text" id="detail-loc" name="detail-loc" placeholder="상세주소 입력"/>
-	</li>
-	<li>
-	<img class="img-sm">
-		<input type="text" id="detail-loc" name="detail-loc" placeholder="연락받을 이메일"/>
-		<input type="file" id="upfile" name="upfile" multiple="multiple"/>
-	</li>
-</ul>
+		<input type="text" id="detail-loc" name="detail-loc" placeholder="상세주소 입력"/></div>
+	<div id="findinfo1">
+		연락 받을 이메일 <%= session.getAttribute("email") %>
+	</div>
 </div>
 
-<div style="padding: 0 0 0 40px;">
+
+<table >
+	<tr>
+		<td style="border: 1px solid;">
+			<img alt="main"  id="mainimg"/>
+		</td>
+		<td>
+			<table>
+				<tr>
+					<td><img alt="sub1" id="subimg1"/></td>
+				</tr>
+				<tr>
+					<td><img alt="sub2" id="subimg2"/></td>
+				</tr>
+				<tr>
+					<td><img alt="sub3" id="subimg3"/></td>
+				</tr>
+			</table>
+		</td>
+</table>
+<input type="file" id="upfile" name="upfile" multiple="multiple" accept="image/jpeg" style="display:none;"/><br>
+<button class="btn browse" type="button">사진 업로드</button>
+<div>
 	<textarea id="content" name="content">본문</textarea>
 </div>
 
-<div>
-	<button id="write">작성</button>
-	<button id="cancle" onclick="history.go(-1)">취소</button>
+<div style="width: 120px; margin: 5px 45%">
+	<button id="write" class="btn btn-info">작성</button>
+	<button id="cancle" class="btn btn-danger" onclick="history.go(-1)">취소</button>
 </div>
 </form>
 </div><!-- div.container end -->
