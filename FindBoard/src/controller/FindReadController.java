@@ -27,8 +27,13 @@ public class FindReadController extends HttpServlet {
 		//전달파라미터 얻기 - findno
 		FindBoard findno = findboardService.getParam(req);
 
+		System.out.println("findno가 나오나"+findno);
+		
 		//상세보기 결과 
 		FindBoard viewFindBoard = findboardService.views(findno);
+		
+		System.out.println("findno만 추출해서 나오나"+viewFindBoard);
+		
 		
 		//닉네임 전달
 		req.setAttribute("nick", findboardService.getnick(viewFindBoard));
@@ -41,7 +46,7 @@ public class FindReadController extends HttpServlet {
 		
 		//첨부파일 정보 VIEW에 전달
 		FindImg findImg = findboardService.viewFile(viewFindBoard);
-		req.setAttribute("findFile", findImg);
+		req.setAttribute("findImg", findImg);
 
 		// VIEW 지정 및 응답 - forward
 		req.getRequestDispatcher("/WEB-INF/views/find/read.jsp")

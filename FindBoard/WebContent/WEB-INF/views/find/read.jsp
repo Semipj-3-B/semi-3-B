@@ -6,7 +6,7 @@
     
 <%  Usertb u = (Usertb) request.getAttribute("param"); %>
 <%	FindBoard b = (FindBoard) request.getAttribute("viewFindBoard"); %>
-<%	FindImg findImg = (FindImg) request.getAttribute("findFile"); %>
+<%	FindImg findImg = (FindImg) request.getAttribute("findImg"); %>
 
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
 
@@ -18,19 +18,17 @@ $(document).ready(function() {
 		$(location).attr("href", "/find/list");
 	});
 	
-// 	//수정버튼 동작
-// 	$("#btnUpdate").click(function() {
-<%-- 		$(location).attr("href", "/board/update?boardno=<%=b.getBoardno() %>"); --%>
-// 	});
+	//수정버튼 동작
+	$("#btnUpdate").click(function() {
+		$(location).attr("href", "/find/update?FindNo=<%=b.getFindNo() %>");
+	});
 
-// 	//삭제버튼 동작
-// 	$("#btnDelete").click(function() {
-		
-// 		if( confirm("게시글을 삭제하시겠습니까?") ) {
-<%-- 			$(location).attr("href", "/board/delete?boardno=<%=b.getBoardno() %>"); --%>
-// 		}
-		
-// 	});
+	//삭제버튼 동작
+	$("#btnDelete").click(function() {		
+		if( confirm("게시글을 삭제하시겠습니까?") ) {
+			$(location).attr("href", "/find/delete?FindNo=<%=b.getFindNo() %>");
+		}		
+	});
 	
 });
 </script>
@@ -100,38 +98,7 @@ $(document).ready(function() {
 <h1>반려동물 찾기</h1>
 <hr>
 
-<!-- <table> -->
 
-<!-- <tr> -->
-<%-- <td colspan="3"><%=b.getTitle() %></td> --%>
-<%-- <td><%=request.getAttribute("nick") %></td> --%>
-<%-- <td><%=b.getCreateDate() %></td> --%>
-<!-- </tr> -->
-
-<!-- <tr> -->
-<!-- <td colspan="2" rowspan="6">메인사진</td> -->
-<!-- <td rowspan="2">사진1</td> -->
-<%-- <td>반려동물 이름 : <%=b.getPetName() %></td> --%>
-<!-- </tr> -->
-
-<!-- <tr> -->
-<%-- <td>반려동물 종류 : <%=b.getPetName() %></td> --%>
-<!-- </tr> -->
-
-<!-- <tr> -->
-<!-- <td rowspan="1">사진2</td> -->
-<%-- <td>반려동물 나이 : <%=b.getPetName() %></td> --%>
-<%-- <td>잃어버린 곳 : <%=b.getLoc() %></td> --%>
-<!-- </tr> -->
-
-<!-- <tr> -->
-<!-- <td rowspan="1">사진3</td> -->
-<%-- <td>이메일 : <%=u.getEmail() %></td> --%>
-<!-- </tr> -->
-
-<%-- <tr><td colspan="4"><textarea><%=b.getContent() %></textarea></td></tr> --%>
-
-<!-- </table> -->
 
 <div>
 <div id="findheader"><%=b.getTitle() %></div>
@@ -151,7 +118,7 @@ $(document).ready(function() {
 <table >
 	<tr>
 		<td style="border: 1px solid;">
-			<img src="..." alt="main"  id="mainimg"/>
+			<img src=".." alt="main"  id="mainimg"/>
 		</td>
 		<td>
 			<table>

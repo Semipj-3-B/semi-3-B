@@ -51,7 +51,7 @@ public interface FindBoardService {
 	 * @param find_no  - find_no를 가지고 있는 객체
 	 * @return FindBoard - 조회된 게시글
 	 */
-	public FindBoard views(FindBoard find_no);
+	public FindBoard views(FindBoard findno);
 
 	/**
 	 * 요청 파라미터 얻기
@@ -98,6 +98,19 @@ public interface FindBoardService {
 	 * @return 이메일
 	 */
 	public String getemail(FindBoard viewFindBoard);
+	
+	/**
+	 * 게시글 삭제
+	 * @param findboard
+	 */
+	public void delete(FindBoard findboard);
+
+
+	/**
+	 * 게시글 수정
+	 * @param req
+	 */
+	public void update(HttpServletRequest req);
 	
 
 }

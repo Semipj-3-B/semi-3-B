@@ -321,7 +321,50 @@ public class FindBoardServiceImpl implements FindBoardService{
 		
 	} //write() END
 
-
+	@Override
+	public void delete(FindBoard findboard) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		
+//		if(findBoardDao.deleteFile(conn, findboard) > 0) {
+//			JDBCTemplate.commit(conn);
+//		} else {
+//			JDBCTemplate.rollback(conn);
+//		}
+		
+		if(findBoardDao.delete(conn, findboard) > 0) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		
+	}
+	
+	//게시글 수정
+	@Override
+	public void update(HttpServletRequest req) {
+		
+		FindBoard findboard = null;
+		
+		findboard = new FindBoard();
+		
+//		findboard.setFindno알겠습니다
+		findboard.setTitle( req.getParameter("title") );
+		findboard.setContent( req.getParameter("content") );
+		
+		Connection conn = JDBCTemplate.getConnection();
+		
+		if(findboard != null) {
+			if(findBoardDao.update(conn, findboard) > 0) {
+				JDBCTemplate.commit(conn);
+			} else {
+				JDBCTemplate.rollback(conn);
+			}
+		}
+		
+		
+	}
 
 
 	

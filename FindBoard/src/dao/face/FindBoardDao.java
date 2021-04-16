@@ -125,7 +125,30 @@ public interface FindBoardDao {
 	public int selectUserno(Connection conn, String userid);
 
 
+//	/**
+//	 * 파일 삭제
+//	 * @param conn
+//	 * @param findboard
+//	 * @return
+//	 */
+//	public int deleteFile(Connection conn, FindBoard findboard);
 
+	
+	/**
+	 * 게시글 삭제
+	 * @param conn
+	 * @param findboard
+	 * @return
+	 */
+	public int delete(Connection conn, FindBoard findboard);
+
+	/**
+	 * 게시글 수정
+	 * @param conn
+	 * @param findboard
+	 * @return
+	 */
+	public int update(Connection conn, FindBoard findboard);
 	
 
 

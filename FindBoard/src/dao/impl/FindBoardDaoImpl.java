@@ -280,7 +280,7 @@ public class FindBoardDaoImpl implements FindBoardDao {
 				
 		//SQL
 		String sql = "";
-		sql += "SELECT nick FROM user_tb";
+		sql += "SELECT nick FROM usertb";
 		sql += " WHERE user_no = ?";
 		
 		//결과
@@ -313,7 +313,7 @@ public class FindBoardDaoImpl implements FindBoardDao {
 	public String selectEmailByUserNo(Connection conn, FindBoard viewFindBoard) {
 			//SQL
 			String sql = "";
-			sql += "SELECT email FROM user_tb";
+			sql += "SELECT email FROM usertb";
 			sql += " WHERE user_no = ?";
 				
 			//결과
@@ -493,6 +493,122 @@ public class FindBoardDaoImpl implements FindBoardDao {
 		}
 		
 		return userno;
+	}
+	
+
+//	@Override
+//	public int deleteFile(Connection conn, FindBoard findboard) {
+//		
+//		String sql = "";
+//		sql += "DELETE findboardfile";
+//		sql += " WHERE find_no = ?";
+//				
+//
+//		PreparedStatement ps = null; 
+//				
+//		int res = -1;
+//		
+//		try {
+//			//DB작업
+//			ps = conn.prepareStatement(sql);
+//			ps.setInt(1, findboard.getFindNo());
+//
+//			res = ps.executeUpdate();
+//			
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//			
+//		} finally {
+//			try {
+//				//DB객체 닫기
+//				if(ps!=null)	ps.close();
+//				
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		
+//		return res;
+//		
+//	}
+
+	@Override
+	public int delete(Connection conn, FindBoard findboard) {
+		
+		
+		String sql = "";
+		sql += "DELETE findboard";
+		sql += " WHERE find_no = ?";
+		
+		//DB 객체
+		PreparedStatement ps = null; 
+				
+		int res = -1;
+			
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, findboard.getFindNo());
+			
+			res = ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		} finally {
+			try {
+				//DB객체 닫기
+				if(ps!=null)	ps.close();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return res;
+	}
+
+	@Override
+	public int update(Connection conn, FindBoard findboard) {
+		
+		//다음 게시글 번호 조회 쿼리
+		String sql = "";
+		sql += "UPDATE findboard";
+		sql += " SET title = ?,";
+		sql += " 	content = ?,";
+		sql += "	update_date = sysdate,";
+		sql += " 	find_no = findboard_seq.nextval";
+		sql += " WHERE find_no = ?";
+		
+		
+		//DB 객체
+		PreparedStatement ps = null; 
+				
+		int res = -1;		
+		
+		try {
+			//DB작업
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, findboard.getTitle());
+			ps.setString(2, findboard.getContent());
+			ps.setInt(3, findboard.getFindNo());
+
+			res = ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		} finally {
+			try {
+				//DB객체 닫기
+				if(ps!=null)	ps.close();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return res;
+		
 	}
 
 
