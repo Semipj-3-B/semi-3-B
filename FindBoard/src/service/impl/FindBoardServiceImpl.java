@@ -125,8 +125,8 @@ public class FindBoardServiceImpl implements FindBoardService{
 		
 		//새 게시글, 첨부파일 데이터를 저장할 객체 선언
 		FindBoard findBoard = null;
-		List<FindImg> findImges = new ArrayList<FindImg>();
 		FindImg findImg = null;
+		List<FindImg> findImages = new ArrayList<FindImg>();
 		final String[] location = {"서울특별시", "경기도", "강원도", "충청북도", "충청남도"
 									, "경상북도", "경상남도", "전라북도", "전라남도", "대전광역시"
 									, "광주광역시", "인천광역시", "부산광역시", "대구광역시"
@@ -146,6 +146,7 @@ public class FindBoardServiceImpl implements FindBoardService{
 		
 		Connection conn = JDBCTemplate.getConnection();
 		int findno = findBoardDao.selectFindno(conn);
+		findBoard.setFindNo(findno);
 		
 		//DiskFileItemFactory: FileItem 오브젝트 생성 및 메모리/HDD에서의 데이터 처리 기능을 가진다.
 		DiskFileItemFactory factory = new DiskFileItemFactory();
@@ -250,28 +251,6 @@ public class FindBoardServiceImpl implements FindBoardService{
 				}
 			} //if(isFormField) END
 			
-			String userid = (String) req.getSession().getAttribute("userid");
-			if(userid != null && !"".equals(userid)) {
-				int userno = findBoardDao.selectUserno(JDBCTemplate.getConnection(), userid);
-				findBoard.setUserNo(userno);
-			}
-			
-			String usernoString = (String)req.getSession().getAttribute("userno");
-			if(usernoString != null && !"".equals(usernoString)) {
-				findBoard.setUserNo(Integer.parseInt(usernoString));
-			}
-			
-			if(findBoard != null) {
-				findBoard.setFindNo(findno);
-				
-				if(findBoardDao.insert(conn, findBoard) > 0) {
-					JDBCTemplate.commit(conn);
-				} else {
-					JDBCTemplate.rollback(conn);
-				}
-			}
-			
-			
 			//파일 처리
 			if(!item.isFormField()) {
 				//UUID 생성
@@ -279,7 +258,9 @@ public class FindBoardServiceImpl implements FindBoardService{
 				String uid = uuid.toString().split("-")[0];
 				
 				//파일이 저장될 이름을 설정(originName_xxxxxxxx)
-				String storedName = item.getName() + "_" + uid;
+				int lastDot = item.getName().lastIndexOf('.');
+				String originName = item.getName().substring(0, lastDot);
+				String storedName = originName + "_" + uid;
 				
 				//로컬 저장소에 파일 객체(upload 폴더) 생성
 				File uploFolder = new File(req.getServletContext().getRealPath("upload"));
@@ -288,8 +269,11 @@ public class FindBoardServiceImpl implements FindBoardService{
 				File upFile = new File(uploFolder, storedName);
 				
 				findImg = new FindImg();
-				findImg.setOriginImg(item.getName());
+				findImg.setFindNo(findno);
+				findImg.setOriginImg(originName);
 				findImg.setStoredImg(storedName);
+				
+				findImages.add(findImg);
 				
 				//처리가 완료된 파일 업로드
 				try {
@@ -299,19 +283,36 @@ public class FindBoardServiceImpl implements FindBoardService{
 					e.printStackTrace();
 				}
 				
-				if(findImg != null) {
-					findImg.setFindNo(findno);
-					
-					findImges.add(findImg);
-					if(findBoardDao.insertImg(conn, findImges) > 0) {
-						JDBCTemplate.commit(conn);
-					} else {
-						JDBCTemplate.rollback(conn);
-					}
-				}
 			} //if(!ifFormField) END
 
 		} //while(iter.hasnext) END
+		
+		String userid = (String) req.getSession().getAttribute("userid");
+		if(userid != null && !"".equals(userid)) {
+			int userno = findBoardDao.selectUserno(JDBCTemplate.getConnection(), userid);
+			findBoard.setUserNo(userno);
+		}
+		
+		String usernoString = (String)req.getSession().getAttribute("userno");
+		if(usernoString != null && !"".equals(usernoString)) {
+			findBoard.setUserNo(Integer.parseInt(usernoString));
+		}
+		
+		if(findBoard != null) {
+			if(findBoardDao.insert(conn, findBoard) > 0) {
+				JDBCTemplate.commit(conn);
+			} else {
+				JDBCTemplate.rollback(conn);
+			}
+		}
+		
+		if(findImages != null) {
+			if(findBoardDao.insertImg(conn, findImages) > 0) {
+				JDBCTemplate.commit(conn);
+			} else {
+				JDBCTemplate.rollback(conn);
+			}
+		}
 		
 	} //write() END
 	

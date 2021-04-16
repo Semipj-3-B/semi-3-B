@@ -414,7 +414,7 @@ public class FindBoardDaoImpl implements FindBoardDao {
 	}
 
 	@Override
-	public int insertImg(Connection conn, List<FindImg> findImges) {
+	public int insertImg(Connection conn, List<FindImg> findImages) {
 		String sql = "";
 		sql += "INSERT INTO findimg (image_no, find_no, origin_img, stored_img)";
 		sql += " VALUES (findimg_seq.nextval, ?, ?, ?)";
@@ -423,12 +423,13 @@ public class FindBoardDaoImpl implements FindBoardDao {
 		
 		try {
 			ps = conn.prepareStatement(sql);
-			for(int i = 0; i < findImges.size(); i++) {
-				ps.setInt(1, findImges.get(i).getFindNo());
-				ps.setString(2, findImges.get(i).getOriginImg());
-				ps.setString(3, findImges.get(i).getStoredImg());
+			for(int i = 0; i < findImages.size(); i++) {
+				ps.setInt(1, findImages.get(i).getFindNo());
+				ps.setString(2, findImages.get(i).getOriginImg());
+				ps.setString(3, findImages.get(i).getStoredImg());
+
+				result = ps.executeUpdate();
 			}//for() END
-			result = ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

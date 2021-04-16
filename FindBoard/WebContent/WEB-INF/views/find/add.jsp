@@ -28,7 +28,7 @@ $(document).ready(function () {
 	$("#upfile").on('change', uploadImg)
 	
 	$("#write").click(function () {
-		submitContents( $("#write"))
+		submitContents($("#write"))
 		$("form").submit();
 	})
 	
@@ -133,23 +133,6 @@ function uploadImg(e) {
 	} //for() END
 	
 } //uploadImg() END
-
-	
-var formData = new FormData($("#upload")[0]);
-console.log(formData)
-	
-$.ajax({ 
-	type: "POST"
-	, enctype: 'multipart/form-data'
-	, url: '/file/add'
-	, data: formData
-	, processData: false
-	, contentType: false
-	, cache: false
-	, dataType: 'json'
-	, success: function (result) { cosole.log("성공") }
-	, error: function (e) { console.log("실패")} 
-});
 
 </script>
 <style type="text/css">
@@ -273,7 +256,7 @@ textarea {
 <input type="file" id="upfile" name="upfile" multiple="multiple" accept="image/jpeg" style="display:none;"/><br>
 <button class="btn browse" type="button">사진 업로드</button>
 <div>
-	<textarea id="content" name="content">본문</textarea>
+	<textarea id="content" name="content"></textarea>
 </div>
 
 <div style="width: 120px; margin: 5px 45%">

@@ -100,10 +100,10 @@ public interface FindBoardDao {
 	/**
 	 * 새 게시글의 첨부파일을 FingImg 테이블에 삽입한다.
 	 * @param conn		DB 연결 객체
-	 * @param findImges	첨부파일 데이터가 담긴 전달 파라미터
+	 * @param findImages	첨부파일 데이터가 담긴 전달 파라미터
 	 * @return		삽입된 행의 수
 	 */
-	int insertImg(Connection conn, List<FindImg> findImges);
+	int insertImg(Connection conn, List<FindImg> findImages);
 
 
 	/**
