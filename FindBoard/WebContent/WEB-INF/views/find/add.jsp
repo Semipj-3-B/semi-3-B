@@ -92,7 +92,7 @@ function uploadImg(e) {
 				reader.onload = function(ev){
 					$("#mainimg").attr({
 						"src" : ev.target.result
-						, "width" : "300px"
+						, "width" : "500px"
 						, "height" : "300px"
 					})
 				}
@@ -101,8 +101,8 @@ function uploadImg(e) {
 				reader.onload = function(ev){
 					$("#subimg1").attr({
 						"src" : ev.target.result
-						, "width" : "150px"
-						, "height" : "150px"
+						, "width" : "100px"
+						, "height" : "100px"
 					})
 				}
 				break
@@ -110,8 +110,8 @@ function uploadImg(e) {
 				reader.onload = function(ev){
 					$("#subimg2").attr({
 						"src" : ev.target.result
-						, "width" : "150px"
-						, "height" : "150px"
+						, "width" : "100px"
+						, "height" : "100px"
 					})
 				}
 				break
@@ -138,18 +138,18 @@ function uploadImg(e) {
 var formData = new FormData($("#upload")[0]);
 console.log(formData)
 	
-/* $.ajax({ 
+$.ajax({ 
 	type: "POST"
 	, enctype: 'multipart/form-data'
 	, url: '/file/add'
-	, data: fileList
+	, data: formData
 	, processData: false
 	, contentType: false
 	, cache: false
 	, dataType: 'json'
 	, success: function (result) { cosole.log("성공") }
 	, error: function (e) { console.log("실패")} 
-}); */
+});
 
 </script>
 <style type="text/css">

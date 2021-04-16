@@ -3,6 +3,7 @@ package service.impl;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
@@ -130,7 +131,12 @@ public class FindBoardServiceImpl implements FindBoardService{
 		
 		//새 게시글, 첨부파일 데이터를 저장할 객체 선언
 		FindBoard findBoard = null;
+		List<FindImg> findImges = new ArrayList<FindImg>();
 		FindImg findImg = null;
+		final String[] location = {"서울특별시", "경기도", "강원도", "충청북도", "충청남도"
+									, "경상북도", "경상남도", "전라북도", "전라남도", "대전광역시"
+									, "광주광역시", "인천광역시", "부산광역시", "대구광역시"
+									, "울산광역시", "세종시", "제주시"};
 		
 		//파일업로드 형태의 데이터가 맞는지 검사
 		boolean isMutltipart = false;
@@ -143,6 +149,9 @@ public class FindBoardServiceImpl implements FindBoardService{
 		
 		//multipart/form-data일 때 인스턴스 생성
 		findBoard = new FindBoard();
+		
+		Connection conn = JDBCTemplate.getConnection();
+		int findno = findBoardDao.selectFindno(conn);
 		
 		//DiskFileItemFactory: FileItem 오브젝트 생성 및 메모리/HDD에서의 데이터 처리 기능을 가진다.
 		DiskFileItemFactory factory = new DiskFileItemFactory();
@@ -209,7 +218,12 @@ public class FindBoardServiceImpl implements FindBoardService{
 					
 					if("loc".equals(key)) {
 						try {
-							findBoard.setLoc(item.getString("UTF-8"));
+							int value = Integer.parseInt(item.getString("UTF-8")) - 1;
+							for(int i = 0; i < location.length; i++) {
+								if( i == value ) {
+									findBoard.setLoc(location[i]);
+								}
+							}
 						} catch (UnsupportedEncodingException e) {
 							e.printStackTrace();
 						}
@@ -269,50 +283,48 @@ public class FindBoardServiceImpl implements FindBoardService{
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+				
+				String userid = (String) req.getSession().getAttribute("userid");
+				if(userid != null && !"".equals(userid)) {
+					int userno = findBoardDao.selectUserno(JDBCTemplate.getConnection(), userid);
+					findBoard.setUserNo(userno);
+				}
+				
+				String usernoString = (String)req.getSession().getAttribute("userno");
+				if(usernoString != null && !"".equals(usernoString)) {
+					findBoard.setUserNo(Integer.parseInt(usernoString));
+				}
+				
+				if(findBoard != null) {
+					findBoard.setFindNo(findno);
+					
+					if(findBoardDao.insert(conn, findBoard) > 0) {
+						JDBCTemplate.commit(conn);
+					} else {
+						JDBCTemplate.rollback(conn);
+					}
+				}
+				
+				if(findImg != null) {
+					findImg.setFindNo(findno);
+					
+					findImges.add(findImg);
+					if(findBoardDao.insertImg(conn, findImges) > 0) {
+						JDBCTemplate.commit(conn);
+					} else {
+						JDBCTemplate.rollback(conn);
+					}
+				}
 			} //if(!ifFormField) END
-			
+
 		} //while(iter.hasnext) END
-		
-		
-		Connection conn = JDBCTemplate.getConnection();
-		
-		String userid = (String) req.getSession().getAttribute("userid");
-		if(userid != null && !"".equals(userid)) {
-			int userno = findBoardDao.selectUserno(JDBCTemplate.getConnection(), userid);
-			findBoard.setUserNo(userno);
+
+		//testcode
+		for(FindImg f : findImges) {
+			System.out.println(f.getFindNo());
+			System.out.println(f.getOriginImg());
 		}
-		
-		String usernoString = (String)req.getSession().getAttribute("userno");
-		if(usernoString != null && !"".equals(usernoString)) {
-			findBoard.setUserNo(Integer.parseInt(usernoString));
-		}
-		
-		int findno = findBoardDao.selectFindno(conn);
-		if(findBoard != null) {
-			findBoard.setFindNo(findno);
-			
-			if(findBoardDao.insert(conn, findBoard) > 0) {
-				JDBCTemplate.commit(conn);
-			} else {
-				JDBCTemplate.rollback(conn);
-			}
-		}
-		
-		if(findImg != null) {
-			findImg.setFindNo(findno);
-			
-			if(findBoardDao.insertImg(conn, findImg) > 0) {
-				JDBCTemplate.commit(conn);
-			} else {
-				JDBCTemplate.rollback(conn);
-			}
-		}
-		
-		System.out.println(findImg.getFindNo());
-		System.out.println(findImg.getOriginImg());
-		System.out.println(findImg.getStoredImg());
-		
+		System.out.println( "size: " + findImges.size());
 	} //write() END
 	
-			
 }

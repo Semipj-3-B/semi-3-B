@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
+
 import dao.face.FindBoardDao;
 import dto.FindBoard;
 import dto.FindImg;
@@ -412,7 +414,7 @@ public class FindBoardDaoImpl implements FindBoardDao {
 	}
 
 	@Override
-	public int insertImg(Connection conn, FindImg findImg) {
+	public int insertImg(Connection conn, List<FindImg> findImges) {
 		String sql = "";
 		sql += "INSERT INTO findimg (image_no, find_no, origin_img, stored_img)";
 		sql += " VALUES (findimg_seq.nextval, ?, ?, ?)";
@@ -421,10 +423,11 @@ public class FindBoardDaoImpl implements FindBoardDao {
 		
 		try {
 			ps = conn.prepareStatement(sql);
-			ps.setInt(1, findImg.getFindNo());
-			ps.setString(2, findImg.getOriginImg());
-			ps.setString(3, findImg.getStoredImg());
-			
+			for(int i = 0; i < findImges.size(); i++) {
+				ps.setInt(1, findImges.get(i).getFindNo());
+				ps.setString(2, findImges.get(i).getOriginImg());
+				ps.setString(3, findImges.get(i).getStoredImg());
+			}//for() END
 			result = ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
