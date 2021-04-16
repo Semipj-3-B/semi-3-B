@@ -122,12 +122,6 @@ public class FindBoardServiceImpl implements FindBoardService{
 	
 	@Override
 	public void write(HttpServletRequest req) {
-		/* <<INSER DATA>>
-		 * 게시글: userno(session), title, petname, petkinds, petage, loc, content
-		 * NOT NULL: userno, title, petkinds, loc
-		 * 
-		 * 첨부사진: imgnum, findno, originimg, storedimg 
-		 */
 		
 		//새 게시글, 첨부파일 데이터를 저장할 객체 선언
 		FindBoard findBoard = null;
@@ -256,6 +250,27 @@ public class FindBoardServiceImpl implements FindBoardService{
 				}
 			} //if(isFormField) END
 			
+			String userid = (String) req.getSession().getAttribute("userid");
+			if(userid != null && !"".equals(userid)) {
+				int userno = findBoardDao.selectUserno(JDBCTemplate.getConnection(), userid);
+				findBoard.setUserNo(userno);
+			}
+			
+			String usernoString = (String)req.getSession().getAttribute("userno");
+			if(usernoString != null && !"".equals(usernoString)) {
+				findBoard.setUserNo(Integer.parseInt(usernoString));
+			}
+			
+			if(findBoard != null) {
+				findBoard.setFindNo(findno);
+				
+				if(findBoardDao.insert(conn, findBoard) > 0) {
+					JDBCTemplate.commit(conn);
+				} else {
+					JDBCTemplate.rollback(conn);
+				}
+			}
+			
 			
 			//파일 처리
 			if(!item.isFormField()) {
@@ -284,27 +299,6 @@ public class FindBoardServiceImpl implements FindBoardService{
 					e.printStackTrace();
 				}
 				
-				String userid = (String) req.getSession().getAttribute("userid");
-				if(userid != null && !"".equals(userid)) {
-					int userno = findBoardDao.selectUserno(JDBCTemplate.getConnection(), userid);
-					findBoard.setUserNo(userno);
-				}
-				
-				String usernoString = (String)req.getSession().getAttribute("userno");
-				if(usernoString != null && !"".equals(usernoString)) {
-					findBoard.setUserNo(Integer.parseInt(usernoString));
-				}
-				
-				if(findBoard != null) {
-					findBoard.setFindNo(findno);
-					
-					if(findBoardDao.insert(conn, findBoard) > 0) {
-						JDBCTemplate.commit(conn);
-					} else {
-						JDBCTemplate.rollback(conn);
-					}
-				}
-				
 				if(findImg != null) {
 					findImg.setFindNo(findno);
 					
@@ -318,13 +312,7 @@ public class FindBoardServiceImpl implements FindBoardService{
 			} //if(!ifFormField) END
 
 		} //while(iter.hasnext) END
-
-		//testcode
-		for(FindImg f : findImges) {
-			System.out.println(f.getFindNo());
-			System.out.println(f.getOriginImg());
-		}
-		System.out.println( "size: " + findImges.size());
+		
 	} //write() END
 	
 }
