@@ -260,35 +260,44 @@ public class FindBoardServiceImpl implements FindBoardService{
 			
 			//파일 처리
 			if(!item.isFormField()) {
-				//UUID 생성
-				UUID uuid = UUID.randomUUID();
-				String uid = uuid.toString().split("-")[0];
-				
-				//파일이 저장될 이름을 설정(originName_xxxxxxxx)
+				//확장자 추출
 				int lastDot = item.getName().lastIndexOf('.');
-				String originName = item.getName().substring(0, lastDot);
-				String storedName = originName + "_" + uid;
+				String ext = item.getName().substring(lastDot + 1);
+
+				boolean isImg = false;
+				if("jpg".equals(ext) || "jpeg".equals(ext)) isImg = true;
 				
-				//로컬 저장소에 파일 객체(upload 폴더) 생성
-				File uploFolder = new File(req.getServletContext().getRealPath("upload"));
-				uploFolder.mkdir();
-				
-				File upFile = new File(uploFolder, storedName);
-				
-				findImg = new FindImg();
-				findImg.setFindNo(findno);
-				findImg.setOriginImg(originName);
-				findImg.setStoredImg(storedName);
-				
-				findImages.add(findImg);
-				
-				//처리가 완료된 파일 업로드
-				try {
-					item.write(upFile);	//실제 업로드
-					item.delete();		//임시 파일 삭제
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				if(isImg) {
+					
+					//UUID 생성
+					UUID uuid = UUID.randomUUID();
+					String uid = uuid.toString().split("-")[0];
+					
+					//파일이 저장될 이름을 설정(originName_xxxxxxxx)
+					String originName = item.getName().substring(0, lastDot);
+					String storedName = originName + "_" + uid;
+					
+					//로컬 저장소에 파일 객체(upload 폴더) 생성
+					File uploFolder = new File(req.getServletContext().getRealPath("upload"));
+					uploFolder.mkdir();
+					
+					File upFile = new File(uploFolder, storedName);
+					
+					findImg = new FindImg();
+					findImg.setFindNo(findno);
+					findImg.setOriginImg(originName);
+					findImg.setStoredImg(storedName);
+					
+					findImages.add(findImg);
+					
+					//처리가 완료된 파일 업로드
+					try {
+						item.write(upFile);	//실제 업로드
+						item.delete();		//임시 파일 삭제
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				} //if(isImg) END
 				
 			} //if(!ifFormField) END
 
