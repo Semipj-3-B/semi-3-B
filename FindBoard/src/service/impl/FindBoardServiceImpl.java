@@ -57,30 +57,13 @@ public class FindBoardServiceImpl implements FindBoardService{
 	}
 
 	@Override
-	public FindBoard views(FindBoard find_no) {
-		Connection conn = JDBCTemplate.getConnection();
-
-		//
-		if( findBoardDao.updateHit(conn, find_no) >= 0 ) {
-			JDBCTemplate.commit(conn);
-		} else {
-			JDBCTemplate.rollback(conn);
-		}
-		
-		//게시글 조회
-		FindBoard board = findBoardDao.selectBoardByFindno(conn, find_no); 
-		
-		return board;
-	}
-
-	@Override
 	public FindBoard getParam(HttpServletRequest req) {
 		
 		//FindBoardno를 저장할 객체 생성
 		FindBoard findNo = new FindBoard();
 		
 		//FindBoardno 전달 파라미터 검증
-		String param = req.getParameter("find_no");
+		String param = req.getParameter("FindNo");
 		if(param!=null && !"".equals(param)) {
 			
 			//Findboardno 전달파라미터 추출
@@ -90,6 +73,25 @@ public class FindBoardServiceImpl implements FindBoardService{
 		// 결과 반환
 		return findNo;
 	}
+	
+	@Override
+	public FindBoard views(FindBoard findno) {
+		Connection conn = JDBCTemplate.getConnection();
+
+		//
+		if( findBoardDao.updateHit(conn, findno) >= 0 ) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		//게시글 조회
+		FindBoard board = findBoardDao.selectBoardByFindno(conn, findno); 
+		
+		return board;
+	}
+
+
 
 //	@Override
 //	public FindBoard read(FindBoard findNo) {
@@ -113,6 +115,11 @@ public class FindBoardServiceImpl implements FindBoardService{
 	@Override
 	public String getnick(FindBoard viewFindBoard) {
 		return findBoardDao.selectNickByUserNo(JDBCTemplate.getConnection(), viewFindBoard);
+	}
+	
+	@Override
+	public String getemail(FindBoard viewFindBoard) {
+		return findBoardDao.selectEmailByUserNo(JDBCTemplate.getConnection(), viewFindBoard);
 	}
 
 	@Override
@@ -315,5 +322,55 @@ public class FindBoardServiceImpl implements FindBoardService{
 		}
 		
 	} //write() END
+
+	@Override
+	public void delete(FindBoard findboard) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		
+//		if(findBoardDao.deleteFile(conn, findboard) > 0) {
+//			JDBCTemplate.commit(conn);
+//		} else {
+//			JDBCTemplate.rollback(conn);
+//		}
+		
+		if(findBoardDao.delete(conn, findboard) > 0) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		
+	}
 	
+	//게시글 수정
+	@Override
+	public void update(HttpServletRequest req) {
+		
+		FindBoard findboard = null;
+		
+		findboard = new FindBoard();
+		
+//		findboard.setFindno알겠습니다
+		findboard.setTitle( req.getParameter("title") );
+		findboard.setContent( req.getParameter("content") );
+		
+		Connection conn = JDBCTemplate.getConnection();
+		
+		if(findboard != null) {
+			if(findBoardDao.update(conn, findboard) > 0) {
+				JDBCTemplate.commit(conn);
+			} else {
+				JDBCTemplate.rollback(conn);
+			}
+		}
+		
+		
+	}
+
+
+
+
+	
+			
 }
