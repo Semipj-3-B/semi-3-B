@@ -34,12 +34,27 @@ $(document).ready(function () {
 	
 })
 
+
+function getByteLength(name) {
+	var b = 0	//byte
+	var c = 0	//char
+	
+	for(j = 0; j < name.length; j++) {
+		c = name.charCodeAt(j)
+		if(c >> 11) c = 3
+		else if(c >> 7) c = 2
+		else c = 1
+		b+=c	
+	}
+	return b
+}
+
 function uploadImg(e) {
 	//이미지 영역 초기화
-	$("#mainimg").empty()	
+ 	$("#mainimg").empty()	
 	$("#subimg1").empty()	
 	$("#subimg2").empty()	
-	$("#subimg3").empty()	
+	$("#subimg3").empty()
 	
 	var files = null
 	if(e.target.files != null) {
@@ -58,6 +73,17 @@ function uploadImg(e) {
 		if(!files[i].type.match("image/jpeg")) {
 			alert('jpg 또는 jpeg 확장자만 업로드 가능합니다.')
 			e.target.value = null
+			return false
+		}
+		
+		//확장자 제거한 파일명
+		var lastDot = files[i].name.lastIndexOf('.')
+		var fileName = files[i].name.substring(0, lastDot)
+		
+		//파일명 길이 검사	
+		var byteLen = getByteLength(fileName)
+		if(byteLen > 30) {
+			alert('파일명은 한글 10자 이하로 가능합니다.')
 			return false
 		}
 		
@@ -84,44 +110,44 @@ function uploadImg(e) {
 			alert('10MB까지 업로드 할 수 있습니다.')
 			return false
 		}
-		
+	
 		//이미지 미리보기
 		var reader = new FileReader()
 		switch(i) {
 			case 0:
 				reader.onload = function(ev){
-					$("#mainimg").attr({
+					$("<img>").attr({
 						"src" : ev.target.result
 						, "width" : "400px"
 						, "height" : "310px"
-					})
+					}).appendTo($("#mainimg"))
 				}
 				break
 			case 1:
 				reader.onload = function(ev){
-					$("#subimg1").attr({
+					$("<img>").attr({
 						"src" : ev.target.result
 						, "width" : "100px"
 						, "height" : "100px"
-					})
+					}).appendTo($("#subimg1"))
 				}
 				break
 			case 2:
 				reader.onload = function(ev){
-					$("#subimg2").attr({
+					$("<img>").attr({
 						"src" : ev.target.result
 						, "width" : "100px"
 						, "height" : "100px"
-					})
+					}).appendTo($("#subimg2"))
 				}
 				break
 			case 3:
 				reader.onload = function(ev){
-					$("#subimg3").attr({
+					$("<img>").attr({
 						"src" : ev.target.result
 						, "width" : "150px"
 						, "height" : "150px"
-					})
+					}).appendTo($("#subimg3"))
 				}
 				break
 			default: return false
@@ -186,11 +212,11 @@ textarea {
 	<hr>
 	
 	<!-- img -->
-	<div class="mainimg"><img id="mainimg"  alt="main"/></div>
+	<div id="mainimg" class="mainimg"></div>
 	<div class="subimg-grid">
-		<div><img id="subimg1" alt="sub1" /></div>
-		<div><img id="subimg2" alt="sub2" /></div>
-		<div><img id="subimg3" alt="sub3" /></div>
+		<div id="subimg1"></div>
+		<div id="subimg2"></div>
+		<div id="subimg3"></div>
 	</div>
 	
 	<div class="petinfo-grid">
