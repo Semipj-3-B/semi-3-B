@@ -17,7 +17,7 @@ function submitContents(elClickedObj) {
 </script>
 <script type="text/javascript">
 $(document).ready(function () {
-
+	
 	const upBtn = document.querySelector('.browse')
 	const realupInput = document.querySelector('#upfile')
 
@@ -92,8 +92,8 @@ function uploadImg(e) {
 				reader.onload = function(ev){
 					$("#mainimg").attr({
 						"src" : ev.target.result
-						, "width" : "500px"
-						, "height" : "300px"
+						, "width" : "400px"
+						, "height" : "310px"
 					})
 				}
 				break
@@ -136,43 +136,37 @@ function uploadImg(e) {
 
 </script>
 <style type="text/css">
-div#title {
-	padding: 0 292.5px;
+input#title:focus{outline: none;}
+
+.mainimg{
+	position: absolute;
+	width: 400px;
+	height: 310px;
+	border: 1px solid;
 }
 
-
-input#title { 
-	/* border: none; */ 
-	width: 585px;
-	font-size: 20px;
-	text-align: center;
-	margin: 0 0 10px 0;
+.subimg-grid {
+	display: inline-grid;
+	grid-template-rows: 100px 100px 100px;
+	grid-row-gap: 3px;
+	margin: 0 0 0 405px;
+	border: 1px solid;
+	width: 150px;
+	height: 309px;
 }
 
-#mainimg{
-		width: 500px;
-		height: 300px;
-		float: left;
-}
-
-table table tr td img{
-	border:1px solid;
-	width: 100px;
-	height: 100px;
-	float: left;
-	margin: 5px 5px 5px 5px;
-}
-
-#findinfo{
+.petinfo-grid {
+	display: grid;
+	grid-template-rows: 50px 40px 50px 50px 50px;
+	margin: 0 5% 0 0;
+	/* border: 1px solid; */
 	width: 450px;
+	height: 240px;
 	float: right;
-	margin: 2%;
-}
-#findinfo1{
-	border:1px solid;
-	margin: 10px 3px 10px 3px;
-	padding: 2%;
+	align-items: center;
+	font-size: 14px;
 	text-align: center;
+	padding: 40px 0;
 }
 
 input.pat {
@@ -184,88 +178,73 @@ textarea {
 	width: 1000px;
 	height: 400px;
 }
-
 </style>
 
 <div class="container">
-<form action="/find/add" method="post" enctype="multipart/form-data" id="upload">
-
-<div id="title"><input id="title" name="title" /></div>
-
-<div id="findinfo">		
-	<div id="findinfo1">
-		<label for="patname">반려동물이름</label>
-		<input class="pat" type="text" id="petname" name="petname"/>
+<form action="/find/add" method="post" enctype="multipart/form-data">
+	<h1><input id="title" name="title" placeholder="제목입력" style="border: none;" /></h1>
+	<hr>
+	
+	<!-- img -->
+	<div class="mainimg"><img id="mainimg"  alt="main"/></div>
+	<div class="subimg-grid">
+		<div><img id="subimg1" alt="sub1" /></div>
+		<div><img id="subimg2" alt="sub2" /></div>
+		<div><img id="subimg3" alt="sub3" /></div>
 	</div>
-	<div id="findinfo1">
-		<input type="radio" value="dog" name="petkinds" />강아지
-		<input type="radio" value="cat" name="petkinds" />고양이
-		<input type="radio" value="etc" name="petkinds" />기타 동물
+	
+	<div class="petinfo-grid">
+		<div>
+			<label for="patname">반려동물이름</label>
+			<input class="pat" type="text" id="petname" name="petname" />
+		</div>
+		<div style="text-align: center;">
+			<input type="radio" value="dog" name="petkinds" />강아지
+			<input type="radio" value="cat" name="petkinds" />고양이
+			<input type="radio" value="etc" name="petkinds" />기타 동물
+		</div>
+		<div>
+			<label for="petage">반려동물나이</label>
+			<input class="pat" type="text" id="petage" name="petage"/>
+		</div>
+		<div>
+			<label for="detail-loc">잃어버린 곳</label>
+			<select name="loc">
+				<option value="0"  selected = "selected">지역</option>
+				<option value="1">서울특별시</option>
+				<option value="2">경기도</option>
+				<option value="3">강원도</option>
+				<option value="4">충청북도</option>
+				<option value="5">충청남도</option>
+				<option value="6">경상북도</option>
+				<option value="7">경상남도</option>
+				<option value="8">전라북도</option>
+				<option value="9">전라남도</option>
+				<option value="10">대전광역시</option>
+				<option value="11">광주광역시</option>
+				<option value="12">인천광역시</option>
+				<option value="13">부산광역시</option>
+				<option value="14">대구광역시</option>
+				<option value="15">울산광역시</option>
+				<option value="16">세종시</option>
+				<option value="17">제주시</option>
+			</select>
+			<input type="text" id="detail-loc" name="detail-loc" placeholder="상세주소 입력"/>
+		</div>
+		<div>이메일 <%= session.getAttribute("email") %></div>
 	</div>
-	<div id="findinfo1">
-	<label for="petage">반려동물나이</label>
-	<input class="pat" type="text" id="petage" name="petage"/></div>
-	<div id="findinfo1">
-		<label for="detail-loc">잃어버린 곳</label>
-		<select name="loc">
-			<option value="0"  selected = "selected">지역</option>
-			<option value="1">서울특별시</option>
-			<option value="2">경기도</option>
-			<option value="3">강원도</option>
-			<option value="4">충청북도</option>
-			<option value="5">충청남도</option>
-			<option value="6">경상북도</option>
-			<option value="7">경상남도</option>
-			<option value="8">전라북도</option>
-			<option value="9">전라남도</option>
-			<option value="10">대전광역시</option>
-			<option value="11">광주광역시</option>
-			<option value="12">인천광역시</option>
-			<option value="13">부산광역시</option>
-			<option value="14">대구광역시</option>
-			<option value="15">울산광역시</option>
-			<option value="16">세종시</option>
-			<option value="17">제주시</option>
-		</select>
-		<input type="text" id="detail-loc" name="detail-loc" placeholder="상세주소 입력"/></div>
-	<div id="findinfo1">
-		연락 받을 이메일 <%= session.getAttribute("email") %>
+	
+	<input type="file" id="upfile" name="upfile" multiple="multiple" accept="image/jpeg" style="display:none;"/><br>
+	<button class="btn browse" type="button">사진 업로드</button>
+	
+	<div><textarea id="content" name="content"></textarea></div>
+
+	<div style="width: 120px; margin: 5px 45%">
+		<button id="write" class="btn btn-info">작성</button>
+		<button id="cancle" class="btn btn-danger" onclick="history.go(-1)">취소</button>
 	</div>
-</div>
-
-
-<table >
-	<tr>
-		<td style="border: 1px solid;">
-			<img alt="main"  id="mainimg"/>
-		</td>
-		<td>
-			<table>
-				<tr>
-					<td><img alt="sub1" id="subimg1"/></td>
-				</tr>
-				<tr>
-					<td><img alt="sub2" id="subimg2"/></td>
-				</tr>
-				<tr>
-					<td><img alt="sub3" id="subimg3"/></td>
-				</tr>
-			</table>
-		</td>
-</table>
-<input type="file" id="upfile" name="upfile" multiple="multiple" accept="image/jpeg" style="display:none;"/><br>
-<button class="btn browse" type="button">사진 업로드</button>
-<div>
-	<textarea id="content" name="content"></textarea>
-</div>
-
-<div style="width: 120px; margin: 5px 45%">
-	<button id="write" class="btn btn-info">작성</button>
-	<button id="cancle" class="btn btn-danger" onclick="history.go(-1)">취소</button>
-</div>
 </form>
 </div><!-- div.container end -->
-
 <script type="text/javascript">
 var oEditors = []
 nhn.husky.EZCreator.createInIFrame({
