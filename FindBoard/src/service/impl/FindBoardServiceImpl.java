@@ -264,17 +264,34 @@ public class FindBoardServiceImpl implements FindBoardService{
 				int lastDot = item.getName().lastIndexOf('.');
 				String ext = item.getName().substring(lastDot + 1);
 
+				//확장자 유효 검사
 				boolean isImg = false;
 				if("jpg".equals(ext) || "jpeg".equals(ext)) isImg = true;
 				
-				if(isImg) {
+				//파일명 유효 검사
+				boolean isValidName = false;
+				String originName = item.getName().substring(0, lastDot);
+				
+				//파일명 String -> Byte 길이로 변환
+				int nameToBytes = 0;
+				try {
+					nameToBytes = originName.getBytes("UTF-8").length;
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}
+				
+				//30byte 초과시 false
+				final int maxBytes = 30;
+				if(nameToBytes <= maxBytes) isValidName = true;
+				
+				//확장자, 파일명 모두 유효할 때만 파일 저장 및 DB 삽입
+				if(isImg && isValidName) {
 					
 					//UUID 생성
 					UUID uuid = UUID.randomUUID();
 					String uid = uuid.toString().split("-")[0];
 					
 					//파일이 저장될 이름을 설정(originName_xxxxxxxx)
-					String originName = item.getName().substring(0, lastDot);
 					String storedName = originName + "_" + uid;
 					
 					//로컬 저장소에 파일 객체(upload 폴더) 생성
