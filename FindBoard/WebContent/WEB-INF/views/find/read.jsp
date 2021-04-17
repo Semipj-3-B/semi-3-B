@@ -6,7 +6,7 @@
     
 <%  Usertb u = (Usertb) request.getAttribute("param"); %>
 <%	FindBoard b = (FindBoard) request.getAttribute("viewFindBoard"); %>
-<%	FindImg findImg = (FindImg) request.getAttribute("findFile"); %>
+<%	FindImg findImg = (FindImg) request.getAttribute("findImg"); %>
 
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
 
@@ -18,20 +18,19 @@ $(document).ready(function() {
 		$(location).attr("href", "/find/list");
 	});
 	
-// 	//수정버튼 동작
-// 	$("#btnUpdate").click(function() {
-<%-- 		$(location).attr("href", "/board/update?boardno=<%=b.getBoardno() %>"); --%>
-// 	});
+	//수정버튼 동작
+	$("#btnUpdate").click(function() {
+		$(location).attr("href", "/find/update?FindNo=<%=b.getFindNo() %>");
+	});
 
-// 	//삭제버튼 동작
-// 	$("#btnDelete").click(function() {
-		
-// 		if( confirm("게시글을 삭제하시겠습니까?") ) {
-<%-- 			$(location).attr("href", "/board/delete?boardno=<%=b.getBoardno() %>"); --%>
-// 		}
-		
-});
+	//삭제버튼 동작
+	$("#btnDelete").click(function() {		
+		if( confirm("게시글을 삭제하시겠습니까?") ) {
+			$(location).attr("href", "/find/delete?FindNo=<%=b.getFindNo() %>");
+		}		
+	});
 	
+});
 </script>
 
 <style type="text/css">
@@ -96,41 +95,11 @@ $(document).ready(function() {
 
 <div class="container">
 
-<h1>반려동물 찾기</h1>
+<h1>반려동물 찾기 </h1>
+<a href="/upload/<%=findImg.getImgNum() %>"></a>
 <hr>
 
-<!-- <table> -->
 
-<!-- <tr> -->
-<%-- <td colspan="3"><%=b.getTitle() %></td> --%>
-<%-- <td><%=request.getAttribute("nick") %></td> --%>
-<%-- <td><%=b.getCreateDate() %></td> --%>
-<!-- </tr> -->
-
-<!-- <tr> -->
-<!-- <td colspan="2" rowspan="6">메인사진</td> -->
-<!-- <td rowspan="2">사진1</td> -->
-<%-- <td>반려동물 이름 : <%=b.getPetName() %></td> --%>
-<!-- </tr> -->
-
-<!-- <tr> -->
-<%-- <td>반려동물 종류 : <%=b.getPetName() %></td> --%>
-<!-- </tr> -->
-
-<!-- <tr> -->
-<!-- <td rowspan="1">사진2</td> -->
-<%-- <td>반려동물 나이 : <%=b.getPetName() %></td> --%>
-<%-- <td>잃어버린 곳 : <%=b.getLoc() %></td> --%>
-<!-- </tr> -->
-
-<!-- <tr> -->
-<!-- <td rowspan="1">사진3</td> -->
-<%-- <td>이메일 : <%=u.getEmail() %></td> --%>
-<!-- </tr> -->
-
-<%-- <tr><td colspan="4"><textarea><%=b.getContent() %></textarea></td></tr> --%>
-
-<!-- </table> -->
 
 <div>
 <div id="findheader"><%=b.getTitle() %></div>
@@ -139,35 +108,35 @@ $(document).ready(function() {
 </div>
 
 <div id="findinfo">		
-	<div id="findinfo1">반려동물 종류 : PetName</div>
-	<div id="findinfo1">반려동물 이름 : PetKinds</div>
-	<div id="findinfo1">반려동물 나이 : PetAge</div>
-	<div id="findinfo1">잃어버린 위치 : loc</div>
-	<div id="findinfo1">이메일 : email</div>
+	<div id="findinfo1">반려동물 종류 : <%=b.getPetKinds() %></div>
+	<div id="findinfo1">반려동물 이름 : <%=b.getPetName() %></div>
+	<div id="findinfo1">반려동물 나이 : <%=b.getPetAge() %></div>
+	<div id="findinfo1">잃어버린 위치 : <%=b.getLoc() %></div>
+	<div id="findinfo1">이메일 : <%=request.getAttribute("email") %></div>
 </div>
 
 
 <table >
 	<tr>
 		<td style="border: 1px solid;">
-			<img src="..." alt="main"  id="mainimg"/>
+			<img src="/upload/<%=findImg.getStoredImg() %>" alt="main"  id="mainimg"/>
 		</td>
 		<td>
 			<table>
 				<tr>
-					<td><img src="..." alt="sub1" id="subimg"/></td>
+					<td><img src="/upload/<%=findImg.getStoredImg() %>" alt="sub1" id="subimg"/></td>
 				</tr>
 				<tr>
-					<td><img src="..." alt="sub2" id="subimg"/></td>
+					<td><img src="/upload/<%=findImg.getStoredImg() %>" alt="sub2" id="subimg"/></td>
 				</tr>
 				<tr>
-					<td><img src="..." alt="sub3" id="subimg"/></td>
+					<td><img src="/upload/<%=findImg.getStoredImg() %>" alt="sub3" id="subimg"/></td>
 				</tr>
 			</table>
 		</td>
 </table>
 
-<p style="width: 1100px; height: 300px; border: 1px solid; margin: 10px 0 10px 0;">content</p>
+<p style="width: 1100px; height: 300px; border: 1px solid; margin: 10px 0 10px 0;"><%=b.getContent() %></p>
 
 
 

@@ -47,8 +47,10 @@ public class FIndUpdateController extends HttpServlet {
 		req.setAttribute("updateFindBoard", updateFindBoard);
 		
 		//첨부파일 정보 VIEW에 전달
-//		FindImg findImg = findboardService.viewFile(viewFindBoard);
-//		req.setAttribute("findImg", findImg);
+		FindImg findImg = findboardService.viewFile(updateFindBoard);
+		req.setAttribute("findImg", findImg);
+		
+		System.out.println("첨부파일에 전달할 정보 = " + findImg);
 
 		// VIEW 지정 및 응답 - forward
 		req.getRequestDispatcher("/WEB-INF/views/find/update.jsp")
@@ -63,7 +65,7 @@ public class FIndUpdateController extends HttpServlet {
 		
 		findboardService.update(req);
 		
-		System.out.println("req"+req);
+//		System.out.println("req"+req);
 		
 		resp.sendRedirect("/find/list");
 		

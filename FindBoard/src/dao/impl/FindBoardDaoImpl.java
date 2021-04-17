@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 import dao.face.FindBoardDao;
 import dto.FindBoard;
@@ -185,6 +184,9 @@ public class FindBoardDaoImpl implements FindBoardDao {
 				viewFindBoard.setPetAge( rs.getInt("pet_Age") );
 				viewFindBoard.setLoc( rs.getString("loc") );
 				viewFindBoard.setContent( rs.getString("content") );
+				viewFindBoard.setFindNo( rs.getInt("find_No") );
+				viewFindBoard.setUserNo( rs.getInt("user_No") );
+				viewFindBoard.setUpdateDate( rs.getDate("update_Date") );
 								
 			}
 			
@@ -207,7 +209,7 @@ public class FindBoardDaoImpl implements FindBoardDao {
 		 
 		//SQL 작성
 		String sql = "";
-		sql += "SELECT * FROM findboard";
+		sql += "UPDATE findboard";
 		sql += " SET views = views + 1";
 		sql += " WHERE find_no = ?";
 
@@ -282,7 +284,7 @@ public class FindBoardDaoImpl implements FindBoardDao {
 				
 		//SQL
 		String sql = "";
-		sql += "SELECT nick FROM user_tb";
+		sql += "SELECT nick FROM usertb";
 		sql += " WHERE user_no = ?";
 		
 		//결과
@@ -310,6 +312,39 @@ public class FindBoardDaoImpl implements FindBoardDao {
 		//최종 결과 반환
 		return nick;
 	}
+	
+	@Override
+	public String selectEmailByUserNo(Connection conn, FindBoard viewFindBoard) {
+			//SQL
+			String sql = "";
+			sql += "SELECT email FROM usertb";
+			sql += " WHERE user_no = ?";
+				
+			//결과
+			String email = null;
+				
+			try {
+				ps = conn.prepareStatement(sql); //SQL수행 객체
+				ps.setInt(1, viewFindBoard.getUserNo()); //조회할 id 적용
+					
+				rs = ps.executeQuery(); //SQL 수행 및 결과집합 저장
+					
+				//조회 결과 처리
+				while(rs.next()) {
+					email = rs.getString("email");
+				}
+					
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				//DB객체 닫기
+				JDBCTemplate.close(rs);
+				JDBCTemplate.close(ps);
+			}
+				
+			//최종 결과 반환
+			return email;
+	}
 
 
 	@Override
@@ -334,10 +369,10 @@ public class FindBoardDaoImpl implements FindBoardDao {
 			while(rs.next()) {
 				findImg = new FindImg();
 				
-				findImg.setImgNum( rs.getInt("img_Num") );
 				findImg.setFindNo( rs.getInt("find_No") );
+				findImg.setImgNum( rs.getInt("image_No") );
 				findImg.setOriginImg( rs.getString("origin_Img") );
-				findImg.setStoredImg( rs.getString("sotred_Img") );
+				findImg.setStoredImg( rs.getString("stored_Img") );
 				
 				
 			}
@@ -414,7 +449,7 @@ public class FindBoardDaoImpl implements FindBoardDao {
 	}
 
 	@Override
-	public int insertImg(Connection conn, List<FindImg> findImages) {
+	public int insertImg(Connection conn, List<FindImg> findImges) {
 		String sql = "";
 		sql += "INSERT INTO findimg (image_no, find_no, origin_img, stored_img)";
 		sql += " VALUES (findimg_seq.nextval, ?, ?, ?)";
@@ -423,13 +458,12 @@ public class FindBoardDaoImpl implements FindBoardDao {
 		
 		try {
 			ps = conn.prepareStatement(sql);
-			for(int i = 0; i < findImages.size(); i++) {
-				ps.setInt(1, findImages.get(i).getFindNo());
-				ps.setString(2, findImages.get(i).getOriginImg());
-				ps.setString(3, findImages.get(i).getStoredImg());
-
-				result = ps.executeUpdate();
+			for(int i = 0; i < findImges.size(); i++) {
+				ps.setInt(1, findImges.get(i).getFindNo());
+				ps.setString(2, findImges.get(i).getOriginImg());
+				ps.setString(3, findImges.get(i).getStoredImg());
 			}//for() END
+			result = ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -465,4 +499,121 @@ public class FindBoardDaoImpl implements FindBoardDao {
 		
 		return userno;
 	}
+
+//	@Override
+//	public int deleteFile(Connection conn, FindBoard findboard) {
+//		
+//		String sql = "";
+//		sql += "DELETE findboardfile";
+//		sql += " WHERE find_no = ?";
+//				
+//
+//		PreparedStatement ps = null; 
+//				
+//		int res = -1;
+//		
+//		try {
+//			//DB작업
+//			ps = conn.prepareStatement(sql);
+//			ps.setInt(1, findboard.getFindNo());
+//
+//			res = ps.executeUpdate();
+//			
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//			
+//		} finally {
+//			try {
+//				//DB객체 닫기
+//				if(ps!=null)	ps.close();
+//				
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		
+//		return res;
+//		
+//	}
+
+	@Override
+	public int delete(Connection conn, FindBoard findboard) {
+		
+		
+		String sql = "";
+		sql += "DELETE findboard";
+		sql += " WHERE find_no = ?";
+		
+		//DB 객체
+		PreparedStatement ps = null; 
+				
+		int res = -1;
+			
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, findboard.getFindNo());
+			
+			res = ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		} finally {
+			try {
+				//DB객체 닫기
+				if(ps!=null)	ps.close();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return res;
+	}
+
+	@Override
+	public int update(Connection conn, FindBoard findboard) {
+		
+		//다음 게시글 번호 조회 쿼리
+		String sql = "";
+		sql += "UPDATE findboard";
+		sql += " SET title = ?,";
+		sql += " 	content = ?,";
+		sql += "	update_date = sysdate,";
+		sql += " 	find_no = findboard_seq.nextval";
+		sql += " WHERE find_no = ?";
+		
+		
+		//DB 객체
+		PreparedStatement ps = null; 
+				
+		int res = -1;		
+		
+		try {
+			//DB작업
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, findboard.getTitle());
+			ps.setString(2, findboard.getContent());
+			ps.setInt(3, findboard.getFindNo());
+
+			res = ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		} finally {
+			try {
+				//DB객체 닫기
+				if(ps!=null)	ps.close();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return res;
+		
+	}
+
+
 }

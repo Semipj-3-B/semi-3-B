@@ -41,7 +41,7 @@ public interface FindBoardDao {
 	 * @param find_no - 조회할 find_no 가진 객체
 	 * @return FindBoard - 조회된 결과 객체
 	 */
-	public FindBoard selectBoardByFindno(Connection conn, FindBoard find_no);
+	public FindBoard selectBoardByFindno(Connection conn, FindBoard findno);
 
 
 
@@ -70,6 +70,16 @@ public interface FindBoardDao {
 	 * @return
 	 */
 	public String selectNickByUserNo(Connection conn, FindBoard viewFindBoard);
+	
+	/**
+	 * 
+	 * userNo로 email 얻어오기
+	 * 
+	 * @param conn
+	 * @param viewFindBoard
+	 * @return
+	 */
+	public String selectEmailByUserNo(Connection conn, FindBoard viewFindBoard);
 
 	/**
 	 * 첨부파일 조회
@@ -100,10 +110,10 @@ public interface FindBoardDao {
 	/**
 	 * 새 게시글의 첨부파일을 FingImg 테이블에 삽입한다.
 	 * @param conn		DB 연결 객체
-	 * @param findImages	첨부파일 데이터가 담긴 전달 파라미터
+	 * @param findImges	첨부파일 데이터가 담긴 전달 파라미터
 	 * @return		삽입된 행의 수
 	 */
-	int insertImg(Connection conn, List<FindImg> findImages);
+	int insertImg(Connection conn, List<FindImg> findImges);
 
 
 	/**
@@ -113,6 +123,35 @@ public interface FindBoardDao {
 	 * @return 		회원번호 조회
 	 */
 	public int selectUserno(Connection conn, String userid);
+
+	
+//	/**
+//	 * 파일 삭제
+//	 * @param conn
+//	 * @param findboard
+//	 * @return
+//	 */
+//	public int deleteFile(Connection conn, FindBoard findboard);
+
+	
+	/**
+	 * 게시글 삭제
+	 * @param conn
+	 * @param findboard
+	 * @return
+	 */
+	public int delete(Connection conn, FindBoard findboard);
+
+	/**
+	 * 게시글 수정
+	 * @param conn
+	 * @param findboard
+	 * @return
+	 */
+	public int update(Connection conn, FindBoard findboard);
+
+
+
 	
 
 
