@@ -96,15 +96,16 @@ $(document).ready(function() {
 <div class="container">
 
 <h1>반려동물 찾기 </h1>
-<a href="/upload/<%=findImg.getImgNum() %>"></a>
 <hr>
 
 
 
 <div>
+
 <div id="findheader"><%=b.getTitle() %></div>
 <div id="findheader1"><%=request.getAttribute("nick") %></div>
 <div id="findheader1"><%=b.getCreateDate() %></div>
+
 </div>
 
 <div id="findinfo">		
@@ -117,6 +118,7 @@ $(document).ready(function() {
 
 
 <table >
+<%	if( findImg != null ) { %>
 	<tr>
 		<td style="border: 1px solid;">
 			<img src="/upload/<%=findImg.getStoredImg() %>" alt="main"  id="mainimg"/>
@@ -134,9 +136,29 @@ $(document).ready(function() {
 				</tr>
 			</table>
 		</td>
+<%	} else {%>
+	<tr>
+		<td style="border: 1px solid;">
+			<img src=".." alt="main"  id="mainimg"/>
+		</td>
+		<td>
+			<table>
+				<tr>
+					<td><img src=".." alt="sub1" id="subimg"/></td>
+				</tr>
+				<tr>
+					<td><img src=".." alt="sub2" id="subimg"/></td>
+				</tr>
+				<tr>
+					<td><img src=".." alt="sub3" id="subimg"/></td>
+				</tr>
+			</table>
+		</td>
+<%	}  %>
 </table>
 
-<p style="width: 1100px; height: 300px; border: 1px solid; margin: 10px 0 10px 0;"><%=b.getContent() %></p>
+<p style="width: 1100px; height: 300px; border: 1px solid; margin: 10px 0 10px 0; ">123</p>
+<p style="width: 1100px; height: 300px; border: 1px solid; margin: 10px 0 10px 0;">왜따로나오지?<%=b.getContent() %> </p>
 
 
 
