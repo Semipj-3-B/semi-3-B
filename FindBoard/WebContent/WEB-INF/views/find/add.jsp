@@ -18,6 +18,7 @@ function submitContents(elClickedObj) {
 <script type="text/javascript">
 $(document).ready(function () {
 	
+	//사진업로드 버튼 클릭 -> input file 클릭으로 이벤트 생성
 	const upBtn = document.querySelector('.browse')
 	const realupInput = document.querySelector('#upfile')
 
@@ -25,10 +26,21 @@ $(document).ready(function () {
 		realupInput.click()
 	})
 
+	//파일을 첨부했을 때
 	$("#upfile").on('change', uploadImg)
 	
+	//작성 버튼 눌렀을 때
 	$("#write").click(function () {
+		
+		//NOT NULL CHECK
+		if(!checkInfo()) {
+			alert('필수 사항을 모두 입력해주세요.')
+			return false
+		}
+		
 		submitContents($("#write"))
+		
+		//첨부 파일이 없는 경우
 		var imges = $("#mainimg").children("img").attr('src')
 		if( imges == null || imges == '') {
 			if(confirm("사진 첨부 없이 글을 등록하시겠습니까?")){
@@ -162,6 +174,21 @@ function uploadImg(e) {
 	
 } //uploadImg() END
 
+//NOT NULL CHECK: petname, petkinds, title, loc
+function checkInfo() {
+	var pname = $("#petname").val()
+	var pkinds = $("#petkinds").children("input").val()
+	var title = $("#title").val()
+	var loc = $("#loc").val()
+	var flag = true
+	
+	if(pname == null || pname == '') flag = false
+	if(pkinds == null || pkinds == '') flag = false
+	if(title == null || title == '') flag = false
+	if(loc == null || loc == '') flag = false
+	
+	return flag
+}
 </script>
 <style type="text/css">
 input#title:focus{outline: none;}
@@ -191,7 +218,7 @@ input#title:focus{outline: none;}
 
 .petinfo-grid {
 	display: grid;
-	grid-template-rows: 50px 40px 50px 50px 50px;
+	grid-template-rows: 50px 40px 50px 50px 50px 50px;
 	margin: 0 5% 0 0;
 	/* border: 1px solid; */
 	width: 450px;
@@ -200,7 +227,6 @@ input#title:focus{outline: none;}
 	align-items: center;
 	font-size: 14px;
 	text-align: center;
-	padding: 40px 0;
 }
 
 input.pat {
@@ -228,11 +254,12 @@ textarea {
 	</div>
 	
 	<div class="petinfo-grid">
+		<div id=msg style='color:#EBAA5F;'><h5>※제목 / 이름 / 동물 종류 / 지역은 필수 입력사항입니다.※</h5></div>
 		<div>
 			<label for="patname">반려동물이름</label>
 			<input class="pat" type="text" id="petname" name="petname" />
 		</div>
-		<div style="text-align: center;">
+		<div style="text-align: center;" id="petkinds">
 			<input type="radio" value="dog" name="petkinds" />강아지
 			<input type="radio" value="cat" name="petkinds" />고양이
 			<input type="radio" value="etc" name="petkinds" />기타 동물
@@ -243,7 +270,7 @@ textarea {
 		</div>
 		<div>
 			<label for="detail-loc">잃어버린 곳</label>
-			<select name="loc">
+			<select id="loc" name="loc">
 				<option value="0"  selected = "selected">지역</option>
 				<option value="1">서울특별시</option>
 				<option value="2">경기도</option>
