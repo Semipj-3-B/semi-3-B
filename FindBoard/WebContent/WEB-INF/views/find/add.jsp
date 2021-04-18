@@ -191,7 +191,8 @@ function checkInfo() {
 }
 </script>
 <style type="text/css">
-input#title:focus{outline: none;}
+input[type=text]:focus{outline: none;}
+input[type=text] {border: none;}
 
 .mainimg{
 	position: absolute;
@@ -206,7 +207,6 @@ input#title:focus{outline: none;}
 	grid-template-rows: 100px 100px 100px;
 	grid-row-gap: 3px;
 	margin: 0 0 0 405px;
-	/* border: 1px solid; */
 	width: 150px;
 	height: 309px;
 }
@@ -232,18 +232,41 @@ input#title:focus{outline: none;}
 input.pat {
 	font-size: 14px;
 	width: 270px;
+	border-bottom: 2px solid #EBAA5F;
+	text-align: center;
+}
+
+#detail-loc {border-bottom: 1px solid #EBAA5F;}
+
+.browse {
+	margin: 5px 0 10px 150px;
+	border-color: #A48654;
+	background-color: white;
+	transition-duration: 0.4s;
+}
+
+.browse:hover {
+  background-color: #A48654;
+  color: white;
 }
 
 textarea {
 	width: 1000px;
 	height: 400px;
 }
+
+#write { background-color: #EBC680; }
+#subBtn button {transition-duration: 0.4s;}
+#subBtn button:hover{
+	box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}	
+
 </style>
 
 <div class="container">
 <form action="/find/add" method="post" enctype="multipart/form-data">
-	<h1><input id="title" name="title" placeholder="제목입력" style="border: none;" /></h1>
-	<hr>
+	<h1><input type="text" id="title" name="title" placeholder="제목입력" /></h1>
+	<hr> <!-- style="border: 3px solid #EBC680;" -->
 	
 	<!-- img -->
 	<div id="mainimg" class="mainimg"></div>
@@ -256,7 +279,7 @@ textarea {
 	<div class="petinfo-grid">
 		<div id=msg style='color:#EBAA5F;'><h5>※제목 / 이름 / 동물 종류 / 지역은 필수 입력사항입니다.※</h5></div>
 		<div>
-			<label for="patname">반려동물이름</label>
+			<label for="petname">반려동물이름</label>
 			<input class="pat" type="text" id="petname" name="petname" />
 		</div>
 		<div style="text-align: center;" id="petkinds">
@@ -271,7 +294,7 @@ textarea {
 		<div>
 			<label for="detail-loc">잃어버린 곳</label>
 			<select id="loc" name="loc">
-				<option value="0"  selected = "selected">지역</option>
+				<option value="0"  selected = "selected" style="height: 26px;">지역</option>
 				<option value="1">서울특별시</option>
 				<option value="2">경기도</option>
 				<option value="3">강원도</option>
@@ -292,17 +315,17 @@ textarea {
 			</select>
 			<input type="text" id="detail-loc" name="detail-loc" placeholder="상세주소 입력"/>
 		</div>
-		<div>이메일 <%= session.getAttribute("email") %></div>
+		<div style="font-weight: 700;">이메일 <%= session.getAttribute("email") %></div>
 	</div>
 	
 	<input type="file" id="upfile" name="upfile" multiple="multiple" accept="image/jpeg" style="display:none;"/><br>
-	<button class="btn browse" type="button">사진 업로드</button>
+	<button class="browse btn" type="button">사진 첨부</button>
 	
 	<div><textarea id="content" name="content"></textarea></div>
 
-	<div style="width: 120px; margin: 5px 45%">
-		<button id="write" class="btn btn-info" type="button">작성</button>
-		<button id="cancle" class="btn btn-danger" onclick="history.go(-1)">취소</button>
+	<div id="subBtn" style="width: 120px; margin: 5px 45%">
+		<button id="write" class="btn" type="button">작성</button>
+		<button id="cancle" class="btn" onclick="history.go(-1)">취소</button>
 	</div>
 </form>
 </div><!-- div.container end -->
