@@ -283,6 +283,10 @@ public class FindBoardServiceImpl implements FindBoardService{
 				//30byte 초과시 false
 				final int maxBytes = 30;
 				if(nameToBytes <= maxBytes) isValidName = true;
+				else {
+					originName = originName.substring(0, 9);
+					isValidName = true;
+				}
 				
 				//확장자, 파일명 모두 유효할 때만 파일 저장 및 DB 삽입
 				if(isImg && isValidName) {
