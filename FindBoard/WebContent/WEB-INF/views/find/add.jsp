@@ -29,11 +29,15 @@ $(document).ready(function () {
 	
 	$("#write").click(function () {
 		submitContents($("#write"))
-		$("form").submit();
+		var imges = $("#mainimg").children("img").attr('src')
+		if( imges == null || imges == '') {
+			if(confirm("사진 첨부 없이 글을 등록하시겠습니까?")){
+				$("form").submit();
+			}
+		} else	$("form").submit();
 	})
 	
 })
-
 
 function getByteLength(name) {
 	var b = 0	//byte
@@ -81,7 +85,7 @@ function uploadImg(e) {
 		//파일명 길이 검사	
 		var byteLen = getByteLength(fileName)
 		if(byteLen > 30) {
-			alert('파일명은 한글 10자 이하로 가능합니다.')
+			alert('파일명은 한글 10자 또는 영문 30자 이하로 가능합니다.')
 			return false
 		}
 		
@@ -166,7 +170,8 @@ input#title:focus{outline: none;}
 	position: absolute;
 	width: 400px;
 	height: 310px;
-	border: 1px solid;
+	border: 1px solid #A48654;
+	border-radius: 5px;
 }
 
 .subimg-grid {
@@ -174,9 +179,14 @@ input#title:focus{outline: none;}
 	grid-template-rows: 100px 100px 100px;
 	grid-row-gap: 3px;
 	margin: 0 0 0 405px;
-	border: 1px solid;
+	/* border: 1px solid; */
 	width: 150px;
 	height: 309px;
+}
+
+.subimg-grid div {
+	border: 1px solid #A48654;
+	border-radius: 5px;
 }
 
 .petinfo-grid {
@@ -264,7 +274,7 @@ textarea {
 	<div><textarea id="content" name="content"></textarea></div>
 
 	<div style="width: 120px; margin: 5px 45%">
-		<button id="write" class="btn btn-info">작성</button>
+		<button id="write" class="btn btn-info" type="button">작성</button>
 		<button id="cancle" class="btn btn-danger" onclick="history.go(-1)">취소</button>
 	</div>
 </form>
