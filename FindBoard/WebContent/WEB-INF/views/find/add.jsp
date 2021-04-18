@@ -64,7 +64,6 @@ function uploadImg(e) {
 	//파일 개수 검사
 	if(files.length > 4 ) {
 		alert('최대 4장까지 업로드 할 수 있습니다.')
-		e.target.value = null	/* 파일 업로드 초기화 */
 		return false
 	}
 	
@@ -72,7 +71,6 @@ function uploadImg(e) {
 		//확장자 검사
 		if(!files[i].type.match("image/jpeg")) {
 			alert('jpg 또는 jpeg 확장자만 업로드 가능합니다.')
-			e.target.value = null
 			return false
 		}
 		
