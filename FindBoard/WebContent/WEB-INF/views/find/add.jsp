@@ -132,8 +132,8 @@ function uploadImg(e) {
 				reader.onload = function(ev){
 					$("<img>").attr({
 						"src" : ev.target.result
-						, "width" : "400px"
-						, "height" : "310px"
+						, "width" : "397px"
+						, "height" : "307px"
 					}).appendTo($("#mainimg"))
 				}
 				break
@@ -141,8 +141,8 @@ function uploadImg(e) {
 				reader.onload = function(ev){
 					$("<img>").attr({
 						"src" : ev.target.result
-						, "width" : "100px"
-						, "height" : "100px"
+						, "width" : "147px"
+						, "height" : "97px"
 					}).appendTo($("#subimg1"))
 				}
 				break
@@ -150,8 +150,8 @@ function uploadImg(e) {
 				reader.onload = function(ev){
 					$("<img>").attr({
 						"src" : ev.target.result
-						, "width" : "100px"
-						, "height" : "100px"
+						, "width" : "147px"
+						, "height" : "97px"
 					}).appendTo($("#subimg2"))
 				}
 				break
@@ -159,8 +159,8 @@ function uploadImg(e) {
 				reader.onload = function(ev){
 					$("<img>").attr({
 						"src" : ev.target.result
-						, "width" : "150px"
-						, "height" : "150px"
+						, "width" : "147px"
+						, "height" : "97px"
 					}).appendTo($("#subimg3"))
 				}
 				break
