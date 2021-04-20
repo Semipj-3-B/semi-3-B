@@ -510,7 +510,7 @@ public class FindBoardDaoImpl implements FindBoardDao {
 	public int deleteFile(Connection conn, FindBoard findboard) {
 		
 		String sql = "";
-		sql += "DELETE findboardfile";
+		sql += "DELETE findimg";
 		sql += " WHERE find_no = ?";
 				
 
@@ -579,14 +579,13 @@ public class FindBoardDaoImpl implements FindBoardDao {
 
 	@Override
 	public int update(Connection conn, FindBoard findboard) {
+		System.out.println("findboard.getFindNo() = " + findboard.getFindNo());
 		
-		//다음 게시글 번호 조회 쿼리
 		String sql = "";
 		sql += "UPDATE findboard";
 		sql += " SET title = ?,";
 		sql += " 	content = ?,";
-		sql += "	update_date = sysdate,";
-		sql += " 	find_no = findboard_seq.nextval";
+		sql += "	update_date = sysdate";
 		sql += " WHERE find_no = ?";
 		
 		
@@ -620,6 +619,42 @@ public class FindBoardDaoImpl implements FindBoardDao {
 		return res;
 		
 	}
+
+//	@Override
+//	public void deleteFile(Connection conn, boolean isNewFile) {
+//		
+//		String sql = "";
+//		sql += "DELETE findimg";
+//		sql += " WHERE find_no = ?";
+//				
+//
+//		PreparedStatement ps = null; 
+//				
+//		int res = -1;
+//		
+//		try {
+//			//DB작업
+//			ps = conn.prepareStatement(sql);
+//			ps.setInt(1, findboard.getFindNo());
+//
+//			res = ps.executeUpdate();
+//			
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//			
+//		} finally {
+//			try {
+//				//DB객체 닫기
+//				if(ps!=null)	ps.close();
+//				
+//			} catch (SQLException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		
+//		return res;
+//		
+//	}
 
 
 }

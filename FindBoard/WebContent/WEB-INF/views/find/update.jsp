@@ -42,6 +42,13 @@ $(document).ready(function () {
 
 	$("#upfile").on('change', uploadImg)
 	
+// 	$("#upfile").on('click', function() {
+		
+// 		 
+// 		 $("#subimages").replaceWith("<img id="subimages" / >");
+		
+// 	}
+	
 	$("#write").click(function () {
 		submitContents($("#write"))
 		$("form").submit();
@@ -52,12 +59,17 @@ $(document).ready(function () {
 function uploadImg(e) {
 	
 	 changeimg = 1;
-	
-	//이미지 영역 초기화
-	$("#mainimg").empty()	
-	$("#subimg1").empty()	
-	$("#subimg2").empty()	
-	$("#subimg3").empty()	
+
+	 
+//	$("#mainimg").empty()	
+//	$("#subimg1").empty()	
+//	$("#subimg2").empty()	
+//	$("#subimg3").empty()				 
+			 
+			 
+
+	 $("img").replaceWith("<img>");
+
 	
 	var files = null
 	if(e.target.files != null) {
@@ -108,37 +120,52 @@ function uploadImg(e) {
 		switch(i) {
 			case 0:
 				reader.onload = function(ev){
-					$("#mainimg").attr({
+					$("#mainimg").children().attr({
 						"src" : ev.target.result
-						, "width" : "500px"
-						, "height" : "300px"
+						, "width" : "400px"
+						, "height" : "310px"
 					})
+					//이미지 영역 초기화
+// 					$("#mainimg").empty()	
+// 					$("#subimg1").empty()	
+// 					$("#subimg2").empty()	
+// 					$("#subimg3").empty()	
 				}
 				break
 			case 1:
 				reader.onload = function(ev){
-					$("#subimg1").attr({
+					$("#subimg1").children().attr({
 						"src" : ev.target.result
-						, "width" : "100px"
-						, "height" : "100px"
+						, "width" : "148px;"
+						, "height" : "97px"
 					})
+					//이미지 영역 초기화
+// 					$("#mainimg").empty()	
+// 					$("#subimg1").empty()	
+// 					$("#subimg2").empty()	
+// 					$("#subimg3").empty()	
 				}
 				break
 			case 2:
 				reader.onload = function(ev){
-					$("#subimg2").attr({
+					$("#subimg2").children().attr({
 						"src" : ev.target.result
-						, "width" : "100px"
-						, "height" : "100px"
+						, "width" : "148px;"
+						, "height" : "97px"
 					})
+					//이미지 영역 초기화
+// 					$("#mainimg").empty()	
+// 					$("#subimg1").empty()	
+// 					$("#subimg2").empty()	
+// 					$("#subimg3").empty()	
 				}
 				break
 			case 3:
 				reader.onload = function(ev){
-					$("#subimg3").attr({
+					$("#subimg3").children().attr({
 						"src" : ev.target.result
-						, "width" : "150px"
-						, "height" : "150px"
+						, "width" : "148px;"
+						, "height" : "97px"
 					})
 				}
 				break
@@ -155,33 +182,33 @@ function uploadImg(e) {
 
 <style type="text/css">
 
-#mainimg{
-		width: 500px;
-		height: 300px;
-		float: left;
-}
+/* #mainimg{ */
+/* 		width: 500px; */
+/* 		height: 300px; */
+/* 		float: left; */
+/* } */
 
-#subimg1{
-	border:1px solid;
-	width: 100px;
-	height: 100px;
-	float: left;
-	margin: 5px 5px 5px 5px;
-}
-#subimg2{
-	border:1px solid;
-	width: 100px;
-	height: 100px;
-	float: left;
-	margin: 5px 5px 5px 5px;
-}
-#subimg3{
-	border:1px solid;
-	width: 100px;
-	height: 100px;
-	float: left;
-	margin: 5px 5px 5px 5px;
-}
+/* #subimg1{ */
+/* 	border:1px solid; */
+/* 	width: 100px; */
+/* 	height: 100px; */
+/* 	float: left; */
+/* 	margin: 5px 5px 5px 5px; */
+/* } */
+/* #subimg2{ */
+/* 	border:1px solid; */
+/* 	width: 100px; */
+/* 	height: 100px; */
+/* 	float: left; */
+/* 	margin: 5px 5px 5px 5px; */
+/* } */
+/* #subimg3{ */
+/* 	border:1px solid; */
+/* 	width: 100px; */
+/* 	height: 100px; */
+/* 	float: left; */
+/* 	margin: 5px 5px 5px 5px; */
+/* } */
 
 #findheader{
 	border:1px solid;
@@ -207,6 +234,17 @@ function uploadImg(e) {
 	margin: 10px 3px 10px 3px;
 	text-align: center;
 
+}
+
+#subimages{
+	width: 148px;
+	height: 97px;
+	border-radius: 5px;
+}
+#mainimages{
+	width: 398px;
+	height: 307px;
+	border-radius: 5px;
 }
 
 .mainimg{
@@ -268,11 +306,12 @@ table table tr td img{
 
 <div class="container">
 
-<h3>반려동물 찾기 <%= findImg.size() %></h3>
+<h3>반려동물 찾기</h3>
 <hr>
 
 <!-- //enctype="multipart/form-data" 파일 업로드 처리-->
 <form action="/find/update" method="post" enctype="multipart/form-data" >
+
 <input type = "hidden" name = "FindNo"  value="<%=request.getParameter("FindNo") %>" />
 
 <div>
@@ -292,113 +331,59 @@ table table tr td img{
 
 
 
-<% int changeimg = 0; %>
+<%-- <% int changeimg = 0; %> --%>
 
 <% int i = findImg.size(); %>
 <%-- <% int i = 0; %> --%>
 
-<%	if(  changeimg <= 1 ) { %>
+<%-- <%	if(  changeimg <= 1 ) { %> --%>
 	<%	if(i <= 0) {%>	
-	<table>
-		<tr>			
-		<td style="border: 1px solid;">
-			<img src=".." alt="main"  id="mainimg"/>
-		</td>
-		<td>
-			<table>
-				<tr>
-					<td><img src=".." alt="sub1" id="subimg1"/></td>
-				</tr>
-				<tr>
-					<td><img src=".." alt="sub2" id="subimg2"/></td>
-				</tr>
-				<tr>
-					<td><img src=".." alt="sub3" id="subimg3"/></td>
-				</tr>
-			</table>
-		</td>
 	
+	<div id="mainimg" class="mainimg"><img id="mainimages"></div>
+	<div class="subimg-grid">
+		<div id="subimg1"><img id="subimages"></div>
+		<div id="subimg2"><img id="subimages"></div>
+		<div id="subimg3"><img id="subimages"></div>
+	</div>
+		
 	<%}	if(i < 2 && i > 0) {%>
-			
-	<tr>
-		<td style="border: 1px solid;">
-			<img src="/upload/<%=findImg.get(0).getStoredImg() %>" alt="main"  id="mainimg"/>
-		</td>
-		<td>
-			<table>
-				<tr>
-					<td><img src=".." alt="sub1" id="subimg1"/></td>
-				</tr>
-				<tr>
-					<td><img src=".." alt="sub2" id="subimg2"/></td>
-				</tr>
-				<tr>
-					<td><img src=".." alt="sub3" id="subimg3"/></td>
-				</tr>
-			</table> 
-		</td>
+	
+	<div id="mainimg" class="mainimg"><img src="/upload/<%=findImg.get(0).getStoredImg() %>" id="mainimages"/></div>
+	<div class="subimg-grid">
+		<div id="subimg1"><img id="subimages"></div>
+		<div id="subimg2"><img id="subimages"></div>
+		<div id="subimg3"><img id="subimages"></div>
+	</div>
+	
 	<%}	if(i < 3 && i > 1) {%>
-			
-	<tr>
-		<td style="border: 1px solid;">
-			<img src="/upload/<%=findImg.get(0).getStoredImg() %>" alt="main"  id="mainimg"/>
-		</td>
-		<td>
-			<table>
-				<tr>
-					<td><img src="/upload/<%=findImg.get(1).getStoredImg() %>" alt="sub1" id="subimg"/></td>
-				</tr>
-				<tr>
-					<td><img src=".." alt="sub2" id="subimg2"/></td>
-				</tr>
-				<tr>
-					<td><img src=".." alt="sub3" id="subimg3"/></td>
-				</tr>
-			</table> 
-		</td>
-		
+
+	<div id="mainimg" class="mainimg"><img src="/upload/<%=findImg.get(0).getStoredImg() %>" id="mainimages"/></div>
+	<div class="subimg-grid">
+		<div id="subimg1"><img src="/upload/<%=findImg.get(1).getStoredImg() %>" id="subimages"/></div>
+		<div id="subimg2"><img id="subimages"></div>
+		<div id="subimg3"><img id="subimages"></div>
+	</div>
+	
 	<%}	if(i < 4 && i > 2) {%>
-			
-	<tr>
-		<td style="border: 1px solid;">
-			<img src="/upload/<%=findImg.get(0).getStoredImg() %>" alt="main"  id="mainimg"/>
-		</td>
-		<td>
-			<table>
-				<tr>
-					<td><img src="/upload/<%=findImg.get(1).getStoredImg() %>" alt="sub1" id="subimg"/></td>
-				</tr>
-				<tr>
-					<td><img src="/upload/<%=findImg.get(2).getStoredImg() %>" alt="sub2" id="subimg"/></td>
-				</tr>
-				<tr>
-					<td><img src=".." alt="sub3" id="subimg3"/></td>
-				</tr>
-			</table> 
-		</td>
-	<%}	if(i < 5 && i > 3) {%>
-			
-	<tr>
-		<td style="border: 1px solid;">
-			<img src="/upload/<%=findImg.get(0).getStoredImg() %>" alt="main"  id="mainimg"/>
-		</td>
-		<td>
-			<table>
-				<tr>
-					<td><img src="/upload/<%=findImg.get(1).getStoredImg() %>" alt="sub1" id="subimg"/></td>
-				</tr>
-				<tr>
-					<td><img src="/upload/<%=findImg.get(2).getStoredImg() %>" alt="sub2" id="subimg"/></td>
-				</tr>
-				<tr>
-					<td><img src="/upload/<%=findImg.get(3).getStoredImg() %>" alt="sub3" id="subimg"/></td>
-				</tr>
-			</table> 
-		</td>
 		
+	<div id="mainimg" class="mainimg"><img src="/upload/<%=findImg.get(0).getStoredImg() %>" id="mainimages"/></div>
+	<div class="subimg-grid">
+		<div id="subimg1"><img src="/upload/<%=findImg.get(1).getStoredImg() %>" id="subimages" /></div>
+		<div id="subimg2"><img src="/upload/<%=findImg.get(2).getStoredImg() %>" id="subimages" /></div>
+		<div id="subimg3"><img><img id="subimages"></div>
+	</div>	
+	
+	<%}	if(i < 5 && i > 3) {%>
+	<div id="mainimg" class="mainimg"><img src="/upload/<%=findImg.get(0).getStoredImg() %>" id="mainimages"/></div>
+	<div class="subimg-grid">
+		<div id="subimg1"><img src="/upload/<%=findImg.get(1).getStoredImg() %>"  id="subimages"/></div>
+		<div id="subimg2"><img src="/upload/<%=findImg.get(2).getStoredImg() %>"  id="subimages"/></div>
+		<div id="subimg3"><img src="/upload/<%=findImg.get(3).getStoredImg() %>"  id="subimages"/></div>
+	</div>	
+
 	<% } %><!-- if문 끝 -->
-</table>	
-<% }  else {%><!-- 버튼 클릭 IF문 끝 -->
+	
+<%-- <% }  else {%><!-- 버튼 클릭 IF문 끝 --> --%>
 <!-- 	바뀌어서 이 말이 들어가나 -->
 <!-- 왜 인지 모르겠는데 글쓰기 시 이미지 하나만 들어가서 -->
 <!-- 제대로 초기화 되고 바뀌는지 알수 없음 -->
@@ -406,14 +391,14 @@ table table tr td img{
 <!-- ajax가 아니기때문에 화면 전환은 안될꺼같음 -->
 <!-- if문의 모든이미지를 이걸로 처리하면? -->
 <!-- if문을 쓰는 의미가 있나 -->
-	<div id="mainimg" class="mainimg"></div>
-	<div class="subimg-grid">
-		<div id="subimg1"></div>
-		<div id="subimg2"></div>
-		<div id="subimg3"></div>
-	</div>
+<!-- 	<div id="mainimg" class="mainimg"></div> -->
+<!-- 	<div class="subimg-grid"> -->
+<!-- 		<div id="subimg1"></div> -->
+<!-- 		<div id="subimg2"></div> -->
+<!-- 		<div id="subimg3"></div> -->
+<!-- 	</div> -->
 	
-<% } %><!-- if문 끝 -->
+<%-- <% } %><!-- if문 끝 --> --%>
 
 
 <input type="file" id="upfile" name="upfile" multiple="multiple" accept="image/jpeg" style="display:none;"/><br>
@@ -423,7 +408,7 @@ table table tr td img{
 
 
 
-<!-- 서비스부분의 update불가로 작성 안됨 -->
+
 <div style="width: 120px; margin: 5px 45%">
 	<button id="write" class="btn btn-info">작성</button>
 	<button id="cancle" class="btn btn-danger" onclick="history.go(-1)">취소</button>

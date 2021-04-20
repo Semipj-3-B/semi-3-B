@@ -31,12 +31,12 @@ public class FIndUpdateController extends HttpServlet {
 		//전달파라미터 얻기 - findno
 		FindBoard findno = findboardService.getParam(req);
 
-		System.out.println("findno가 나오나"+findno);
+		System.out.println("/find/update findno가 나오나"+findno);
 				
 		//상세보기 결과 
 		FindBoard viewFindBoard = findboardService.views(findno);
 				
-		System.out.println("findno만 추출해서 나오나"+viewFindBoard);
+		System.out.println("/find/update findno만 추출해서 나오나"+viewFindBoard);
 				
 				
 		//닉네임 전달
@@ -54,7 +54,7 @@ public class FIndUpdateController extends HttpServlet {
 		List<FindImg> findImg = findboardService.viewFile(viewFindBoard);
 		req.setAttribute("findImg", findImg);
 				
-		System.out.println("findImg"+findImg);
+		System.out.println("/find/update findImg"+findImg);
 		
 
 		// VIEW 지정 및 응답 - forward
@@ -68,9 +68,11 @@ public class FIndUpdateController extends HttpServlet {
 		
 		System.out.println("/find/update - [POST] 요청완료");
 		
+//		findboardService.deleteFiles(req);
+		
 		findboardService.update(req);
 		
-//		System.out.println("req"+req);
+		System.out.println("/find/update req"+req);
 		
 		resp.sendRedirect("/find/list");
 		

@@ -104,6 +104,8 @@ public interface FindBoardService {
 	 * @param req
 	 */
 	public void update(HttpServletRequest req);
+
+
 	
 
 }

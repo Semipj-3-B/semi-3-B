@@ -52,20 +52,38 @@ $(document).ready(function() {
 	text-align: center;
 
 }
-
-#mainimg{
-		width: 500px;
-		height: 300px;
-		float: left;
+#subimages{
+	width: 148px;
+	height: 97px;
+	border-radius: 5px;
+}
+#mainimages{
+	width: 398px;
+	height: 307px;
+	border-radius: 5px;
+}
+.mainimg{
+	position: absolute;
+	width: 400px;
+	height: 310px;
+	border: 1px solid #A48654;
+	border-radius: 5px;
 }
 
-#subimg{
-/* 	border:1px solid; */
-	width: 100px;
-	height: 100px;
-	float: left;
-	margin: 5px 5px 5px 5px;
+.subimg-grid {
+	display: inline-grid;
+	grid-template-rows: 100px 100px 100px;
+	grid-row-gap: 3px;
+	margin: 0 0 0 405px;
+	width: 150px;
+	height: 309px;
 }
+
+.subimg-grid div {
+	border: 1px solid #A48654;
+	border-radius: 5px;
+}
+
 
 #findinfo{
 	width: 450px;
@@ -118,108 +136,55 @@ $(document).ready(function() {
 </div>
 
 
-<table>
+
 <%-- <%	if( findImg != null ) { %> --%>
 <% int i = findImg.size(); %>
 	<%	if(i <= 0) {%>	
-		<tr>			
-		<td >
-			<img src=".." alt="main"  id="mainimg"/>
-		</td>
-		<td>
-			<table>
-				<tr>
-					<td><img src=".." alt="sub1" id="subimg"/></td>
-				</tr>
-				<tr>
-					<td><img src=".." alt="sub2" id="subimg"/></td>
-				</tr>
-				<tr>
-					<td><img src=".." alt="sub3" id="subimg"/></td>
-				</tr>
-			</table>
-		</td>
+	
+	<div id="mainimg" class="mainimg"></div>
+	<div class="subimg-grid">
+		<div id="subimg1"></div>
+		<div id="subimg2"></div>
+		<div id="subimg3"></div>
+	</div>
 		
 	<%}	if(i < 2 && i > 0) {%>
-			
-	<tr>
-		<td>
-			<img src="/upload/<%=findImg.get(0).getStoredImg() %>" alt="main"  id="mainimg"/>
-		</td>
-		<td>
-			<table>
-				<tr>
-					<td><img src=".." alt="sub1" id="subimg"/></td>
-				</tr>
-				<tr>
-					<td><img src=".." alt="sub2" id="subimg"/></td>
-				</tr>
-				<tr>
-					<td><img src=".." alt="sub3" id="subimg"/></td>
-				</tr>
-			</table> 
-		</td>
+	
+	<div id="mainimg" class="mainimg"><img src="/upload/<%=findImg.get(0).getStoredImg() %>" id="mainimages"/></div>
+	<div class="subimg-grid">
+<!-- 		<div id="subimg1"></div> -->
+<!-- 		<div id="subimg2"></div> -->
+<!-- 		<div id="subimg3"></div> -->
+	</div>
+	
 	<%}	if(i < 3 && i > 1) {%>
-			
-	<tr>
-		<td>
-			<img src="/upload/<%=findImg.get(0).getStoredImg() %>" alt="main"  id="mainimg"/>
-		</td>
-		<td>
-			<table>
-				<tr>
-					<td><img src="/upload/<%=findImg.get(1).getStoredImg() %>" alt="sub1" id="subimg"/></td>
-				</tr>
-				<tr>
-					<td><img src=".." alt="sub2" id="subimg"/></td>
-				</tr>
-				<tr>
-					<td><img src=".." alt="sub3" id="subimg"/></td>
-				</tr>
-			</table> 
-		</td>
-		
+
+	<div id="mainimg" class="mainimg"><img src="/upload/<%=findImg.get(0).getStoredImg() %>" id="mainimages"/></div>
+	<div class="subimg-grid">
+		<div id="subimg1"><img src="/upload/<%=findImg.get(1).getStoredImg() %>" id="subimages"/></div>
+<!-- 		<div id="subimg2"></div> -->
+<!-- 		<div id="subimg3"></div> -->
+	</div>
+	
 	<%}	if(i < 4 && i > 2) {%>
-			
-	<tr>
-		<td>
-			<img src="/upload/<%=findImg.get(0).getStoredImg() %>" alt="main"  id="mainimg"/>
-		</td>
-		<td>
-			<table>
-				<tr>
-					<td><img src="/upload/<%=findImg.get(1).getStoredImg() %>" alt="sub1" id="subimg"/></td>
-				</tr>
-				<tr>
-					<td><img src="/upload/<%=findImg.get(2).getStoredImg() %>" alt="sub2" id="subimg"/></td>
-				</tr>
-				<tr>
-					<td><img src=".." alt="sub3" id="subimg"/></td>
-				</tr>
-			</table> 
-		</td>
-	<%}	if(i < 5 && i > 3) {%>
-			
-	<tr>
-		<td>
-			<img src="/upload/<%=findImg.get(0).getStoredImg() %>" alt="main"  id="mainimg"/>
-		</td>
-		<td>
-			<table>
-				<tr>
-					<td><img src="/upload/<%=findImg.get(1).getStoredImg() %>" alt="sub1" id="subimg"/></td>
-				</tr>
-				<tr>
-					<td><img src="/upload/<%=findImg.get(2).getStoredImg() %>" alt="sub2" id="subimg"/></td>
-				</tr>
-				<tr>
-					<td><img src="/upload/<%=findImg.get(3).getStoredImg() %>" alt="sub3" id="subimg"/></td>
-				</tr>
-			</table> 
-		</td>
 		
+	<div id="mainimg" class="mainimg"><img src="/upload/<%=findImg.get(0).getStoredImg() %>" id="mainimages"/></div>
+	<div class="subimg-grid">
+		<div id="subimg1"><img src="/upload/<%=findImg.get(1).getStoredImg() %>" id="subimages" /></div>
+		<div id="subimg2"><img src="/upload/<%=findImg.get(2).getStoredImg() %>" id="subimages" /></div>
+<!-- 		<div id="subimg3"></div> -->
+	</div>	
+	
+	<%}	if(i < 5 && i > 3) {%>
+	<div id="mainimg" class="mainimg"><img src="/upload/<%=findImg.get(0).getStoredImg() %>" id="mainimages"/></div>
+	<div class="subimg-grid">
+		<div id="subimg1"><img src="/upload/<%=findImg.get(1).getStoredImg() %>"  id="subimages"/></div>
+		<div id="subimg2"><img src="/upload/<%=findImg.get(2).getStoredImg() %>"  id="subimages"/></div>
+		<div id="subimg3"><img src="/upload/<%=findImg.get(3).getStoredImg() %>"  id="subimages"/></div>
+	</div>	
+
 	<% } %><!-- if문 끝 -->
-</table>
+
 
 <div style="width: 1100px; height: 300px; border: 1px solid; margin: 10px 0 10px 0;">
 <!-- <p style="width: 1100px; height: 300px; border: 1px solid; margin: 10px 0 10px 0; ">123</p> -->

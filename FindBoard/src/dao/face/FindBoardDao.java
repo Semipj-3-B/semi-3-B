@@ -150,6 +150,14 @@ public interface FindBoardDao {
 	 */
 	public int update(Connection conn, FindBoard findboard);
 
+	
+//	/**
+//	 * 수정시 기존 이미지 파일 삭제
+//	 * @param conn
+//	 * @param isNewFile
+//	 */
+//	public void deleteFile(Connection conn, boolean isNewFile);
+
 
 
 	

@@ -360,18 +360,17 @@ public class FindBoardServiceImpl implements FindBoardService{
 		@Override
 		public void update(HttpServletRequest req) {
 			
-			//수정할 게시글 번호 설정?
-			// 페이지의 정보를 알수있는 String값이 없음
+
 			
-			
+//			FindBoard findNo = null;
+//			findNo = new FindBoard();
 			
 			FindBoard findBoard = null;
 			FindImg findImg = null;
-//			List<FindImg> findImages = new ArrayList<FindImg>();
+			List<FindImg> findImages = new ArrayList<FindImg>();
 			Connection conn = JDBCTemplate.getConnection();
-//			int findno = 0;
-//			findno = new FindBoard();
 			
+			boolean isNewFile = false;
 //			
 			//게시글 조회
 //			int findno = findBoardDao.
@@ -383,6 +382,7 @@ public class FindBoardServiceImpl implements FindBoardService{
 			
 			//사진파일이 없으면
 			if(!isMultipart) {
+				System.out.println("사진파일 없습니다");
 				
 				findBoard = new FindBoard();
 				
@@ -394,7 +394,7 @@ public class FindBoardServiceImpl implements FindBoardService{
 			
 			//사진파일 있을때
 				
-				
+				System.out.println("수정 사진 파일이 있을 때 --------");
 			findBoard = new FindBoard();
 				
 			
@@ -425,10 +425,11 @@ public class FindBoardServiceImpl implements FindBoardService{
 			} catch (FileUploadException e) {
 				e.printStackTrace();
 			}
-			System.out.println("form으로 전달된 데이터 = " + items.iterator() );
+//			System.out.println("form으로 전달된 데이터 = " + items.iterator() );
 			
 			//추출된 전달파라미터 처리 반복자
 			Iterator<FileItem> iter = items.iterator();
+			
 			
 			//모든 요청 정보 처리하기
 			while(iter.hasNext()) {
@@ -440,11 +441,11 @@ public class FindBoardServiceImpl implements FindBoardService{
 				//요청 데이터 처리
 				if(item.isFormField()) {
 					
-					try {// 수정
-						if( "Find_No".equals( item.getFieldName() ) ) {
+					try {
+						if( "FindNo".equals( item.getFieldName() ) ) {
 							findBoard.setFindNo( Integer.parseInt(item.getString() ));
 						}
-								if( "title".equals( item.getFieldName() ) ) {
+						if( "title".equals( item.getFieldName() ) ) {
 							findBoard.setTitle(item.getString("UTF-8"));
 						}
 						if( "content".equals( item.getFieldName() ) ) {
@@ -484,6 +485,9 @@ public class FindBoardServiceImpl implements FindBoardService{
 				
 				//파일 처리
 				if(!item.isFormField()) {
+					
+					isNewFile = true;
+					
 					//확장자 추출
 					int lastDot = item.getName().lastIndexOf('.');
 					String ext = item.getName().substring(lastDot + 1);
@@ -529,7 +533,7 @@ public class FindBoardServiceImpl implements FindBoardService{
 						findImg.setOriginImg(originName);
 						findImg.setStoredImg(storedName);
 						
-//						findImages.add(findImg);
+						findImages.add(findImg);
 						
 						//처리가 완료된 파일 업로드
 						try {
@@ -544,16 +548,18 @@ public class FindBoardServiceImpl implements FindBoardService{
 				
 			} //while(iter.hasnext) END
 			
-//				String userid = (String) req.getSession().getAttribute("userid");
-//				if(userid != null && !"".equals(userid)) {
-//					int userno = findBoardDao.selectUserno(JDBCTemplate.getConnection(), userid);
-//					findBoard.setUserNo(userno);
-//				}
-//				
-//				String usernoString = (String)req.getSession().getAttribute("userno");
-//				if(usernoString != null && !"".equals(usernoString)) {
-//					findBoard.setUserNo(Integer.parseInt(usernoString));
-//				}
+			
+
+				String userid = (String) req.getSession().getAttribute("userid");
+				if(userid != null && !"".equals(userid)) {
+					int userno = findBoardDao.selectUserno(JDBCTemplate.getConnection(), userid);
+					findBoard.setUserNo(userno);
+				}
+				
+				String usernoString = (String)req.getSession().getAttribute("userno");
+				if(usernoString != null && !"".equals(usernoString)) {
+					findBoard.setUserNo(Integer.parseInt(usernoString));
+				}
 				
 
 			}
@@ -561,6 +567,16 @@ public class FindBoardServiceImpl implements FindBoardService{
 //			System.out.println("findImages 이미지 정보 = "+ findImages);
 			System.out.println("findimg 정보 = "+ findImg);
 			System.out.println("findBoard 정보 " + findBoard);
+			
+			
+			if(isNewFile) {
+				//이전파일삭제
+			
+				findBoardDao.deleteFile(conn, findBoard) ;
+
+			
+			}
+			
 			
 			if(findBoard != null) {
 				if(findBoardDao.update(conn, findBoard) > 0) {
@@ -570,16 +586,18 @@ public class FindBoardServiceImpl implements FindBoardService{
 				}
 			}
 			
-//			if(findImages != null) {
-//				if(findBoardDao.insertImg(conn, findImages) > 0) {
-//					JDBCTemplate.commit(conn);
-//				} else {
-//					JDBCTemplate.rollback(conn);
-//				}
-//			}
+			if(findImages != null) {
+				if(findBoardDao.insertImg(conn, findImages) > 0) {
+					JDBCTemplate.commit(conn);
+				} else {
+					JDBCTemplate.rollback(conn);
+				}
+			}
 			
 
 		}//update끝
+
+
 
 
 
