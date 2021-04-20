@@ -450,10 +450,6 @@ public class FindBoardDaoImpl implements FindBoardDao {
 
 	@Override
 	public int insertImg(Connection conn, List<FindImg> findImages) {
-		for(FindImg f : findImages){
-			System.out.println(f);
-		}
-		
 		String sql = "";
 		sql += "INSERT INTO findimg (image_no, find_no, origin_img, stored_img)";
 		sql += " VALUES (findimg_seq.nextval, ?, ?, ?)";
