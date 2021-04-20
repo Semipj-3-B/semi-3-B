@@ -1,0 +1,69 @@
+@charset "utf-8";
+
+* {
+	list-style-type: none;
+	/* 외부정렬: 가운데 */
+	margin: 0 auto;
+	padding: 0;
+	
+}
+
+.sliderbox {
+	width: 1200px;
+	height: 400px;
+	border: 1px solid #ccc;
+	
+	/* 외부정렬: 가운데 */
+	
+	/* div영역을 벗어난 부분을 안보이게 처리 */
+  	overflow: hidden;
+/*   	overflow: visible;   */
+}
+/* 이미지 목록 (ul) */
+.imgslide {
+	/* 자식요소 absolute박스의 기준점으로 설정 */
+	position: relative;
+}
+
+/* 이미지 항목 */
+.imgslide li {
+	/* 자유롭게 위치를 이동시킬수 있도록 설정 */
+	position: absolute;
+
+}
+
+.imgslide li img {
+	/* 모든 이미지를 같은 크기로 설정 */
+	width: 1200px;
+	height: 400px;
+}
+
+.moveBtn {
+  width: 1200px;
+  color: black;
+  top: 45%;
+  position: absolute;
+  z-index: 2;
+  font-size: 60px;
+}
+
+
+.moveBtn .pre {
+  float: left;
+  margin-left: 10px;
+}
+
+.moveBtn .next {
+  float: right;
+  margin-right: 10px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+
+
+
+
