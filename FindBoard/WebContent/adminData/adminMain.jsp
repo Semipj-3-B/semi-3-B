@@ -7,12 +7,10 @@
 $(document).ready(function () {
 	
  	$("#admin-user").click(function () {
-		console.log("#admin-user: ", $(this))
-		
 		$.ajax({
 			type: "get"
-			,url: "/admin/user"
-			,dataType: "html"
+			, url: "/admin/user"
+			, dataType: "html"
 			, success: function(result) {
 					console.log("성공")
 					$(".contents").html(result)		

@@ -31,3 +31,4 @@ th, td { text-align:center;}
 	</tr>
 	<% } %>
 </table>
+<%@ include file="/adminData/adminPaging.jsp" %>
