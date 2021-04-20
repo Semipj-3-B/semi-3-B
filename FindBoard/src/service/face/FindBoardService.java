@@ -61,15 +61,7 @@ public interface FindBoardService {
 	 */
 	public FindBoard getParam(HttpServletRequest req);
 	
-	
-//	/**
-//	 * findNo를 이용하여 게시글 조회
-//	 * + 조회수 증가
-//	 * 
-//	 * @param findNo -> findNo를 가지고 있는 객체
-//	 * @return	조회된 찾기 게시글
-//	 */
-//	public FindBoard read(FindBoard findNo);
+
 
 	/**
 	 * FindBoard의 userid를 이용해 닉네임 조회
@@ -84,7 +76,7 @@ public interface FindBoardService {
 	 * @param viewFindBoard 첨부파일이 포함된 게시글 번호
 	 * @return FindImg - 첨부파일 정보
 	 */
-	public FindImg viewFile(FindBoard viewFindBoard);
+	public List<FindImg> viewFile(FindBoard viewFindBoard);
 	
 	/**
 	 * 작성된 게시글의 데이터를 FindBoard 객체로 저장한다.

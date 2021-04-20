@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+   
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -115,6 +118,8 @@ body {
 <form action="/login/login" method="post" class="box">
 
 <h1>Login</h1>
+
+
 
 <label for="id">아이디</label><br>
 <input type="text" id="id" name="id" />

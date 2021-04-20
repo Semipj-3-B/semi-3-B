@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -26,31 +27,35 @@ public class FIndUpdateController extends HttpServlet {
 		
 		System.out.println("/find/update - [GET]요청");
 		
+		
 		//전달파라미터 얻기 - findno
 		FindBoard findno = findboardService.getParam(req);
 
-		System.out.println("/find/update - findno가 나오나"+findno);
+		System.out.println("findno가 나오나"+findno);
 				
 		//상세보기 결과 
-		FindBoard updateFindBoard = findboardService.views(findno);
+		FindBoard viewFindBoard = findboardService.views(findno);
 				
-		System.out.println("findno를 포함한 결과들"+updateFindBoard);
-		
-		
+		System.out.println("findno만 추출해서 나오나"+viewFindBoard);
+				
+				
 		//닉네임 전달
-		req.setAttribute("nick", findboardService.getnick(updateFindBoard));
-		
+		req.setAttribute("nick", findboardService.getnick(viewFindBoard));
+				
 		//이메일 전달
-		req.setAttribute("email", findboardService.getemail(updateFindBoard));
-		
+		req.setAttribute("email", findboardService.getemail(viewFindBoard));
+				
 		//조회결과 MODEL값 전달
-		req.setAttribute("updateFindBoard", updateFindBoard);
-		
+		req.setAttribute("viewFindBoard", viewFindBoard);
+				
+				
+				
 		//첨부파일 정보 VIEW에 전달
-		FindImg findImg = findboardService.viewFile(updateFindBoard);
+		List<FindImg> findImg = findboardService.viewFile(viewFindBoard);
 		req.setAttribute("findImg", findImg);
+				
+		System.out.println("findImg"+findImg);
 		
-		System.out.println("첨부파일에 전달할 정보 = " + findImg);
 
 		// VIEW 지정 및 응답 - forward
 		req.getRequestDispatcher("/WEB-INF/views/find/update.jsp")

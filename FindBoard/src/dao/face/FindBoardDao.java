@@ -88,7 +88,7 @@ public interface FindBoardDao {
 	 * @param viewFindBoard
 	 * @return
 	 */
-	public FindImg selectFile(Connection connection, FindBoard viewFindBoard);
+	public List<FindImg> selectFile(Connection connection, FindBoard viewFindBoard);
 	
 	/**
 	 * FindBoard 테이블 시퀀스의 nextval을 조회한다.
@@ -125,13 +125,13 @@ public interface FindBoardDao {
 	public int selectUserno(Connection conn, String userid);
 
 	
-//	/**
-//	 * 파일 삭제
-//	 * @param conn
-//	 * @param findboard
-//	 * @return
-//	 */
-//	public int deleteFile(Connection conn, FindBoard findboard);
+	/**
+	 * 파일 삭제
+	 * @param conn
+	 * @param findboard
+	 * @return
+	 */
+	public int deleteFile(Connection conn, FindBoard findboard);
 
 	
 	/**

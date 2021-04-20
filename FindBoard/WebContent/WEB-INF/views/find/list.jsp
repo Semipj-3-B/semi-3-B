@@ -14,26 +14,7 @@
 
 
 <script type="text/javascript">
-// 	var selectOption = document.getElementById("pet");
-// 	selectOption = selectOption.option[selectOption.selectedIndex].value;
-// 	$("#pet option:selected").val();
-	
-// 	var list = $("#").val();
-// 	var option_values = document.getElementById("");
-// 	option_values = option_values.option[].value;
-	
-// 	for(var i=0; i<option_values.length; i++){
-// 		if(list == option_values[i]){
-// 			option_value[i].selected = true;
-			
-// 		} else {
-// 			option_value[i].selected = false;
-// 		}
-		
-// 	}
-	
-		
-	});
+
 // 	function mainSiseMove(code) {
 // 		if (code=='KONEX') {
 // 			document.location.href='/sise/konex.nhn';
@@ -45,9 +26,6 @@
 // 			document.location.href='/sise/sise_index.nhn?code='+code;
 // 		}
 // 	}
-// 	var selectOption = document.getElementByID("pet");
-// 	selectOption = selectOption.options[selectOption.selectedIndex].value;
-
 </script>
 
 <style type="text/css">
@@ -55,7 +33,7 @@
 	
 	
 
-	#container{width:900px; height:850px; margin:0 auto; }
+	#container{width:900px;  margin:0 auto; }
 	#container .click_box{width:100%; 
 		height:40px; 
 		line-height:40px; 
@@ -64,15 +42,14 @@
 	}
 	#container .click_box .left_box{width:300px; float:left; text-align:center;}
 	#container .click_box .right_box{width:90px; float:right; text-align:center;}
-	#container .click_box .right_box p{display:block; 
+	#container .click_box .right_box button{display:block; 
 		width:80px; 
 		height:25px; 
 		background-color:green;
 		margin-top:7px;
-		line-height:25px;
-		border-radius:6px 6px 6px 6px;
+		line-height:20px;
+		border-radius:7px 7px 7px 7px;
 	}
-	#container .click_box .right_box p a{color:#333;}
 	
 	#container .pet_list{width:150px; 
 	
@@ -94,14 +71,14 @@
 			<div class="left_box">
 				<span>반려동물선택</span>
 <!-- 				<INPUT TYPE="HIDDEN" NAME="PET_KINDS"/> -->
-				<select id="pet">
-					<option value="">반려동물</option>
+				<select name="pet">
+					<option value="" selected>반려동물</option>
 					<option value="dog">강아지</option>
 					<option value="cat">고양이</option>
 					<option value="etc">기타</option>
 				</select>
-				<select id="Loc">
-					<option value="">지역선택</option>
+				<select name="lc">
+					<option value="" selected>지역선택</option>
 					<option value="1">서울특별시</option>
 					<option value="2">경기도</option>
 					<option value="3">강원도</option>
@@ -122,7 +99,7 @@
 				</select>
 			</div>
 			<div class="right_box">
-				<p><a href="/find/add" title="글 등록하기">등록하기</a></p>
+				<a href="/find/add"><button >등록하기</button></a>
 			</div>
 		</div>
 		<%	for(int i=0; i<list.size(); i++) { %>
@@ -133,6 +110,6 @@
 				<p><%=list.get(i).getPetKinds() %></p>
 			</div>
 		<% } %>
-	</div>
 <%@ include file="/WEB-INF/views/layout/paging.jsp" %>
+	</div>
 <%@ include file="/WEB-INF/views/layout/footer.jsp" %>

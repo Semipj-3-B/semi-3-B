@@ -348,15 +348,16 @@ public class FindBoardDaoImpl implements FindBoardDao {
 
 
 	@Override
-	public FindImg selectFile(Connection connection, FindBoard viewFindBoard) {
+	public List<FindImg> selectFile(Connection connection, FindBoard viewFindBoard) {
 		
 		//SQL 작성
 		String sql = "";
 		sql += "SELECT * FROM findimg";
 		sql += " WHERE find_no = ?";
+		sql += " ORDER BY image_no DESC";
 		
 		//결과 저장할 BoardFile 객체
-		FindImg findImg = null;
+		List<FindImg> findImg = new ArrayList<>();
 		
 		try {
 			ps = connection.prepareStatement(sql); //SQL수행 객체
@@ -367,14 +368,15 @@ public class FindBoardDaoImpl implements FindBoardDao {
 			
 			//조회 결과 처리
 			while(rs.next()) {
-				findImg = new FindImg();
+				FindImg fi = new FindImg();
 				
-				findImg.setFindNo( rs.getInt("find_No") );
-				findImg.setImgNum( rs.getInt("image_No") );
-				findImg.setOriginImg( rs.getString("origin_Img") );
-				findImg.setStoredImg( rs.getString("stored_Img") );
+				fi.setFindNo( rs.getInt("find_No") );
+				fi.setImgNum( rs.getInt("image_No") );
+				fi.setOriginImg( rs.getString("origin_Img") );
+				fi.setStoredImg( rs.getString("stored_Img") );
 				
-				
+				//findImg 리스트에 결과값 저장
+				findImg.add(fi);
 			}
 			
 		} catch (SQLException e) {
@@ -504,41 +506,41 @@ public class FindBoardDaoImpl implements FindBoardDao {
 		return userno;
 	}
 
-//	@Override
-//	public int deleteFile(Connection conn, FindBoard findboard) {
-//		
-//		String sql = "";
-//		sql += "DELETE findboardfile";
-//		sql += " WHERE find_no = ?";
-//				
-//
-//		PreparedStatement ps = null; 
-//				
-//		int res = -1;
-//		
-//		try {
-//			//DB작업
-//			ps = conn.prepareStatement(sql);
-//			ps.setInt(1, findboard.getFindNo());
-//
-//			res = ps.executeUpdate();
-//			
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//			
-//		} finally {
-//			try {
-//				//DB객체 닫기
-//				if(ps!=null)	ps.close();
-//				
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//		
-//		return res;
-//		
-//	}
+	@Override
+	public int deleteFile(Connection conn, FindBoard findboard) {
+		
+		String sql = "";
+		sql += "DELETE findboardfile";
+		sql += " WHERE find_no = ?";
+				
+
+		PreparedStatement ps = null; 
+				
+		int res = -1;
+		
+		try {
+			//DB작업
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, findboard.getFindNo());
+
+			res = ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			
+		} finally {
+			try {
+				//DB객체 닫기
+				if(ps!=null)	ps.close();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return res;
+		
+	}
 
 	@Override
 	public int delete(Connection conn, FindBoard findboard) {

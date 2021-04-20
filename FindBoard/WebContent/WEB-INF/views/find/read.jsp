@@ -1,12 +1,13 @@
 <%@page import="dto.FindImg"%>
 <%@page import="dto.FindBoard"%>
 <%@page import="dto.Usertb"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
 <%  Usertb u = (Usertb) request.getAttribute("param"); %>
 <%	FindBoard b = (FindBoard) request.getAttribute("viewFindBoard"); %>
-<%	FindImg findImg = (FindImg) request.getAttribute("findImg"); %>
+<%	List<FindImg> findImg = (List) request.getAttribute("findImg"); %>
 
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
 
@@ -44,7 +45,7 @@ $(document).ready(function() {
 
 }
 #findheader1{
-	border:1px solid;
+ 	border:1px solid; 
 	width: 200px;
 	float: left;
 	margin: 10px 3px 10px 3px;
@@ -59,7 +60,7 @@ $(document).ready(function() {
 }
 
 #subimg{
-	border:1px solid;
+/* 	border:1px solid; */
 	width: 100px;
 	height: 100px;
 	float: left;
@@ -95,7 +96,7 @@ $(document).ready(function() {
 
 <div class="container">
 
-<h1>반려동물 찾기 </h1>
+<h1>반려동물 찾기  </h1>
 <hr>
 
 
@@ -117,28 +118,12 @@ $(document).ready(function() {
 </div>
 
 
-<table >
-<%	if( findImg != null ) { %>
-	<tr>
-		<td style="border: 1px solid;">
-			<img src="/upload/<%=findImg.getStoredImg() %>" alt="main"  id="mainimg"/>
-		</td>
-		<td>
-			<table>
-				<tr>
-					<td><img src="/upload/<%=findImg.getStoredImg() %>" alt="sub1" id="subimg"/></td>
-				</tr>
-				<tr>
-					<td><img src="/upload/<%=findImg.getStoredImg() %>" alt="sub2" id="subimg"/></td>
-				</tr>
-				<tr>
-					<td><img src="/upload/<%=findImg.getStoredImg() %>" alt="sub3" id="subimg"/></td>
-				</tr>
-			</table>
-		</td>
-<%	} else {%>
-	<tr>
-		<td style="border: 1px solid;">
+<table>
+<%-- <%	if( findImg != null ) { %> --%>
+<% int i = findImg.size(); %>
+	<%	if(i <= 0) {%>	
+		<tr>			
+		<td >
 			<img src=".." alt="main"  id="mainimg"/>
 		</td>
 		<td>
@@ -154,21 +139,101 @@ $(document).ready(function() {
 				</tr>
 			</table>
 		</td>
-<%	}  %>
+		
+	<%}	if(i < 2 && i > 0) {%>
+			
+	<tr>
+		<td>
+			<img src="/upload/<%=findImg.get(0).getStoredImg() %>" alt="main"  id="mainimg"/>
+		</td>
+		<td>
+			<table>
+				<tr>
+					<td><img src=".." alt="sub1" id="subimg"/></td>
+				</tr>
+				<tr>
+					<td><img src=".." alt="sub2" id="subimg"/></td>
+				</tr>
+				<tr>
+					<td><img src=".." alt="sub3" id="subimg"/></td>
+				</tr>
+			</table> 
+		</td>
+	<%}	if(i < 3 && i > 1) {%>
+			
+	<tr>
+		<td>
+			<img src="/upload/<%=findImg.get(0).getStoredImg() %>" alt="main"  id="mainimg"/>
+		</td>
+		<td>
+			<table>
+				<tr>
+					<td><img src="/upload/<%=findImg.get(1).getStoredImg() %>" alt="sub1" id="subimg"/></td>
+				</tr>
+				<tr>
+					<td><img src=".." alt="sub2" id="subimg"/></td>
+				</tr>
+				<tr>
+					<td><img src=".." alt="sub3" id="subimg"/></td>
+				</tr>
+			</table> 
+		</td>
+		
+	<%}	if(i < 4 && i > 2) {%>
+			
+	<tr>
+		<td>
+			<img src="/upload/<%=findImg.get(0).getStoredImg() %>" alt="main"  id="mainimg"/>
+		</td>
+		<td>
+			<table>
+				<tr>
+					<td><img src="/upload/<%=findImg.get(1).getStoredImg() %>" alt="sub1" id="subimg"/></td>
+				</tr>
+				<tr>
+					<td><img src="/upload/<%=findImg.get(2).getStoredImg() %>" alt="sub2" id="subimg"/></td>
+				</tr>
+				<tr>
+					<td><img src=".." alt="sub3" id="subimg"/></td>
+				</tr>
+			</table> 
+		</td>
+	<%}	if(i < 5 && i > 3) {%>
+			
+	<tr>
+		<td>
+			<img src="/upload/<%=findImg.get(0).getStoredImg() %>" alt="main"  id="mainimg"/>
+		</td>
+		<td>
+			<table>
+				<tr>
+					<td><img src="/upload/<%=findImg.get(1).getStoredImg() %>" alt="sub1" id="subimg"/></td>
+				</tr>
+				<tr>
+					<td><img src="/upload/<%=findImg.get(2).getStoredImg() %>" alt="sub2" id="subimg"/></td>
+				</tr>
+				<tr>
+					<td><img src="/upload/<%=findImg.get(3).getStoredImg() %>" alt="sub3" id="subimg"/></td>
+				</tr>
+			</table> 
+		</td>
+		
+	<% } %><!-- if문 끝 -->
 </table>
 
-<p style="width: 1100px; height: 300px; border: 1px solid; margin: 10px 0 10px 0; ">123</p>
-<p style="width: 1100px; height: 300px; border: 1px solid; margin: 10px 0 10px 0;">왜따로나오지?<%=b.getContent() %> </p>
-
+<div style="width: 1100px; height: 300px; border: 1px solid; margin: 10px 0 10px 0;">
+<!-- <p style="width: 1100px; height: 300px; border: 1px solid; margin: 10px 0 10px 0; ">123</p> -->
+<p ><%=b.getContent() %></p>
+</div>
 
 
 	
 
 <div class="text-left">	
-<%-- <%	if( b.getUserid().equals( session.getAttribute("userid") )) { %> --%>
+<%	if( request.getAttribute("nick").equals(session.getAttribute("nick")) ) { %>
 	<button id="btnUpdate" class="btn btn-info">글수정</button>
 	<button id="btnDelete" class="btn btn-danger">글삭제</button>
-<%-- <%	} %> --%>
+<%	} %>
 </div>
 
 <div>

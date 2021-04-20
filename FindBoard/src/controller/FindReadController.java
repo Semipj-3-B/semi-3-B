@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -44,8 +45,10 @@ public class FindReadController extends HttpServlet {
 		//조회결과 MODEL값 전달
 		req.setAttribute("viewFindBoard", viewFindBoard);
 		
+		
+		
 		//첨부파일 정보 VIEW에 전달
-		FindImg findImg = findboardService.viewFile(viewFindBoard);
+		List<FindImg> findImg = findboardService.viewFile(viewFindBoard);
 		req.setAttribute("findImg", findImg);
 		
 		System.out.println("findImg"+findImg);

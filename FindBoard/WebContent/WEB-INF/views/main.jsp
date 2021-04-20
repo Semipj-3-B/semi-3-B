@@ -16,7 +16,7 @@
 <% } else { %>
 	<%=session.getAttribute("nick") %>님 안녕하세요
 	<a href="/login/logout"><button type="button">logout</button></a>
-
+	<button onclick='location.href="/find/list";'>게시판 가기</button>
 <% } %>
 
 </body>

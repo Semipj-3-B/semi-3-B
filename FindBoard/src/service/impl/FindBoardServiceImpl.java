@@ -93,23 +93,6 @@ public class FindBoardServiceImpl implements FindBoardService{
 
 
 
-//	@Override
-//	public FindBoard read(FindBoard findNo) {
-//		
-//		Connection conn = JDBCTemplate.getConnection();
-//
-//		//조회수 증가
-//		if( findBoardDao.updateHit(conn, findNo) >= 0 ) {
-//			JDBCTemplate.commit(conn);
-//		} else {
-//			JDBCTemplate.rollback(conn);
-//		}
-//		
-//		//게시글 조회
-//		FindBoard board = findBoardDao.selectFind(conn, findNo); 
-//		
-//		return board;
-//	}
 
 	
 	@Override
@@ -123,7 +106,7 @@ public class FindBoardServiceImpl implements FindBoardService{
 	}
 
 	@Override
-	public FindImg viewFile(FindBoard viewFindBoard) {
+	public List<FindImg> viewFile(FindBoard viewFindBoard) {
 		return findBoardDao.selectFile(JDBCTemplate.getConnection(), viewFindBoard);
 	}
 	
@@ -358,11 +341,11 @@ public class FindBoardServiceImpl implements FindBoardService{
 		
 		Connection conn = JDBCTemplate.getConnection();
 		
-//		if(findBoardDao.deleteFile(conn, findboard) > 0) {
-//			JDBCTemplate.commit(conn);
-//		} else {
-//			JDBCTemplate.rollback(conn);
-//		}
+		if(findBoardDao.deleteFile(conn, findboard) > 0) {
+			JDBCTemplate.commit(conn);
+		} else {
+			JDBCTemplate.rollback(conn);
+		}
 		
 		if(findBoardDao.delete(conn, findboard) > 0) {
 			JDBCTemplate.commit(conn);
@@ -374,29 +357,229 @@ public class FindBoardServiceImpl implements FindBoardService{
 	}
 	
 	//게시글 수정
-	@Override
-	public void update(HttpServletRequest req) {
-		
-		FindBoard findboard = null;
-		
-		findboard = new FindBoard();
-		
-//		findboard.setFindno알겠습니다
-		findboard.setTitle( req.getParameter("title") );
-		findboard.setContent( req.getParameter("content") );
-		
-		Connection conn = JDBCTemplate.getConnection();
-		
-		if(findboard != null) {
-			if(findBoardDao.update(conn, findboard) > 0) {
-				JDBCTemplate.commit(conn);
+		@Override
+		public void update(HttpServletRequest req) {
+			
+			//수정할 게시글 번호 설정?
+			// 페이지의 정보를 알수있는 String값이 없음
+			
+			
+			
+			FindBoard findBoard = null;
+			FindImg findImg = null;
+//			List<FindImg> findImages = new ArrayList<FindImg>();
+			Connection conn = JDBCTemplate.getConnection();
+//			int findno = 0;
+//			findno = new FindBoard();
+			
+//			
+			//게시글 조회
+//			int findno = findBoardDao.
+					
+			
+			boolean isMultipart = ServletFileUpload.isMultipartContent(req);
+			
+			System.out.println("사진 있는지 없는지 = "+ isMultipart);
+			
+			//사진파일이 없으면
+			if(!isMultipart) {
+				
+				findBoard = new FindBoard();
+				
+				findBoard.setTitle( req.getParameter("title") );
+				findBoard.setContent( req.getParameter("content") );
+
+				
 			} else {
-				JDBCTemplate.rollback(conn);
+			
+			//사진파일 있을때
+				
+				
+			findBoard = new FindBoard();
+				
+			
+			DiskFileItemFactory factory = new DiskFileItemFactory();
+			
+			//메모리 처리 사이즈 지정
+			final int MEM_SIZE = 1 * 1024; 	//1KB
+			factory.setSizeThreshold(MEM_SIZE);	
+			
+			//임시 저장소
+			File repository = new File(req.getServletContext().getRealPath("tmp"));
+			repository.mkdir();
+			
+			factory.setRepository(repository);
+			
+			//파일업로드 
+			ServletFileUpload upload = new ServletFileUpload(factory);
+			
+			//용량 제한
+			final int MAX_SIZE = 10 * 1024 * 1024;	//10MB
+			upload.setFileSizeMax(MAX_SIZE);
+			
+			
+			//파싱
+			List<FileItem> items = null;
+			try {
+				items = upload.parseRequest(req);
+			} catch (FileUploadException e) {
+				e.printStackTrace();
 			}
-		}
-		
-		
-	}
+			System.out.println("form으로 전달된 데이터 = " + items.iterator() );
+			
+			//추출된 전달파라미터 처리 반복자
+			Iterator<FileItem> iter = items.iterator();
+			
+			//모든 요청 정보 처리하기
+			while(iter.hasNext()) {
+				FileItem item = iter.next();
+				
+				//빈 파일
+				if(item.getSize() <= 0)	continue;
+				
+				//요청 데이터 처리
+				if(item.isFormField()) {
+					
+					try {// 수정
+						if( "Find_No".equals( item.getFieldName() ) ) {
+							findBoard.setFindNo( Integer.parseInt(item.getString() ));
+						}
+								if( "title".equals( item.getFieldName() ) ) {
+							findBoard.setTitle(item.getString("UTF-8"));
+						}
+						if( "content".equals( item.getFieldName() ) ) {
+							findBoard.setContent(item.getString("UTF-8"));
+						}
+						
+//						board.setUserid((String) req.getSession().getAttribute("userid"));
+					} catch (UnsupportedEncodingException e) {
+						e.printStackTrace();
+					}
+//					//name 값으로 키 추출
+//					String key = item.getFieldName();
+//					
+//					if("find_no".equals(key))  {
+//					}
+//						
+//					if("title".equals(key)) {
+//						try {
+//							findBoard.setTitle(item.getString("UTF-8"));
+//						} catch (UnsupportedEncodingException e) {
+//							e.printStackTrace();
+//						}
+//					} //if(title.key) END
+////							
+//					if("content".equals(key) ) {
+//						try {
+//							findBoard.setContent(item.getString("UTF-8"));
+//						} catch (UnsupportedEncodingException e) {
+//							e.printStackTrace();
+//						}
+//					}
+					
+					
+				} //if(isFormField) END
+				
+
+				
+				//파일 처리
+				if(!item.isFormField()) {
+					//확장자 추출
+					int lastDot = item.getName().lastIndexOf('.');
+					String ext = item.getName().substring(lastDot + 1);
+					
+					//확장자 유효 검사
+					boolean isImg = false;
+					if("jpg".equals(ext) || "jpeg".equals(ext)) isImg = true;
+					
+					//파일명 유효 검사
+					boolean isValidName = false;
+					String originName = item.getName().substring(0, lastDot);
+					
+					//파일명 String -> Byte 길이로 변환
+					int nameToBytes = 0;
+					try {
+						nameToBytes = originName.getBytes("UTF-8").length;
+					} catch (UnsupportedEncodingException e) {
+						e.printStackTrace();
+					}
+					
+					//30byte 초과시 false
+					final int maxBytes = 30;
+					if(nameToBytes <= maxBytes) isValidName = true;
+					
+					//확장자, 파일명 모두 유효할 때만 파일 저장 및 DB 삽입
+					if(isImg && isValidName) {
+						
+						//UUID 생성
+						UUID uuid = UUID.randomUUID();
+						String uid = uuid.toString().split("-")[0];
+						
+						//파일의 저장될 이름
+						String storedName = originName + "_" + uid;
+						
+						//upload 폴더 생성
+						File uploFolder = new File(req.getServletContext().getRealPath("upload"));
+						uploFolder.mkdir();
+						
+						File upFile = new File(uploFolder, storedName);
+						
+						findImg = new FindImg();
+						findImg.setFindNo(findBoard.getFindNo());
+						findImg.setOriginImg(originName);
+						findImg.setStoredImg(storedName);
+						
+//						findImages.add(findImg);
+						
+						//처리가 완료된 파일 업로드
+						try {
+							item.write(upFile);	//실제 업로드
+							item.delete();		//임시 파일 삭제
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					} //if(isImg) END
+					
+				} //if(!ifFormField) END
+				
+			} //while(iter.hasnext) END
+			
+//				String userid = (String) req.getSession().getAttribute("userid");
+//				if(userid != null && !"".equals(userid)) {
+//					int userno = findBoardDao.selectUserno(JDBCTemplate.getConnection(), userid);
+//					findBoard.setUserNo(userno);
+//				}
+//				
+//				String usernoString = (String)req.getSession().getAttribute("userno");
+//				if(usernoString != null && !"".equals(usernoString)) {
+//					findBoard.setUserNo(Integer.parseInt(usernoString));
+//				}
+				
+
+			}
+				
+//			System.out.println("findImages 이미지 정보 = "+ findImages);
+			System.out.println("findimg 정보 = "+ findImg);
+			System.out.println("findBoard 정보 " + findBoard);
+			
+			if(findBoard != null) {
+				if(findBoardDao.update(conn, findBoard) > 0) {
+					JDBCTemplate.commit(conn);
+				} else {
+					JDBCTemplate.rollback(conn);
+				}
+			}
+			
+//			if(findImages != null) {
+//				if(findBoardDao.insertImg(conn, findImages) > 0) {
+//					JDBCTemplate.commit(conn);
+//				} else {
+//					JDBCTemplate.rollback(conn);
+//				}
+//			}
+			
+
+		}//update끝
 
 
 
