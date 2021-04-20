@@ -96,10 +96,11 @@
 					<option value="15">울산광역시</option>
 					<option value="16">세종시</option>
 					<option value="17">제주시</option>
+	
 				</select>
 			</div>
 			<div class="right_box">
-				<a href="/find/add"><button >등록하기</button></a>
+				<a href="/find/add"><button >fdsa</button></a>
 			</div>
 		</div>
 		<%	for(int i=0; i<list.size(); i++) { %>
