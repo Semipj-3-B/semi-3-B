@@ -100,7 +100,7 @@
 				</select>
 			</div>
 			<div class="right_box">
-				<a href="/find/add"><button >fdsa</button></a>
+				<a href="/find/add"><button >등록하기</button></a>
 			</div>
 		</div>
 		<%	for(int i=0; i<list.size(); i++) { %>
