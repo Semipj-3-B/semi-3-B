@@ -4,7 +4,21 @@
 <%@page import="util.Paging"%>
 <% AdminPaging apaging = (AdminPaging) request.getAttribute("apaging"); %>
 
-<div class="text-center" style="height: 40px;">
+<style type="text/css">
+.pagination>.active>a,
+.pagination>.active>a:focus,
+.pagination>.active>a:hover,
+.pagination>.active>span,
+.pagination>.active>span:focus,
+.pagination>.active>span:hover {
+	background-color: #EA9A56;
+	border-color: #EA9A56;
+}
+
+.pagination>li>a {color: #EA9A56;}
+</style>
+
+<div class="page text-center" style="height: 40px;">
 	<ul class ="pagination pagination-sm">
 	
 		<!-- 첫 페이지로 이동 ← -->

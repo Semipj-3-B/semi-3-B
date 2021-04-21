@@ -3,6 +3,7 @@ package dao.face;
 import java.sql.Connection;
 import java.util.List;
 
+import dto.FindBoard;
 import dto.Usertb;
 import util.AdminPaging;
 import util.Paging;
@@ -38,6 +39,23 @@ public interface AdminDao {
 	 * @return		업데이트 행
 	 */
 	int deleteUserByUserno(Connection conn, int userno);
+
+	/**
+	 * findboard 테이블을 전체 조회한다.
+	 * @param conn		DB 연결 객체
+	 * @param apaging	페이징 정보 객체
+	 * @return	findboard 테이블의 전체 목록
+	 */
+	List<FindBoard> selectFindBoard(Connection conn, AdminPaging apaging);
+
+	/**
+	 * 글번호로 찾기 게시판의 글을 삭제한다.
+	 * @param conn		DB 연결 객체
+	 * @param findno	게시글 번호
+	 * @return	업데이트 행
+	 */
+	int deleteFindByFindno(Connection conn, int findno);
+
 	
 	
 

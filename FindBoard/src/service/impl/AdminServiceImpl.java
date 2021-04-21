@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import common.JDBCTemplate;
 import dao.face.AdminDao;
 import dao.impl.AdminDaoImpl;
+import dto.FindBoard;
 import dto.Usertb;
 import service.face.AdminService;
 import util.AdminPaging;
@@ -38,7 +39,7 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public List<Usertb> getList(AdminPaging apaging) {
+	public List<Usertb> getUserList(AdminPaging apaging) {
 		return adminDao.selectAll(JDBCTemplate.getConnection(), apaging);
 	}
 
@@ -53,6 +54,26 @@ public class AdminServiceImpl implements AdminService {
 		
 		Connection conn = JDBCTemplate.getConnection();
 		int result = adminDao.deleteUserByUserno(conn, userno);
+		if(result > 0) JDBCTemplate.commit(conn);
+		else JDBCTemplate.rollback(conn);
+	}
+
+	@Override
+	public List<FindBoard> getFindList(AdminPaging apaging) {
+		
+		return adminDao.selectFindBoard(JDBCTemplate.getConnection(), apaging);
+	}
+
+	@Override
+	public void deleteFind(HttpServletRequest req) {
+		String findnoString = req.getParameter("findno");
+		int findno = 0;
+		if(findnoString != null && !"".equals(findnoString)) {
+			findno = Integer.parseInt(findnoString);
+		}
+		
+		Connection conn = JDBCTemplate.getConnection();
+		int result = adminDao.deleteFindByFindno(conn, findno);
 		if(result > 0) JDBCTemplate.commit(conn);
 		else JDBCTemplate.rollback(conn);
 	}

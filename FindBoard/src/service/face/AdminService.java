@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import dto.FindBoard;
 import dto.Usertb;
 import util.AdminPaging;
 import util.Paging;
@@ -29,7 +30,7 @@ public interface AdminService {
 	 * @param apaging	페이징 정보 객체
 	 * @return		페이징 처리된 회원 목록
 	 */
-	List<Usertb> getList(AdminPaging apaging);
+	List<Usertb> getUserList(AdminPaging apaging);
 
 	
 	/**
@@ -38,5 +39,18 @@ public interface AdminService {
 	 */
 	void withdraw(HttpServletRequest req);
 
+	
+	/**
+	 * 페이징 처리와 함께 찾기 게시판의 게시글 목록을 가져온다.
+	 * @param apaging	페이징 정보 객체
+	 * @return	찾기 게시판의 전체 게시글 목록
+	 */
+	List<FindBoard> getFindList(AdminPaging apaging);
+
+	/**
+	 * 게시글을 삭제한다.
+	 * @param req	찾기 게시판의 게시글 번호가 담긴 객체
+	 */
+	void deleteFind(HttpServletRequest req);
 
 }

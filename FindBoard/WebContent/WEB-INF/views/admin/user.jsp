@@ -37,7 +37,7 @@ $(document).ready(function () {
 	})
 })
 </script>	
-	<form action="/admin/user" method="post">	
+	<form action="/admin/user" method="post">
 	<table class="table">
 	<tr>
 		<th style="width: 5%"></th>
@@ -61,7 +61,7 @@ $(document).ready(function () {
 	<% } %>
 	</table>
 	<input type="hidden" id="userno" name="userno" />
-	</form>	
+	</form>
 	<div><%@ include file="/WEB-INF/views/admin/paging.jsp" %></div>
 	</div>
 </div>

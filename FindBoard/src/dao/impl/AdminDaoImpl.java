@@ -9,6 +9,7 @@ import java.util.List;
 
 import common.JDBCTemplate;
 import dao.face.AdminDao;
+import dto.FindBoard;
 import dto.Usertb;
 import util.AdminPaging;
 
@@ -126,6 +127,68 @@ public class AdminDaoImpl implements AdminDao {
 		try {
 			ps = conn.prepareStatement(sql);
 			ps.setInt(1, userno);
+			
+			result = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(ps);
+		}
+		
+		return result;
+	}
+
+	@Override
+	public List<FindBoard> selectFindBoard(Connection conn, AdminPaging apaging) {
+		String sql = "";
+		sql += "SELECT * FROM (";
+		sql += " 	SELECT rownum rnum, F.* FROM (";
+		sql += "		SELECT find_no, user_no, title, content, views FROM findboard";
+		sql += " 		ORDER BY find_no DESC";
+		sql += "	) F";
+		sql += " ) ";
+		sql += " WHERE rnum BETWEEN ? AND ?";
+		
+		List<FindBoard> findList = new ArrayList<FindBoard>();
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, apaging.getStartNo());
+			ps.setInt(2, apaging.getEndNo());
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				FindBoard findBoard = new FindBoard();
+				
+				findBoard.setFindNo(rs.getInt("find_no"));
+				findBoard.setUserNo(rs.getInt("user_no"));
+				findBoard.setTitle(rs.getString("title"));
+				findBoard.setContent(rs.getString("content"));
+				findBoard.setViews(rs.getInt("views"));
+				
+				findList.add(findBoard);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rs);
+			JDBCTemplate.close(ps);
+		}
+		
+		return findList;
+	}
+
+	@Override
+	public int deleteFindByFindno(Connection conn, int findno) {
+		String sql = "";
+		sql += "DELETE FROM findboard";
+		sql += " WHERE find_no = ?";
+		
+		int result = -1;
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, findno);
+			
 			result = ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
