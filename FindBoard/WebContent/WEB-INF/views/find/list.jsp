@@ -14,39 +14,7 @@
 
 
 <script type="text/javascript">
-// 	var selectOption = document.getElementById("pet");
-// 	selectOption = selectOption.option[selectOption.selectedIndex].value;
-// 	$("#pet option:selected").val();
-	
-// 	var list = $("#").val();
-// 	var option_values = document.getElementById("");
-// 	option_values = option_values.option[].value;
-	
-// 	for(var i=0; i<option_values.length; i++){
-// 		if(list == option_values[i]){
-// 			option_value[i].selected = true;
-			
-// 		} else {
-// 			option_value[i].selected = false;
-// 		}
-		
-// 	}
-	
-		
-// 	});
-// 	function mainSiseMove(code) {
-// 		if (code=='KONEX') {
-// 			document.location.href='/sise/konex.nhn';
-// 		} else if(code=='ETF') {
-// 			document.location.href='/sise/etf.nhn';
-// 	    } else if(code=='ETN') {
-// 	        document.location.href='/sise/etn.nhn';
-// 		} else {
-// 			document.location.href='/sise/sise_index.nhn?code='+code;
-// 		}
-// 	}
-// 	var selectOption = document.getElementByID("pet");
-// 	selectOption = selectOption.options[selectOption.selectedIndex].value;
+
 	
 	function search(){
 		location.href="/find/list?pet=" + $('#pet').val() + "&loc=" + $('#Loc').val();
@@ -66,7 +34,14 @@
 		border-radius:5px 5px 5px 5px;
 	}
 	#container .click_box .left_box{width:370px; height:40px; float:left; text-align:center;}
-	#container .click_box .left_box input{width:50px; height:40px;}
+	#container .click_box .left_box input{width:50px; height:20px; 
+		background-color:green; 
+		border-style:none;
+		border-radius:10px;
+		line-height:18px;
+		color:#eee;
+		margin-left:10px;
+	}
 	#container .click_box .right_box{width:90px; height:40px; float:right; text-align:center;}
 	#container .click_box .right_box p{display:block; 
 		width:80px; 
@@ -76,7 +51,7 @@
 		line-height:25px;
 		border-radius:6px 6px 6px 6px;
 	}
-	#container .click_box .right_box p a{color:#333;}
+	#container .click_box .right_box p a{color:#eee;}
 	
 	#container .pet_list{width:150px; 
 	
@@ -103,7 +78,6 @@
 					<option value="dog">강아지</option>
 					<option value="cat">고양이</option>
 					<option value="etc">기타</option>
-					<option value="동물종류 46">동물종류 90</option>
 				</select>
 				<select id="Loc">
 					<option value="">지역선택</option>
