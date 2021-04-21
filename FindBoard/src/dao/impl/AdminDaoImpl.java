@@ -115,4 +115,24 @@ public class AdminDaoImpl implements AdminDao {
 		
 		return userList;
 	}
+
+	@Override
+	public int deleteUserByUserno(Connection conn, int userno) {
+		String sql = "";
+		sql += "DELETE FROM usertb";
+		sql += " WHERE user_no = ?";
+		
+		int result = -1;
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, userno);
+			result = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(ps);
+		}
+		
+		return result;
+	}
 }

@@ -30,6 +30,14 @@ public interface AdminDao {
 	 * @return		DB 조회 결과
 	 */
 	List<Usertb> selectAll(Connection conn, AdminPaging apaging);
+
+	/**
+	 * 회원번호로 회원의 정보를 삭제한다.
+	 * @param conn		DB 연결 객체
+	 * @param userno	회원번호
+	 * @return		업데이트 행
+	 */
+	int deleteUserByUserno(Connection conn, int userno);
 	
 	
 

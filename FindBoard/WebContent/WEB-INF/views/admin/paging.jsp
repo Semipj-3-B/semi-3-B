@@ -1,12 +1,11 @@
 <%@page import="util.AdminPaging"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%@page import="util.Paging"%>
 <% AdminPaging apaging = (AdminPaging) request.getAttribute("apaging"); %>
 
-<div class="text-center">
-	<ul class ="pagination">
+<div class="text-center" style="height: 40px;">
+	<ul class ="pagination pagination-sm">
 	
 		<!-- 첫 페이지로 이동 ← -->
 		<% if(apaging.getCurPage() != 1) { %>	<!-- 첫 페이지가 아닐 때 보인다 -->

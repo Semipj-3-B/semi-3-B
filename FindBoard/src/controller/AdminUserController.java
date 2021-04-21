@@ -32,4 +32,13 @@ public class AdminUserController extends HttpServlet {
 		req.setAttribute("apaging", apaging);
 		req.getRequestDispatcher("/WEB-INF/views/admin/user.jsp").forward(req, resp);
 	}
+	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		System.out.println("/admin/user POST");
+		
+		adminService.withdraw(req);
+		resp.sendRedirect("/admin/user");
+	}
+	
 }

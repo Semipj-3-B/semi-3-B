@@ -23,12 +23,20 @@ public interface AdminService {
 	 */
 	AdminPaging getPaging(HttpServletRequest req);
 
+	
 	/**
 	 * 페이징 처리를 추가하여 회원의 목록을 가져온다.
 	 * @param apaging	페이징 정보 객체
 	 * @return		페이징 처리된 회원 목록
 	 */
 	List<Usertb> getList(AdminPaging apaging);
+
+	
+	/**
+	 * 회원번호로 탈퇴 처리를 진행한다. (데이터 삭제)
+	 * @param req	회원번호가 담긴 요청 파라미터
+	 */
+	void withdraw(HttpServletRequest req);
 
 
 }

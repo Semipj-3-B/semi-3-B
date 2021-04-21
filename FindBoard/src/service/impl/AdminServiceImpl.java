@@ -1,5 +1,6 @@
 package service.impl;
 
+import java.sql.Connection;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,6 +41,22 @@ public class AdminServiceImpl implements AdminService {
 	public List<Usertb> getList(AdminPaging apaging) {
 		return adminDao.selectAll(JDBCTemplate.getConnection(), apaging);
 	}
+
+	@Override
+	public void withdraw(HttpServletRequest req) {
+		String usernoString = req.getParameter("userno");
+		int userno = 0;
+		
+		if(usernoString != null && !"".equals(usernoString)) {
+			userno = Integer.parseInt(usernoString);
+		}
+		
+		Connection conn = JDBCTemplate.getConnection();
+		int result = adminDao.deleteUserByUserno(conn, userno);
+		if(result > 0) JDBCTemplate.commit(conn);
+		else JDBCTemplate.rollback(conn);
+	}
+
 
 
 }
