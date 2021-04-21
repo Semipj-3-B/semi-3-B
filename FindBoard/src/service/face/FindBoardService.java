@@ -1,6 +1,7 @@
 package service.face;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -30,7 +31,7 @@ public interface FindBoardService {
 	 * @param paging - 페이징 정보 객체
 	 * @return List<FindBoard> - 게시글 전체 조회 결과 리스트
 	 */
-	public List<FindBoard> getList(Paging paging);
+	public List<FindBoard> getList(Paging paging, Map<String,String> map);
 
 	
 	/**

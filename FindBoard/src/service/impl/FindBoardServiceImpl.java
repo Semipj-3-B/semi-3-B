@@ -1,19 +1,20 @@
 package service.impl;
 
-import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.tomcat.jni.File;
+import org.apache.tomcat.util.http.fileupload.FileItem;
+import org.apache.tomcat.util.http.fileupload.FileUploadException;
+import org.apache.tomcat.util.http.fileupload.disk.DiskFileItemFactory;
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import common.JDBCTemplate;
 import dao.face.FindBoardDao;
@@ -34,8 +35,8 @@ public class FindBoardServiceImpl implements FindBoardService{
 	}
 	
 	@Override
-	public List<FindBoard> getList(Paging paging) {
-		return findBoardDao.selectAll(JDBCTemplate.getConnection(), paging);
+	public List<FindBoard> getList(Paging paging, Map<String, String> map) {
+		return findBoardDao.selectAll(JDBCTemplate.getConnection(), paging, map);
 	}
 
 	@Override

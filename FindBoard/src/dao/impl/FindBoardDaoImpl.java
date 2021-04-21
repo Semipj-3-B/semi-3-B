@@ -96,7 +96,10 @@ public class FindBoardDaoImpl implements FindBoardDao {
 	}
 
 	@Override
-	public List<FindBoard> selectAll(Connection conn, Paging paging) {
+	public List<FindBoard> selectAll(Connection conn, Paging paging, Map<String, String> map) {
+		
+		System.out.println(map.get("pet"));
+		System.out.println(map.get("loc"));
 		//SQL 작성
 		String sql = "";
 		sql += "SELECT * FROM (";
@@ -105,6 +108,9 @@ public class FindBoardDaoImpl implements FindBoardDao {
 		sql += " 			find_no, user_no, title, create_date, update_date, views";
 		sql += " 			, pet_name, pet_kinds, pet_age, loc, content, board_div";
 		sql += " 		FROM findboard";
+		if( map.get("pet") != null && map.get("loc") != null ) {
+			sql += " WHERE loc=? AND pet_kinds=?";
+		}
 		sql += " 		ORDER BY find_no DESC";
 		sql += "	) F";
 		sql += " ) findboard";
@@ -116,9 +122,15 @@ public class FindBoardDaoImpl implements FindBoardDao {
 		try {
 			ps = conn.prepareStatement(sql); //SQL수행 객체
 			
+			if( map.get("pet") == null && map.get("loc") == null ) {
 			ps.setInt(1, paging.getStartNo());
 			ps.setInt(2, paging.getEndNo());
-			
+			} else {
+				ps.setString(1, map.get("loc"));
+				ps.setString(2, map.get("pet"));
+				ps.setInt(3, paging.getStartNo());
+				ps.setInt(4, paging.getEndNo());
+			}
 			rs = ps.executeQuery(); //SQL 수행 및 결과집합 저장
 			
 			//조회 결과 처리

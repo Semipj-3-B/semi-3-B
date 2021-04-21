@@ -14,7 +14,26 @@
 
 
 <script type="text/javascript">
-
+// 	var selectOption = document.getElementById("pet");
+// 	selectOption = selectOption.option[selectOption.selectedIndex].value;
+// 	$("#pet option:selected").val();
+	
+// 	var list = $("#").val();
+// 	var option_values = document.getElementById("");
+// 	option_values = option_values.option[].value;
+	
+// 	for(var i=0; i<option_values.length; i++){
+// 		if(list == option_values[i]){
+// 			option_value[i].selected = true;
+			
+// 		} else {
+// 			option_value[i].selected = false;
+// 		}
+		
+// 	}
+	
+		
+// 	});
 // 	function mainSiseMove(code) {
 // 		if (code=='KONEX') {
 // 			document.location.href='/sise/konex.nhn';
@@ -26,6 +45,12 @@
 // 			document.location.href='/sise/sise_index.nhn?code='+code;
 // 		}
 // 	}
+// 	var selectOption = document.getElementByID("pet");
+// 	selectOption = selectOption.options[selectOption.selectedIndex].value;
+	
+	function search(){
+		location.href="/find/list?pet=" + $('#pet').val() + "&loc=" + $('#Loc').val();
+	}
 </script>
 
 <style type="text/css">
@@ -33,23 +58,25 @@
 	
 	
 
-	#container{width:900px;  margin:0 auto; }
+	#container{width:900px; /* height:850px; */ overflow:hidden; margin:0 auto; }
 	#container .click_box{width:100%; 
 		height:40px; 
 		line-height:40px; 
 		background-color:#EBC680;
 		border-radius:5px 5px 5px 5px;
 	}
-	#container .click_box .left_box{width:300px; float:left; text-align:center;}
-	#container .click_box .right_box{width:90px; float:right; text-align:center;}
-	#container .click_box .right_box button{display:block; 
+	#container .click_box .left_box{width:370px; height:40px; float:left; text-align:center;}
+	#container .click_box .left_box input{width:50px; height:40px;}
+	#container .click_box .right_box{width:90px; height:40px; float:right; text-align:center;}
+	#container .click_box .right_box p{display:block; 
 		width:80px; 
 		height:25px; 
 		background-color:green;
 		margin-top:7px;
-		line-height:20px;
-		border-radius:7px 7px 7px 7px;
+		line-height:25px;
+		border-radius:6px 6px 6px 6px;
 	}
+	#container .click_box .right_box p a{color:#333;}
 	
 	#container .pet_list{width:150px; 
 	
@@ -71,36 +98,37 @@
 			<div class="left_box">
 				<span>반려동물선택</span>
 <!-- 				<INPUT TYPE="HIDDEN" NAME="PET_KINDS"/> -->
-				<select name="pet">
-					<option value="" selected>반려동물</option>
+				<select id="pet">
+					<option value="">반려동물</option>
 					<option value="dog">강아지</option>
 					<option value="cat">고양이</option>
 					<option value="etc">기타</option>
+					<option value="동물종류 46">동물종류 90</option>
 				</select>
-				<select name="lc">
-					<option value="" selected>지역선택</option>
-					<option value="1">서울특별시</option>
-					<option value="2">경기도</option>
-					<option value="3">강원도</option>
-					<option value="4">충청북도</option>
-					<option value="5">충청남도</option>
-					<option value="6">경상북도</option>
-					<option value="7">경상남도</option>
-					<option value="8">전라북도</option>
-					<option value="9">전라남도</option>
-					<option value="10">대전광역시</option>
-					<option value="11">광주광역시</option>
-					<option value="12">인천광역시</option>
-					<option value="13">부산광역시</option>
-					<option value="14">대구광역시</option>
-					<option value="15">울산광역시</option>
-					<option value="16">세종시</option>
-					<option value="17">제주시</option>
-	
+				<select id="Loc">
+					<option value="">지역선택</option>
+					<option value="서울특별시">서울특별시</option>
+					<option value="경기도">경기도</option>
+					<option value="강원도">강원도</option>
+					<option value="충청북도">충청북도</option>
+					<option value="충청남도">충청남도</option>
+					<option value="경상북도">경상북도</option>
+					<option value="경상남도">경상남도</option>
+					<option value="전라북도">전라북도</option>
+					<option value="전라남도">전라남도</option>
+					<option value="대전광역시">대전광역시</option>
+					<option value="광주광역시">광주광역시</option>
+					<option value="인천광역시">인천광역시</option>
+					<option value="부산광역시">부산광역시</option>
+					<option value="대구광역시">대구광역시</option>
+					<option value="울산광역시">울산광역시</option>
+					<option value="세종시">세종시</option>
+					<option value="제주시">제주시</option>
 				</select>
+				<input type="button" id="search" onclick="search();" value="조회"/>
 			</div>
 			<div class="right_box">
-				<a href="/find/add"><button >등록하기</button></a>
+				<p><a href="/find/add" title="글 등록하기">등록하기</a></p>
 			</div>
 		</div>
 		<%	for(int i=0; i<list.size(); i++) { %>
@@ -111,6 +139,6 @@
 				<p><%=list.get(i).getPetKinds() %></p>
 			</div>
 		<% } %>
-<%@ include file="/WEB-INF/views/layout/paging.jsp" %>
 	</div>
+<%@ include file="/WEB-INF/views/layout/paging.jsp" %>
 <%@ include file="/WEB-INF/views/layout/footer.jsp" %>
