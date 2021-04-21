@@ -30,6 +30,6 @@ public class AdminUserController extends HttpServlet {
 		
 		req.setAttribute("userList", userList);
 		req.setAttribute("apaging", apaging);
-		req.getRequestDispatcher("/adminData/adminUser.jsp").forward(req, resp);
+		req.getRequestDispatcher("/WEB-INF/views/admin/user.jsp").forward(req, resp);
 	}
 }

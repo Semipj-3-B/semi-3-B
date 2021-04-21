@@ -1,19 +1,11 @@
 <%@page import="dto.Usertb"%>
 <%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <% List<Usertb> userList = (List<Usertb>) request.getAttribute("userList"); %>
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<%@ include file="/WEB-INF/views/admin/common.jsp" %>
 
-<style type="text/css">
-table {width: 900px;}
-th, td { text-align:center;}
-</style>
-
-<table class="table">
+	<table class="table">
 	<tr>
 		<th style="width: 15%">아이디</th>
 		<th style="width: 15%">닉네임</th>
@@ -30,5 +22,7 @@ th, td { text-align:center;}
 		<td><%= userList.get(i).getEmail() %></td>
 	</tr>
 	<% } %>
-</table>
-<%@ include file="/adminData/adminPaging.jsp" %>
+	</table>
+	<%@ include file="/WEB-INF/views/admin/paging.jsp" %>
+	</div>
+</div>
