@@ -5,10 +5,13 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.google.gson.Gson;
+
 import common.JDBCTemplate;
 import dao.face.AdminDao;
 import dao.impl.AdminDaoImpl;
 import dto.FindBoard;
+import dto.Product;
 import dto.Usertb;
 import service.face.AdminService;
 import util.AdminPaging;
@@ -78,6 +81,16 @@ public class AdminServiceImpl implements AdminService {
 		else JDBCTemplate.rollback(conn);
 	}
 
+	@Override
+	public List<Product> getProductList(AdminPaging apaging) {
+		
+		return adminDao.selectProduct(JDBCTemplate.getConnection(), apaging);
+	}
 
+	@Override
+	public List<Product> getProdListByCateId(AdminPaging apaging, Product p) {
+		Connection conn = JDBCTemplate.getConnection();
+		return adminDao.selectProductByCateId(conn, apaging, p);
+	}
 
 }

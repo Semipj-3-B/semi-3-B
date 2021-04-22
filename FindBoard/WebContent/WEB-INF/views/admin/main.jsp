@@ -39,7 +39,7 @@
 	<div class="menu-grid" >
 	<button class="bts btn" onclick="location.href='/admin/user'">회원 관리</button>
 	<button class="bts btn" onclick="location.href='/admin/find'">찾기 게시글 관리</button>
-	<button class="bts btn" onclick="location.href='/admin/findout'">발견 게시글 관리</button>
+	<button class="bts btn" onclick="location.href='/admin/discover'">발견 게시글 관리</button>
 	<button class="bts btn" onclick="location.href='/admin/review'">후기 게시글 관리</button>
 	<button class="bts btn" onclick="location.href='/admin/product'">제품 관리</button>
 	</div>

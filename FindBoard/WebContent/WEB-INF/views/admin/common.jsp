@@ -48,9 +48,9 @@ $(document).ready(function () {
 		$("form").attr("onsubmit", "return false")
 		location.href="/admin/find"
 	})
-	$("#findout").click(function () {
+	$("#discovery").click(function () {
 		$("form").attr("onsubmit", "return false")
-		location.href="/admin/findout"
+		location.href="/admin/discovery"
 	})
 	$("#review").click(function () {
 		$("form").attr("onsubmit", "return false")
@@ -66,7 +66,7 @@ $(document).ready(function () {
 	<div class="menu-grid" >
 	<button class="bts btn" id="user">회원 관리</button>
 	<button class="bts btn" id="find">찾기 게시글 관리</button>
-	<button class="bts btn" id="findout">발견 게시글 관리</button>
+	<button class="bts btn" id="discovery">발견 게시글 관리</button>
 	<button class="bts btn" id="review">후기 게시글 관리</button>
 	<button class="bts btn" id="product">제품 관리</button>
 	</div>

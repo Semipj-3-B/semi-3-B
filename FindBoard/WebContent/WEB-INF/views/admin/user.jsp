@@ -18,6 +18,11 @@
 </style>
 <script type="text/javascript">
 $(document).ready(function () {
+	$("#user").css({
+		'background-color': 'white'
+		, 'border': '1px solid  #A48654'
+		, 'color': '#EA9A56'
+	})
 	
 	$("input[type=radio]").change(function () {
 		console.log("0. $this: " , $(this))
@@ -58,12 +63,12 @@ $(document).ready(function () {
 		<td><%= userList.get(i).getUserId() %></td>
 		<td><%= userList.get(i).getNick() %></td>
 		<td>-</td>
-		<td><button class="btns usredel" type="button" id="del<%=i+1 %>" disabled>삭제</button></td>
+		<td><button class="btns userdel" type="button" disabled>삭제</button></td>
 	</tr>
 	<% } %>
 	</table>
 	<input type="hidden" id="userno" name="userno" />
 	</form>
-	<div><%@ include file="/WEB-INF/views/admin/paging.jsp" %></div>
+	<div><%@ include file="/WEB-INF/views/admin/userpaging.jsp" %></div>
 	</div>
 </div>

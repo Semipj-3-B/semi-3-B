@@ -19,23 +19,22 @@
 <script type="text/javascript">
 $(document).ready(function () {
 	
+	$("#find").css({
+		'background-color': 'white'
+		, 'border': '1px solid  #A48654'
+		, 'color': '#EA9A56'
+	})
+	
 	var findno = 0
 	
 	//findno를 post로 보내기 위한 코드
 	$("input[type=radio]").change(function () {
-		console.log("0. $this: " , $(this))
-			
 		findno = $(this).val()
-		console.log("1. 라디오 val(findno) 저장")
-			
 		$("#findno").attr("value", findno)
-		console.log("2. 라디오 val(findno) hidden에 삽입")
-			
 		$(".btns").attr("disabled", false)
-		console.log("3. 버튼 활성화")
 	})
 	
-	$(".finddetail").click(function () {
+	$(".finddet").click(function () {
 		 window.open("/find/read?FindNo="+findno, "_blank", "width=400px height=200px" )
 	})
 	
@@ -61,14 +60,14 @@ $(document).ready(function () {
 	<tr>
 		<td><input type="radio" name="chk" value="<%= findList.get(i).getFindNo() %>" /></td>
 		<td><%= findList.get(i).getFindNo() %></td>
-		<td><button class="btns finddet" type="button" id="detail<%=i+1 %>" disabled>상세보기</button></td>
+		<td><button class="btns finddet" type="button" disabled>상세보기</button></td>
 		<td><%= findList.get(i).getViews() %></td>
-		<td><button class="btns finddel" type="button" id="del<%=i+1 %>" disabled>삭제</button></td>
+		<td><button class="btns finddel" type="button" disabled>삭제</button></td>
 	</tr>
 	<% } %>
 	</table>
 	<input type="hidden" id="findno" name="findno" />
 	</form>	
-	<div><%@ include file="/WEB-INF/views/admin/paging.jsp" %></div>
+	<div><%@ include file="/WEB-INF/views/admin/findpaging.jsp" %></div>
 	</div>
 </div>

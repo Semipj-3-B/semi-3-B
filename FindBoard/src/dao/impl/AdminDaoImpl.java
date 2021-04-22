@@ -10,7 +10,9 @@ import java.util.List;
 import common.JDBCTemplate;
 import dao.face.AdminDao;
 import dto.FindBoard;
+import dto.Product;
 import dto.Usertb;
+import oracle.net.aso.p;
 import util.AdminPaging;
 
 public class AdminDaoImpl implements AdminDao {
@@ -197,5 +199,84 @@ public class AdminDaoImpl implements AdminDao {
 		}
 		
 		return result;
+	}
+
+	@Override
+	public List<Product> selectProduct(Connection conn, AdminPaging apaging) {
+		String sql = "";
+		sql += "SELECT * FROM (";
+		sql += "	SELECT rownum rnum, P.* FROM (";
+		sql += "		SELECT product_id, category_id, product_name, price";
+		sql += "		FROM product";
+		sql += "		ORDER BY product_id";
+		sql += "	) P";   
+		sql += " ) WHERE rnum BETWEEN ? AND ?";   
+			         
+		List<Product> pList = new ArrayList<Product>();
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, apaging.getStartNo());
+			ps.setInt(2, apaging.getEndNo());
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				Product product = new Product();
+				
+				product.setProductId(rs.getInt("product_id"));
+				product.setCategoryId(rs.getInt("category_id"));
+				product.setProductName(rs.getString("product_name"));
+				product.setPrice(rs.getInt("price"));
+				
+				pList.add(product);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rs);
+			JDBCTemplate.close(ps);
+		}
+		
+		return pList;
+	}
+
+	@Override
+	public List<Product> selectProductByCateId(Connection conn, AdminPaging apaging, Product categoryId) {
+		String sql = "";
+		sql += "SELECT * FROM (";
+		sql += "	SELECT rownum rnum, P.* FROM (";
+		sql += "		SELECT product_id, product_name, price FROM product";
+		sql += " 		WHERE category_id = ?";
+		sql += " 		ORDER BY product_id";
+		sql += "	) P";
+		sql += " ) WHERE rnum BETWEEN ? AND ?";
+			   
+		List<Product> pList = new ArrayList<Product>();
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, categoryId.getCategoryId());
+			ps.setInt(2, apaging.getStartNo());
+			ps.setInt(3, apaging.getEndNo());
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				Product p = new Product();
+				
+				p.setProductId(rs.getInt("product_id"));
+				p.setProductName(rs.getString("product_name"));
+				p.setPrice(rs.getInt("price"));
+				
+				pList.add(p);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rs);
+			JDBCTemplate.close(ps);
+		}
+		
+		return pList;
 	}
 }

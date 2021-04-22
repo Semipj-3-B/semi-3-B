@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import dto.FindBoard;
+import dto.Product;
 import dto.Usertb;
 import util.AdminPaging;
 import util.Paging;
@@ -52,5 +53,20 @@ public interface AdminService {
 	 * @param req	찾기 게시판의 게시글 번호가 담긴 객체
 	 */
 	void deleteFind(HttpServletRequest req);
+
+	/**
+	 * 페이징 처리하여 상품 목록 전체를 가져온다.
+	 * @param apaging	페이징 정보 객체
+	 * @return	전체 상품 목록
+	 */
+	List<Product> getProductList(AdminPaging apaging);
+
+	/**
+	 * 같은 카테고리의 상품 목록을 가져온다.
+	 * @param apaging	페이징 정보 객체
+	 * @param p	카테고리ID를 저장한 전달 파라미터
+	 * @return	같은 카테고리의 상품 목록
+	 */
+	List<Product> getProdListByCateId(AdminPaging apaging, Product p);
 
 }
