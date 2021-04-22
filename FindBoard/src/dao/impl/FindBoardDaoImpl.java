@@ -10,6 +10,7 @@ import java.util.Map;
 
 import dao.face.FindBoardDao;
 import dto.FindBoard;
+import dto.FindComment;
 import dto.FindImg;
 import oracle.net.aso.f;
 import util.Paging;
@@ -631,6 +632,139 @@ public class FindBoardDaoImpl implements FindBoardDao {
 		return res;
 		
 	}
+	
+	@Override
+	public List<FindComment> selectComment(Connection conn, int findNo) {
+		
+		String sql = "";
+		sql += "SELECT * FROM findboard_comment";
+		sql += " WHERE find_no = ?";
+		sql += " ORDER BY comment_no";
+		
+		
+		List<FindComment> list = new ArrayList<>();
+		
+		try {	
+			
+			ps = conn.prepareStatement(sql);
+			
+			ps.setInt(1, findNo);
+			
+			rs = ps.executeQuery();
+			
+			while( rs.next() ) {
+				
+				FindComment res = new FindComment();
+				
+				res.setNick( rs.getString("nick") );
+				res.setCommentNo( rs.getInt("comment_no") );
+				res.setCommentText( rs.getString("comment_text") );
+				res.setCommentDate( rs.getDate("comment_date") );
+				res.setCommentUpdate( rs.getDate("comment_update") );
+				
+				list.add(res);
+				
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rs);
+			JDBCTemplate.close(ps);
+			
+		}
+		
+		return list;
+	}
+
+	@Override
+	public int insertComment(Connection conn, FindComment param) {
+		
+		String sql = "";
+		sql += "INSERT INTO findboard_comment( comment_no, find_no, user_no, nick, comment_text)";
+		sql += " VALUES (findboard_comment_seq.nextval, ?, ?, ?, ?)";
+		
+		System.out.println("DAO - inserComment 전달 완료 ");
+		int res = 0;
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			
+			ps.setInt(1, param.getFindNo() );
+			ps.setInt(2, param.getUserNo() );
+			ps.setString(3, param.getNick() );
+			ps.setString(4, param.getCommentText() );
+			
+			res = ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(ps);
+		}
+		
+		return res;
+	}
+
+	@Override
+	public int deleteComment(Connection conn, FindComment param) {
+		
+		String sql = "";
+		sql += "DELETE findboard_comment";
+		sql += " WHERE comment_no = ?";
+		
+		int res = 0;
+		
+		try {
+			ps = conn.prepareStatement(sql);
+
+			ps.setInt(1, param.getCommentNo());
+			
+			res = ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(ps);
+		}
+		
+		return res;
+	}
+
+	@Override
+	public int updateComment(Connection conn, FindComment param) {
+		
+		String sql = "";
+		sql += "UPDATE findboard_comment";
+		sql += " SET comment_text = ?,";
+		sql += "	comment_update = sysdate";
+		sql += " WHERE comment_no = ?";
+		
+		
+		int res = 0;
+		
+		try {
+			ps=conn.prepareStatement(sql);
+
+			ps.setString(1, param.getCommentText());
+			ps.setInt(2, param.getCommentNo());
+			
+			res = ps.executeUpdate();
+		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(ps);
+		}
+		
+		return res;
+
+	}
+
+	
 
 //	@Override
 //	public void deleteFile(Connection conn, boolean isNewFile) {

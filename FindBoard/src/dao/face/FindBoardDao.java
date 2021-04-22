@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import dto.FindBoard;
+import dto.FindComment;
 import dto.FindImg;
 import util.Paging;
 
@@ -151,6 +152,44 @@ public interface FindBoardDao {
 	 */
 	public int update(Connection conn, FindBoard findboard);
 
+
+	/**
+	 * 댓글 찾기
+	 * 
+	 * @param conn DB연결 객체
+	 * @param findNo 댓글을 찾을 게시글 번호
+	 * @return
+	 */
+	public List<FindComment> selectComment(Connection conn, int findNo);
+
+	
+	/**
+	 * 작성한 댓글 정보를  DB에 입력
+	 * @param conn
+	 * @param param
+	 * @return
+	 */
+	public int insertComment(Connection conn, FindComment param);
+
+	
+	/**
+	 * 댓글 삭제하기
+	 * @param conn
+	 * @param param
+	 * @return
+	 */
+	public int deleteComment(Connection conn, FindComment param);
+
+	
+	/**
+	 * 댓글 수정하기 DAO
+	 * 
+	 * @param conn
+	 * @param param
+	 * @return
+	 */
+	public int updateComment(Connection conn, FindComment param);
+
 	
 //	/**
 //	 * 수정시 기존 이미지 파일 삭제
@@ -158,6 +197,11 @@ public interface FindBoardDao {
 //	 * @param isNewFile
 //	 */
 //	public void deleteFile(Connection conn, boolean isNewFile);
+
+
+
+	
+
 
 
 

@@ -3,20 +3,28 @@ package dto;
 import java.util.Date;
 
 public class FindComment {
+	
+	
 	private int commentNo;
 	private int findNo;
 	private int userNo;
+	private String nick;
 	private String commentText;
 	private Date commentDate;
 	private Date commentUpdate;
 	
+	
+
 	@Override
 	public String toString() {
-		return "FindComment [commentNo=" + commentNo + ", findNo=" + findNo + ", userNo=" + userNo + ", commentText="
-				+ commentText + ", commentDate=" + commentDate + "]";
+		return "FindComment [commentNo=" + commentNo + ", findNo=" + findNo + ", userNo=" + userNo + ", nick=" + nick
+				+ ", commentText=" + commentText + ", commentDate=" + commentDate + ", commentUpdate=" + commentUpdate
+				+ "]";
+		
 	}
 	
-	//getter, setter
+	
+	
 	public int getCommentNo() {
 		return commentNo;
 	}
@@ -34,6 +42,12 @@ public class FindComment {
 	}
 	public void setUserNo(int userNo) {
 		this.userNo = userNo;
+	}
+	public String getNick() {
+		return nick;
+	}
+	public void setNick(String nick) {
+		this.nick = nick;
 	}
 	public String getCommentText() {
 		return commentText;
@@ -54,4 +68,9 @@ public class FindComment {
 		this.commentUpdate = commentUpdate;
 	}
 	
+	
+	
+	
+	
 }
+

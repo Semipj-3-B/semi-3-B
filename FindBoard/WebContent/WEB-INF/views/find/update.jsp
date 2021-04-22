@@ -31,6 +31,7 @@ function submitContents( elClickedObj ) {
 </script>
 
 <script type="text/javascript">
+
 $(document).ready(function () {
 
 	const upBtn = document.querySelector('.browse')

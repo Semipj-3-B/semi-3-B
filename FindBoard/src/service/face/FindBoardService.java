@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import dto.FindBoard;
+import dto.FindComment;
 import dto.FindImg;
 import util.Paging;
 
@@ -105,6 +106,45 @@ public interface FindBoardService {
 	 * @param req
 	 */
 	public void update(HttpServletRequest req);
+
+
+	
+	/**
+	 * findboard의 댓글 보여주기
+	 * @param findNo 댓글이 나올 게시글 번호
+	 * @return
+	 */
+	public List<FindComment> viewComment(int findNo);
+
+	
+	/**
+	 * 정보들 얻어오기
+	 * @param req
+	 * @return
+	 */
+	public FindComment getCommentParam(HttpServletRequest req);
+
+	/**
+	 * 댓글 작성하기
+	 * @param param
+	 */
+	public void writeComment(FindComment param);
+
+	
+	/**
+	 * 댓글 삭제하기
+	 * @param param
+	 */
+	public void removeComment(FindComment param);
+
+	
+	/**
+	 * 댓글 수정하기
+	 * @param param
+	 */
+	public void updateComment(FindComment param);
+
+	
 
 
 	

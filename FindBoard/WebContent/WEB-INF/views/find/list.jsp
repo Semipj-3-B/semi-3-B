@@ -16,9 +16,30 @@
 <script type="text/javascript">
 
 	
-	function search(){
+function search(){
+		
+		console.log($('#pet').val());
+		
+// 		if($('#pet').val() = null ){
+		
+// 			console.log("loc 가능");
+			
+// 		location.href="/find/list?loc=" + $('#Loc').val();			
+			
+// 		}else if(  $('#Loc').val() = null ){
+			
+// 			console.log("pet 가능");
+			
+// 		location.href="/find/list?pet="  + $('#pet').val();
+			
+// 		} else{
+			
+		
+// 		}
+		
 		location.href="/find/list?pet=" + $('#pet').val() + "&loc=" + $('#Loc').val();
-	}
+		
+}
 </script>
 
 <style type="text/css">

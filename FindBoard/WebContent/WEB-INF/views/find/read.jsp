@@ -34,6 +34,197 @@ $(document).ready(function() {
 });
 </script>
 
+<script type="text/javascript">
+
+$(document).ready(function () {
+	
+	
+$("#subimages").on('click', function (){
+	
+	var imageLocation = this.getAttribute("src");
+	
+	lightboxImage.setAttribute("src", imageLocation);
+	
+	lightbox.style.display = "block";
+	
+	
+})
+
+	/* 팝업 클릭시 창닫음 */
+$("#lightbox").on('click', function() {
+	lightbox.style.display = "none";
+});
+
+
+// /* 클릭시 이미지저장경로와 display속성 부여 */
+// function showPopup() {
+// 	var imageLocation = this.getAttribute("src");
+// 	lightboxImage.setAttribute("src", imageLocation);
+// 	lightbox.style.display = "block";
+
+// 	/* 팝업 클릭시 창닫음 */
+// 	lightbox.onclick = function() {
+// 		lightbox.style.display = "none";
+// 	}
+// }
+
+
+})
+
+</script>
+
+<!-- 댓글 관련 -->
+<script type="text/javascript">
+
+/* 댓글목록 조회 */
+$(document).ready(function() {
+	commentlist();
+})
+
+// $("#commentwrap").click(
+
+/* 댓글 목록조회 */
+function commentlist() {
+	
+	var findNo = $("#FindNo").val();
+	
+	$.ajax({
+		type : 'get',
+		url : '/find/commentlist',
+		data : {'findNo' : findNo},
+		dataType : 'json',
+		success : function(data) {
+			var jsontext = JSON.stringify(data);
+			var commentlist = JSON.parse(jsontext);
+
+			for(var i=0; i<commentlist.length; i++) {
+				
+				var html = '';
+				
+				html += "<div class='commentwrap'> <span class='commnetNick'>"
+				html += commentlist[i].nick
+				html += "</span> <span class='commentDate'>"
+				html += commentlist[i].commentDate
+				html += "</span>"
+				html += "<input type='button' onclick = 'commentUpdateTrans(" + commentlist[i].commentNo + ")' id='updatebtn" + commentlist[i].commentNo + "' value='수정'/>"
+				html += "<input type='button' onclick = 'commentDelete(" + commentlist[i].commentNo + ")' id='deletebtn" + commentlist[i].commentNo + "' value='삭제'/>"
+				html += "<br> <div id='comwrap" + commentlist[i].commentNo + "'> <span class='commentText' id='commentText" + commentlist[i].commentNo + "'> "
+				html += commentlist[i].commentText
+				html += "</span> </div>"
+				
+				$("#commentwrap").append(html);
+			}/* for문 끝 */
+			
+		}/* success끝 */
+		
+	})/* ajax끝 */
+	
+}//click 이벤트 끝	
+
+
+$(document).ready(function() {
+
+
+
+/* 댓글 추가 */
+$("#commentUpdatebtn").click(function() {
+	
+	
+	var findNo = $("#FindNo").val();
+	var comment = $("#comment").val();
+	var nick = $("#nick").val();
+	var userno = $("#userno").val();
+
+	console.log(findNo);
+	
+	$.ajax({
+		type : 'post',
+		url : '/find/commentinsert',
+		data : {'findNo' : findNo
+				, 'comment' : comment
+				, 'nick' : nick
+				, 'userno' : userno},
+		success : function() {
+			$("#comment").val("");
+			$("#commentwrap").html("");
+			
+			commentlist();
+		}	//success
+		
+	})	//ajax
+	
+})//click
+
+})//document
+
+/* 댓글 삭제 */
+function commentDelete(commentno) {
+	
+	$.ajax({
+		type : 'post',
+		url : '/find/commentdelete',
+		data : {'commentno' : commentno},
+		success : function() {
+			
+			$("#commentwrap").html("");
+			
+			commentlist();
+		}
+			
+	})
+}
+
+/* 댓글 수정 */
+function commentUpdateTrans(commentno) {
+	
+	var contentText = $('#commentText' + commentno).text();
+	
+	$('#updatebtn' + commentno).css('display', 'none');
+	$('#deletebtn' + commentno).css('display', 'none');
+	
+	var html = '';
+	
+	html += "<input type='text' id='comupdate' value='" + contentText + "' style='width:300px; height:40px;'/>";
+	html += "<input type='button' id='updateConfirm' onclick='commentUpdate(" + commentno + ")' value='수정'/>"
+	html += "<input type='button' id='canclebtn' onclick='updatecancle()' value='취소'/>"
+	
+	$('#comwrap' + commentno).html(html)
+	
+	commentUpdateFocus();
+}
+
+
+/* 수정버튼 클릭 */
+function commentUpdate(commentno) {
+	
+	var comment = $('#comupdate').val();
+	
+	$.ajax({
+		type: 'post',
+		url: '/find/commentupdate',
+		data: { 'commentno' : commentno
+				,'comment' : comment},
+		success : function() {
+			
+			$("#commentwrap").html("");
+			
+			commentlist();
+		}
+	})
+}
+
+/* 취소버튼 클릭 */
+function updatecancle() {
+	
+	$("#commentwrap").html("");
+	
+	commentlist();
+}
+
+
+</script>
+
+
 <style type="text/css">
 
 #findheader{
@@ -97,15 +288,34 @@ $(document).ready(function() {
 	text-align: center;
 }
 
-#content {
-	width: 80%;
-	height: 200px;
-	margin: 10px 0 10px 5px;
+#comment {
+width : 500px;
+height : 70px;
 }
 
 #button{
 	float: right;
 	margin: 0px 0 0px 50px;
+}
+
+#lightbox {
+  position: fixed;
+  width:50%;
+  height:50%;
+  background-color:rgba(0,0,0,0.7); 
+  top:20%;
+  left:20%;
+  display:none;
+}
+
+#lightbox img {
+  position:absolute; 
+  top:50%;
+  left:50%;
+  width:100%;
+  height:100%;
+  transform:translate(-50%, -50%);
+  border:1px solid #eee;      
 }
 
 </style>
@@ -114,11 +324,13 @@ $(document).ready(function() {
 
 <div class="container">
 
-<h1>반려동물 찾기  </h1>
+<h1>반려동물 찾기</h1>
 <hr>
 
-
-
+<input type ="hidden" name ="FindNo" id ="FindNo" value="<%=request.getParameter("FindNo") %>" />
+<input type="hidden" id="nick" value="<%=session.getAttribute("nick") %>">
+<input type="hidden" id="userno" value="<%=session.getAttribute("userno")%>">
+	
 <div>
 
 <div id="findheader"><%=b.getTitle() %></div>
@@ -147,7 +359,9 @@ $(document).ready(function() {
 		<div id="subimg2"></div>
 		<div id="subimg3"></div>
 	</div>
-		
+		<div id="lightbox">
+		<img alt="" src="" id="lightboxImage">
+	</div>
 	<%}	if(i < 2 && i > 0) {%>
 	
 	<div id="mainimg" class="mainimg"><img src="/upload/<%=findImg.get(0).getStoredImg() %>" id="mainimages"/></div>
@@ -156,32 +370,41 @@ $(document).ready(function() {
 <!-- 		<div id="subimg2"></div> -->
 <!-- 		<div id="subimg3"></div> -->
 	</div>
-	
+		<div id="lightbox">
+		<img alt="" src="" id="lightboxImage" />
+	</div>
 	<%}	if(i < 3 && i > 1) {%>
 
 	<div id="mainimg" class="mainimg"><img src="/upload/<%=findImg.get(0).getStoredImg() %>" id="mainimages"/></div>
 	<div class="subimg-grid">
-		<div id="subimg1"><img src="/upload/<%=findImg.get(1).getStoredImg() %>" id="subimages"/></div>
+		<div id="subimg1"><img src="/upload/<%=findImg.get(1).getStoredImg() %>" id="subimages" class="subimages" /></div>
 <!-- 		<div id="subimg2"></div> -->
 <!-- 		<div id="subimg3"></div> -->
 	</div>
-	
+		<div id="lightbox">
+		<img alt="" src="" id="lightboxImage">
+	</div>
 	<%}	if(i < 4 && i > 2) {%>
 		
 	<div id="mainimg" class="mainimg"><img src="/upload/<%=findImg.get(0).getStoredImg() %>" id="mainimages"/></div>
 	<div class="subimg-grid">
-		<div id="subimg1"><img src="/upload/<%=findImg.get(1).getStoredImg() %>" id="subimages" /></div>
-		<div id="subimg2"><img src="/upload/<%=findImg.get(2).getStoredImg() %>" id="subimages" /></div>
+		<div id="subimg1"><img src="/upload/<%=findImg.get(1).getStoredImg() %>" id="subimages" class="subimages" /></div>
+		<div id="subimg2"><img src="/upload/<%=findImg.get(2).getStoredImg() %>" id="subimages" class="subimages" /></div>
 <!-- 		<div id="subimg3"></div> -->
 	</div>	
-	
+		<div id="lightbox">
+		<img alt="" src="" id="lightboxImage">
+	</div>
 	<%}	if(i < 5 && i > 3) {%>
 	<div id="mainimg" class="mainimg"><img src="/upload/<%=findImg.get(0).getStoredImg() %>" id="mainimages"/></div>
 	<div class="subimg-grid">
-		<div id="subimg1"><img src="/upload/<%=findImg.get(1).getStoredImg() %>"  id="subimages"/></div>
-		<div id="subimg2"><img src="/upload/<%=findImg.get(2).getStoredImg() %>"  id="subimages"/></div>
-		<div id="subimg3"><img src="/upload/<%=findImg.get(3).getStoredImg() %>"  id="subimages"/></div>
+		<div id="subimg1"><img src="/upload/<%=findImg.get(1).getStoredImg() %>"  id="subimages" class="subimages" /></div>
+		<div id="subimg2"><img src="/upload/<%=findImg.get(2).getStoredImg() %>"  id="subimages" class="subimages" /></div>
+		<div id="subimg3"><img src="/upload/<%=findImg.get(3).getStoredImg() %>"  id="subimages" class="subimages" /></div>
 	</div>	
+	<div id="lightbox">
+		<img alt="" src="" id="lightboxImage" />
+	</div>
 
 	<% } %><!-- if문 끝 -->
 
@@ -200,11 +423,16 @@ $(document).ready(function() {
 	<button id="btnDelete" class="btn btn-danger">글삭제</button>
 <%	} %>
 </div>
+<hr>
 
 <div>
-<textarea id="content" name="content"></textarea>
-	<div id="button">
-	<button>댓글등록</button>
+	<h3>댓글</h3>
+	
+	<input type="text" id=comment name="comment" />
+	<input type="button" id="commentUpdatebtn" value="댓글 등록"/>
+	
+	<div id="commentwrap">
+<!-- 	<h1>댓글목록</h1> -->
 	</div>
 </div>
 
@@ -216,3 +444,32 @@ $(document).ready(function() {
 
 
 <%@ include file="/WEB-INF/views/layout/footer.jsp" %>
+
+
+
+
+
+
+
+
+<!-- 	<div class="imgbox"> -->
+<%-- 		<% for( int i=0; i<file.size(); i++) { %> --%>
+<%-- 			<img src="<%=request.getContextPath()%>/upload/<%=file.get(i).getStoredName() %>" --%>
+<%-- 				data-src="<%=request.getContextPath()%>/upload/<%=file.get(i).getStoredName() %>" --%>
+<!-- 				 class="pic"> -->
+<%-- 		<% } %> --%>
+<!-- 		<br> -->
+<!-- 	</div> -->
+<!-- 	<div id="lightbox"> -->
+<!-- 		<img alt="" src="" id="lightboxImage"> -->
+<!-- 	</div> -->
+
+
+
+
+
+
+
+
+
+
