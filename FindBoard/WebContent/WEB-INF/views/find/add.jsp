@@ -265,6 +265,11 @@ textarea {
 
 <div class="container">
 <form action="/find/add" method="post" enctype="multipart/form-data">
+
+<input type ="hidden" name ="FindNo" id ="FindNo" value="<%=request.getParameter("FindNo") %>" />
+<input type="hidden" id="nick" value="<%=session.getAttribute("nick") %>">
+<input type="hidden" id="userno" value="<%=session.getAttribute("userno")%>">
+
 	<h1><input type="text" id="title" name="title" placeholder="제목입력" /></h1>
 	<hr> <!-- style="border: 3px solid #EBC680;" -->
 	

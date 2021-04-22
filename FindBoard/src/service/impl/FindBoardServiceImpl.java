@@ -315,6 +315,12 @@ public class FindBoardServiceImpl implements FindBoardService{
 			findBoard.setUserNo(userno);
 		}
 				
+//		String usernoString = String.valueOf(req.getSession().getAttribute("userno"));
+//		if(usernoString != null && !"".equals(usernoString)) {
+//			findBoard.setUserNo((Integer) req.getSession().getAttribute("userno"));
+//		}
+		System.out.println("userno = " + req.getSession().getAttribute("userno") );
+		
 		String usernoString = String.valueOf(req.getSession().getAttribute("userno"));
 		if(usernoString != null && !"".equals(usernoString)) {
 			findBoard.setUserNo((Integer) req.getSession().getAttribute("userno"));
