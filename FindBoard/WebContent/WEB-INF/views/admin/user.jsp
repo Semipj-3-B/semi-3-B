@@ -32,7 +32,7 @@ $(document).ready(function () {
 		console.log("3. 버튼 활성화")
 	})
 	
-	$("button").click(function () {
+	$(".userdel").click(function () {
 		if(confirm("회원을 삭제하시겠습니까?")) {
 			$("form").submit()
 		} else {
@@ -50,7 +50,6 @@ $(document).ready(function () {
 		<th style="width: 20%">닉네임</th>
 		<th style="width: 15%">탈퇴요청</th>
 		<th style="width: 15%">DB삭제</th>
-		<th style="width: 15%">이메일전송</th>
 	</tr>
 	<% for(int i = 0; i < userList.size(); i++) { %>
 	<tr>
@@ -59,8 +58,7 @@ $(document).ready(function () {
 		<td><%= userList.get(i).getUserId() %></td>
 		<td><%= userList.get(i).getNick() %></td>
 		<td>-</td>
-		<td><button class="btns" type="button" id="del<%=i+1 %>" disabled>삭제</button></td>
-		<td><button class="btns" type="button" id="sub<%=i+1 %>" disabled>전송</button></td>
+		<td><button class="btns usredel" type="button" id="del<%=i+1 %>" disabled>삭제</button></td>
 	</tr>
 	<% } %>
 	</table>

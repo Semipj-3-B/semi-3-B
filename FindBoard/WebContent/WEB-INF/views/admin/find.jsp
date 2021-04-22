@@ -35,11 +35,11 @@ $(document).ready(function () {
 		console.log("3. 버튼 활성화")
 	})
 	
-	$(".detail").click(function () {
+	$(".finddetail").click(function () {
 		 window.open("/find/read?FindNo="+findno, "_blank", "width=400px height=200px" )
 	})
 	
-	$(".del").click(function () {
+	$(".finddel").click(function () {
 		if(confirm("글을 삭제하시겠습니까?")) {
 			$("form").submit()
 		} else {
@@ -52,18 +52,18 @@ $(document).ready(function () {
 	<table class="table">
 	<tr>
 		<th style="width: 5%"></th>
-		<th style="width: 10%">글번호</th>
-		<th style="width: 15%">게시글</th>
-		<th style="width: 10%">조회수</th>
-		<th style="width: 15%">글삭제</th>
+		<th style="width: 5%">글번호</th>
+		<th style="width: 5%">게시글</th>
+		<th style="width: 5%">조회수</th>
+		<th style="width: 5%">글삭제</th>
 	</tr>
 	<% for(int i = 0; i < findList.size(); i++) { %>
 	<tr>
 		<td><input type="radio" name="chk" value="<%= findList.get(i).getFindNo() %>" /></td>
 		<td><%= findList.get(i).getFindNo() %></td>
-		<td><button class="btns detail" type="button" id="detail<%=i+1 %>" disabled>상세보기</button></td>
+		<td><button class="btns finddet" type="button" id="detail<%=i+1 %>" disabled>상세보기</button></td>
 		<td><%= findList.get(i).getViews() %></td>
-		<td><button class="btns del" type="button" id="del<%=i+1 %>" disabled>삭제</button></td>
+		<td><button class="btns finddel" type="button" id="del<%=i+1 %>" disabled>삭제</button></td>
 	</tr>
 	<% } %>
 	</table>
