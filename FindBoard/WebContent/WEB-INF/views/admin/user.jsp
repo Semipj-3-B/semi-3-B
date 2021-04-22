@@ -33,7 +33,11 @@ $(document).ready(function () {
 	})
 	
 	$("button").click(function () {
-		$("form").submit()
+		if(confirm("회원을 삭제하시겠습니까?")) {
+			$("form").submit()
+		} else {
+			return false
+		}
 	})
 })
 </script>	

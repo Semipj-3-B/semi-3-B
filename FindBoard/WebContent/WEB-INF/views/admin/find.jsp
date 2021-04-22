@@ -19,10 +19,13 @@
 <script type="text/javascript">
 $(document).ready(function () {
 	
+	var findno = 0
+	
+	//findno를 post로 보내기 위한 코드
 	$("input[type=radio]").change(function () {
 		console.log("0. $this: " , $(this))
 			
-		var findno = $(this).val()
+		findno = $(this).val()
 		console.log("1. 라디오 val(findno) 저장")
 			
 		$("#findno").attr("value", findno)
@@ -32,10 +35,18 @@ $(document).ready(function () {
 		console.log("3. 버튼 활성화")
 	})
 	
-	$("button").click(function () {
-		$("form").submit()
+	$(".detail").click(function () {
+		 window.open("/find/read?FindNo="+findno, "_blank", "width=400px height=200px" )
 	})
-})
+	
+	$(".del").click(function () {
+		if(confirm("글을 삭제하시겠습니까?")) {
+			$("form").submit()
+		} else {
+			return false
+		}
+	})
+}) 
 </script>	
 	<form action="/admin/find" method="post">	
 	<table class="table">
@@ -50,9 +61,9 @@ $(document).ready(function () {
 	<tr>
 		<td><input type="radio" name="chk" value="<%= findList.get(i).getFindNo() %>" /></td>
 		<td><%= findList.get(i).getFindNo() %></td>
-		<td><button class="btns" type="button" id="detail<%=i+1 %>" disabled>상세보기</button></td>
+		<td><button class="btns detail" type="button" id="detail<%=i+1 %>" disabled>상세보기</button></td>
 		<td><%= findList.get(i).getViews() %></td>
-		<td><button class="btns" type="button" id="del<%=i+1 %>" disabled>삭제</button></td>
+		<td><button class="btns del" type="button" id="del<%=i+1 %>" disabled>삭제</button></td>
 	</tr>
 	<% } %>
 	</table>
