@@ -20,18 +20,28 @@
 	margin: 0 0 0 150px;
 }
 
-.bts {
+.btns {
 	transition-duration: 0.4s;
 	background-color: #EBC680;
 	color: white;
 	
 }
 
-.bts:hover {
+.btns:hover {
 	border: 2px solid #A48654;
 	background-color: white;
 	color: #A48654;
 }
+
+.funBtns {
+	border: none;
+	background-color: white;
+	transition-duration: 0.4s;
+	color: #A48654;
+}
+.funBtns:hover {
+	background-color: #A48654;
+	color: white;
 
 table {width: 900px;}
 th, td { text-align:center;}
@@ -64,10 +74,10 @@ $(document).ready(function () {
 </script>
 <div class="container">
 	<div class="menu-grid" >
-	<button class="bts btn" id="user">회원 관리</button>
-	<button class="bts btn" id="find">찾기 게시글 관리</button>
-	<button class="bts btn" id="discovery">발견 게시글 관리</button>
-	<button class="bts btn" id="review">후기 게시글 관리</button>
-	<button class="bts btn" id="product">제품 관리</button>
+	<button class="btns btn" id="user">회원 관리</button>
+	<button class="btns btn" id="find">찾기 게시글 관리</button>
+	<button class="btns btn" id="discovery">발견 게시글 관리</button>
+	<button class="btns btn" id="review">후기 게시글 관리</button>
+	<button class="btns btn" id="product">제품 관리</button>
 	</div>
 	<div class="contents">

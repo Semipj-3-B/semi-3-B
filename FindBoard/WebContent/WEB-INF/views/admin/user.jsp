@@ -1,21 +1,10 @@
 <%@page import="dto.Usertb"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<% List<Usertb> userList = (List<Usertb>) request.getAttribute("userList"); %>
 
+<% List<Usertb> userList = (List<Usertb>) request.getAttribute("userList"); %>
 <%@ include file="/WEB-INF/views/admin/common.jsp" %>
-<style type="text/css">
-.btns {
-	border: none;
-	background-color: white;
-	transition-duration: 0.4s;
-	color: #A48654;
-}
-.btns:hover {
-	background-color: #A48654;
-	color: white;
-}
-</style>
+
 <script type="text/javascript">
 $(document).ready(function () {
 	$("#user").css({
@@ -33,7 +22,7 @@ $(document).ready(function () {
 		$("#userno").attr("value", userno)
 		console.log("2. 라디오 val(userno) hidden에 삽입")
 			
-		$(".btns").attr("disabled", false)
+		$(".funBtns").attr("disabled", false)
 		console.log("3. 버튼 활성화")
 	})
 	
@@ -63,12 +52,12 @@ $(document).ready(function () {
 		<td><%= userList.get(i).getUserId() %></td>
 		<td><%= userList.get(i).getNick() %></td>
 		<td>-</td>
-		<td><button class="btns userdel" type="button" disabled>삭제</button></td>
+		<td><button class="funBtns userdel" type="button" disabled>삭제</button></td>
 	</tr>
 	<% } %>
 	</table>
 	<input type="hidden" id="userno" name="userno" />
 	</form>
-	<div><%@ include file="/WEB-INF/views/admin/userpaging.jsp" %></div>
+	<div><%@ include file="/WEB-INF/views/admin/paging.jsp" %></div>
 	</div>
 </div>

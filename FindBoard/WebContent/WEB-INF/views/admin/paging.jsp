@@ -23,7 +23,7 @@
 	
 		<!-- 첫 페이지로 이동 ← -->
 		<% if(apaging.getCurPage() != 1) { %>	<!-- 첫 페이지가 아닐 때 보인다 -->
-		<li><a href="/admin">&larr;</a></li>
+		<li><a href="<%= request.getContextPath()%>">&larr;</a></li>
 		<% } %>
 		<!-- 조건에 만족하지 않으면 아예 안보임 -->
 		
@@ -32,7 +32,7 @@
 		<!-- 이전 페이징 리스트로 가기 << -->
 		<% if(apaging.getStartPage() > apaging.getPageCount() ){ %>
 		<li>
-		<a href="/admin/find?curPage=<%=apaging.getStartPage() - apaging.getPageCount() %>"> &laquo; </a>
+		<a href="<%= request.getContextPath()%>?curPage=<%=apaging.getStartPage() - apaging.getPageCount() %>"> &laquo; </a>
 		</li>
 		<% } else { %>
 		<li class="disabled"><a>&laquo;</a></li>
@@ -42,7 +42,7 @@
 		
 		<!-- 이전 페이지로 가기 < -->
 		<% if(apaging.getCurPage() != 1) { %>
-		<li><a href="/admin/find?curPage=<%=apaging.getCurPage() - 1 %>"> &lt; </a></li>
+		<li><a href="<%= request.getContextPath()%>?curPage=<%=apaging.getCurPage() - 1 %>"> &lt; </a></li>
 		<% } %>
 		<!-- 조건에 만족하지 않으면 아예 안보임 -->
 		
@@ -50,23 +50,23 @@
 		<!-- 페이징 리스트 -->
 		<% for(int i=apaging.getStartPage(); i<=apaging.getEndPage(); i++ ) { %>
 			<% if( i == apaging.getCurPage() ) { %>
-		<li class="active"><a href="/admin/find?curPage=<%=i %>"><%=i %></a></li>
+		<li class="active"><a href="<%= request.getContextPath()%>?curPage=<%=i %>"><%=i %></a></li>
 			<% }  else {%>
-		<li><a href="/admin/find?curPage=<%=i %>"><%=i %></a></li>
+		<li><a href="<%= request.getContextPath()%>?curPage=<%=i %>"><%=i %></a></li>
 			<% } %>
 		<% } %>
 		
 		
 		<!-- 다음 페이지로 가기 > -->		
 		<% if(apaging.getCurPage() != apaging.getTotalPage() ) { %>
-		<li><a href="/admin/find?curPage=<%=apaging.getCurPage() + 1%>">&gt;</a></li>
+		<li><a href="<%= request.getContextPath()%>?curPage=<%=apaging.getCurPage() + 1%>">&gt;</a></li>
 		<% } %>
 		
 		
 		
 		<!-- 다음 페이징 리스트로 가기 >> -->
 		<% if( apaging.getEndPage() != apaging.getTotalPage() ) { %>
-		<li><a href="/admin/find?curPage=<%=apaging.getStartPage() + apaging.getPageCount()%>">&raquo;</a></li>
+		<li><a href="<%= request.getContextPath()%>?curPage=<%=apaging.getStartPage() + apaging.getPageCount()%>">&raquo;</a></li>
 		<% } else {%>
 		<li class="disabled"><a>&raquo;</a></li>
 		<% } %>
@@ -75,7 +75,7 @@
 		
 		<!-- 마지막 페이지로 가기 → -->
 		<% if(apaging.getCurPage() != apaging.getTotalPage() ) { %>	<!-- 마지막 페이지가 아닐 때 보인다 -->
-		<li><a href="/admin/find?curPage=<%=apaging.getTotalPage()%>">&rarr;</a></li>
+		<li><a href="<%= request.getContextPath()%>?curPage=<%=apaging.getTotalPage()%>">&rarr;</a></li>
 		<% } %>
 		<!-- 조건에 만족하지 않으면 아예 안보임 -->
 		

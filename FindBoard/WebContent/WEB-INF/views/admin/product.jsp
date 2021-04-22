@@ -1,20 +1,10 @@
 <%@page import="dto.Product"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <% List<Product> pList = (List<Product>) request.getAttribute("productList"); %>
 <%@ include file="/WEB-INF/views/admin/common.jsp" %>
-<style type="text/css">
-.btns {
-	border: none;
-	background-color: white;
-	transition-duration: 0.4s;
-	color: #A48654;
-}
-.btns:hover {
-	background-color: #A48654;
-	color: white;
-}
-</style>
+
 <script type="text/javascript">
 $(document).ready(function () {
 	var prodId = 0
@@ -61,12 +51,13 @@ function getProdId() {
 	$("input[type=radio]").change(function () {
 		prodId = $(this).val()
 		$("#prodId").attr("value", prodId)
-		$(".btns").attr("disabled", false)
+		$(".funBtns").attr("disabled", false)
 	})
 }
 
 //카테고리별 목록 조회 
 function viewProducts(data) {
+	console.log("성공")
 	var pList = JSON.parse(JSON.stringify(data))
 	console.log(pList)
 	
@@ -83,8 +74,8 @@ function viewProducts(data) {
 		html += "<td>" + pList[i].productId + "</td>"
 		html += "<td>" + pList[i].productName + "</td>"
 		html += "<td>" + pList[i].price + "</td>"
-		html += "<td><button class='btns prodmod' type='button' disabled>수정</button></td>"
-		html += "<td><button class='btns proddel' type='button' disabled>삭제</button></td>"
+		html += "<td><button class='funBtns prodmod' type='button' disabled>수정</button></td>"
+		html += "<td><button class='funBtns proddel' type='button' disabled>삭제</button></td>"
 		html += "</tr>" 
 	}	
 		$("table").append(html)
@@ -113,13 +104,13 @@ function viewProducts(data) {
 		<td><%= pList.get(i).getProductId() %></td>
 		<td><%= pList.get(i).getProductName() %></td>
 		<td><%= pList.get(i).getPrice() %></td>
-		<td><button class="btns prodmod" type="button" disabled>수정</button></td>
-		<td><button class="btns proddel" type="button" disabled>삭제</button></td>
+		<td><button class="funBtns prodmod" type="button" disabled>수정</button></td>
+		<td><button class="funBtns proddel" type="button" disabled>삭제</button></td>
 	</tr>
 	<% } %>
 	</table>
 	<input type="hidden" id="prodId" name="prodId" />
 	</form>
-	<div><%@ include file="/WEB-INF/views/admin/prodpaging.jsp" %></div>
+	<div><%@ include file="/WEB-INF/views/admin/paging.jsp" %></div>
 	</div>
 </div>

@@ -1,21 +1,10 @@
 <%@page import="dto.FindBoard"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<% List<FindBoard> findList = (List<FindBoard>) request.getAttribute("findList"); %>
 
+<% List<FindBoard> findList = (List<FindBoard>) request.getAttribute("findList"); %>
 <%@ include file="/WEB-INF/views/admin/common.jsp" %>
-<style type="text/css">
-.btns {
-	border: none;
-	background-color: white;
-	transition-duration: 0.4s;
-	color: #A48654;
-}
-.btns:hover {
-	background-color: #A48654;
-	color: white;
-}
-</style>
+
 <script type="text/javascript">
 $(document).ready(function () {
 	
@@ -31,7 +20,7 @@ $(document).ready(function () {
 	$("input[type=radio]").change(function () {
 		findno = $(this).val()
 		$("#findno").attr("value", findno)
-		$(".btns").attr("disabled", false)
+		$(".funBtns").attr("disabled", false)
 	})
 	
 	$(".finddet").click(function () {
@@ -60,14 +49,14 @@ $(document).ready(function () {
 	<tr>
 		<td><input type="radio" name="chk" value="<%= findList.get(i).getFindNo() %>" /></td>
 		<td><%= findList.get(i).getFindNo() %></td>
-		<td><button class="btns finddet" type="button" disabled>상세보기</button></td>
+		<td><button class="funBtns finddet" type="button" disabled>상세보기</button></td>
 		<td><%= findList.get(i).getViews() %></td>
-		<td><button class="btns finddel" type="button" disabled>삭제</button></td>
+		<td><button class="funBtns finddel" type="button" disabled>삭제</button></td>
 	</tr>
 	<% } %>
 	</table>
 	<input type="hidden" id="findno" name="findno" />
 	</form>	
-	<div><%@ include file="/WEB-INF/views/admin/findpaging.jsp" %></div>
+	<div><%@ include file="/WEB-INF/views/admin/paging.jsp" %></div>
 	</div>
 </div>
