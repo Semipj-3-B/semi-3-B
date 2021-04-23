@@ -53,6 +53,8 @@ function btnsEvent() {
 	//수정하기
 	$(".prodmod").click(function () {
 		 window.open("/product/edit?productId="+prodId, "_blank", "width=400px height=200px")
+	})
+	
 	$(".proddel").click(function () {
 		if(confirm("상품을 삭제하시겠습니까?")) {
 			$("form").submit()

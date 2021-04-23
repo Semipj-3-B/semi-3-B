@@ -26,27 +26,25 @@ public class AdminProductController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
-		AdminPaging apaging = adminService.getPaging(req);
-		req.setAttribute("apaging", apaging);
 		
-		Product p = null;
 		List<Product> productList = null;
-		Gson gson = null;
 		
 		//ajax로 요청 들어왔을 때
 		String param = req.getParameter("categoryId");
-		System.out.println("select: " + param);
 		if(param != null && !"".equals(param)) {
-			p = new Product();
-			p.setCategoryId(Integer.parseInt(param));
-			productList = adminService.getProdListByCateId(apaging, p);
-			gson = new Gson();
+			Gson gson = new Gson();
+			int categoryId = Integer.parseInt(param);
+			productList = adminService.getProdListByCateId(categoryId);
+			
 			resp.setContentType("application/json; charset=utf-8");
 			PrintWriter out = resp.getWriter();
 			out.print(gson.toJson(productList));
 			
 		} else {
+			AdminPaging apaging = adminService.getPaging(req);
 			productList = adminService.getProductList(apaging);
+
+			req.setAttribute("apaging", apaging);
 			req.setAttribute("productList", productList);
 			req.getRequestDispatcher("/WEB-INF/views/admin/product.jsp").forward(req, resp);
 		}

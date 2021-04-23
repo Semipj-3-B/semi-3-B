@@ -242,23 +242,17 @@ public class AdminDaoImpl implements AdminDao {
 	}
 
 	@Override
-	public List<Product> selectProductByCateId(Connection conn, AdminPaging apaging, Product categoryId) {
+	public List<Product> selectProductByCateId(Connection conn, int categoryId) {
 		String sql = "";
-		sql += "SELECT * FROM (";
-		sql += "	SELECT rownum rnum, P.* FROM (";
-		sql += "		SELECT product_id, product_name, price FROM product";
-		sql += " 		WHERE category_id = ?";
-		sql += " 		ORDER BY product_id";
-		sql += "	) P";
-		sql += " ) WHERE rnum BETWEEN ? AND ?";
+		sql += "SELECT product_id, product_name, price FROM product";
+		sql += " WHERE category_id = ?";
+		sql += " ORDER BY product_id";
 			   
 		List<Product> pList = new ArrayList<Product>();
 		
 		try {
 			ps = conn.prepareStatement(sql);
-			ps.setInt(1, categoryId.getCategoryId());
-			ps.setInt(2, apaging.getStartNo());
-			ps.setInt(3, apaging.getEndNo());
+			ps.setInt(1, categoryId);
 			rs = ps.executeQuery();
 			
 			while(rs.next()) {

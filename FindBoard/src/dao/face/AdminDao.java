@@ -68,12 +68,11 @@ public interface AdminDao {
 
 	/**
 	 * product 테이블에서 같은 카테고리를 가진 행을 조회한다.
-	 * @param conn		DB 연결 객체
-	 * @param apaging	페이징 정보 객체
+	 * @param conn			DB 연결 객체
 	 * @param categoryId	카테고리ID
 	 * @return	조회 결과 목록 리스트
 	 */
-	List<Product> selectProductByCateId(Connection conn, AdminPaging apaging, Product categoryId);
+	List<Product> selectProductByCateId(Connection conn, int categoryId);
 
 	/**
 	 * 상품 ID로 상품 DB를 삭제한다.

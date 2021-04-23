@@ -15,11 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import dto.FindBoard;
-import dto.Usertb;
 import service.face.AdminService;
 import service.impl.AdminServiceImpl;
 import util.AdminPaging;
-import util.Paging;
 
 @WebServlet("/admin/find")
 public class AdminFindController extends HttpServlet {

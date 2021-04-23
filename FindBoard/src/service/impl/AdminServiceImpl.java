@@ -90,9 +90,8 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public List<Product> getProdListByCateId(AdminPaging apaging, Product p) {
-		Connection conn = JDBCTemplate.getConnection();
-		return adminDao.selectProductByCateId(conn, apaging, p);
+	public List<Product> getProdListByCateId(int categoryId) {
+		return adminDao.selectProductByCateId(JDBCTemplate.getConnection(), categoryId);
 	}
 
 	@Override

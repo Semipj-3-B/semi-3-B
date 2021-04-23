@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import dto.DiscoverBoard;
 import dto.FindBoard;
 import dto.Product;
 import dto.Usertb;
@@ -64,11 +65,10 @@ public interface AdminService {
 
 	/**
 	 * 같은 카테고리의 상품 목록을 가져온다.
-	 * @param apaging	페이징 정보 객체
-	 * @param p		카테고리ID를 저장한 전달 파라미터
+	 * @param categoryId	카테고리ID를 저장한 전달 파라미터
 	 * @return	같은 카테고리의 상품 목록
 	 */
-	List<Product> getProdListByCateId(AdminPaging apaging, Product p);
+	List<Product> getProdListByCateId(int categoryId);
 
 	/**
 	 * 상품을 삭제한다.
@@ -89,5 +89,6 @@ public interface AdminService {
 	 * @return		카테고리 값에 따른 조회 결과
 	 */
 	List<FindBoard> getFindListByMap(Map<String, String> map);
+
 
 }
