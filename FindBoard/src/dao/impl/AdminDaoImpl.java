@@ -13,6 +13,7 @@ import dao.face.AdminDao;
 import dto.DiscoverBoard;
 import dto.FindBoard;
 import dto.Product;
+import dto.ReviewUserJoin;
 import dto.Usertb;
 import oracle.net.aso.p;
 import util.AdminPaging;
@@ -532,5 +533,96 @@ public class AdminDaoImpl implements AdminDao {
 			JDBCTemplate.close(ps);
 		}
 		return dList;
+	}
+
+	@Override
+	public List<ReviewUserJoin> selectReviewBoard(Connection conn, AdminPaging apaging) {
+		String sql = "";
+		sql += " SELECT * FROM (";
+		sql += "	    SELECT rownum rnum, R.* FROM (";
+		sql += "	           SELECT";
+		sql += "	               review_no, s.review_sort_detail, title, u.user_id, create_date, views";
+		sql += "	           FROM review_board b, review_board_sort s, usertb u";
+		sql += "	           WHERE b.review_sort = s.review_sort AND b.user_no = u.user_no";
+		sql += "	           ORDER BY review_no DESC";
+		sql += "	       ) R";
+		sql += "	   ) REVIEW";
+		sql += "	   WHERE rnum BETWEEN ? AND ?";
+		
+		//결과 저장
+		List<ReviewUserJoin> reviewBoardList = new ArrayList<ReviewUserJoin>();
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			
+			ps.setInt(1, apaging.getStartNo());
+			ps.setInt(2, apaging.getEndNo());
+			
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				ReviewUserJoin review = new ReviewUserJoin(); // 결과값 저장 객체
+				
+				review.setReviewNo(rs.getInt("review_no"));
+				review.setReviewSortDetail(rs.getString("review_sort_detail"));
+				review.setTitle(rs.getString("title"));
+				review.setUserId(rs.getString("user_id"));
+				review.setCreateDate(rs.getDate("create_date"));
+				review.setViews(rs.getInt("views"));
+				
+				reviewBoardList.add(review);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rs);
+			JDBCTemplate.close(ps);
+		}
+		
+		return reviewBoardList;
+	}
+
+	@Override
+	public List<ReviewUserJoin> selectReviewBySort(Connection conn, int reviewSort) {
+		String sql = "";
+		sql += "SELECT";
+		sql += "	review_no, s.review_sort_detail, title, u.user_id, create_date, views ";
+		sql += "FROM ";
+		sql += "	review_board b, review_board_sort s, usertb u ";
+		sql += "WHERE b.review_sort = s.review_sort";
+		sql += "		AND b.user_no = u.user_no";
+		sql += "		AND s.review_sort = ? ";
+		sql += "ORDER BY review_no DESC";
+		
+		//결과 저장
+		List<ReviewUserJoin> reviewBoardList = new ArrayList<ReviewUserJoin>();
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, reviewSort);
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				ReviewUserJoin review = new ReviewUserJoin(); // 결과값 저장 객체
+				
+				review.setReviewNo(rs.getInt("review_no"));
+				review.setReviewSortDetail(rs.getString("review_sort_detail"));
+				review.setTitle(rs.getString("title"));
+				review.setUserId(rs.getString("user_id"));
+				review.setCreateDate(rs.getDate("create_date"));
+				review.setViews(rs.getInt("views"));
+				
+				reviewBoardList.add(review);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rs);
+			JDBCTemplate.close(ps);
+		}
+		
+		return reviewBoardList;
 	}
 }

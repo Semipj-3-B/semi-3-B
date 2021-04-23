@@ -14,6 +14,7 @@ import dao.impl.AdminDaoImpl;
 import dto.DiscoverBoard;
 import dto.FindBoard;
 import dto.Product;
+import dto.ReviewUserJoin;
 import dto.Usertb;
 import oracle.net.aso.p;
 import service.face.AdminService;
@@ -225,6 +226,16 @@ public class AdminServiceImpl implements AdminService {
 		}
 	
 		return dList;
+	}
+
+	@Override
+	public List<ReviewUserJoin> getReviewList(AdminPaging apaging) {
+		return adminDao.selectReviewBoard(JDBCTemplate.getConnection(), apaging);
+	}
+
+	@Override
+	public List<ReviewUserJoin> getReviewBySort(int reviewSort) {
+		return adminDao.selectReviewBySort(JDBCTemplate.getConnection(), reviewSort);
 	}
 
 }

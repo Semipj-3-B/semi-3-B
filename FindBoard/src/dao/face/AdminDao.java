@@ -7,6 +7,7 @@ import java.util.Map;
 import dto.DiscoverBoard;
 import dto.FindBoard;
 import dto.Product;
+import dto.ReviewUserJoin;
 import dto.Usertb;
 import util.AdminPaging;
 import util.Paging;
@@ -138,6 +139,22 @@ public interface AdminDao {
 	 * @return		조회 결과 리스트
 	 */	
 	List<DiscoverBoard> selectDiscByLoc(Connection conn, String loc);
+
+	/**
+	 * reviewboard 테이블 목록을 전체 조회한다. (user테이블과 join)
+	 * @param conn	DB 연결 객체
+	 * @param apaging	페이징 정보 객체
+	 * @return	 조회 결과 리스트
+	 */
+	List<ReviewUserJoin> selectReviewBoard(Connection conn, AdminPaging apaging);
+
+	/**
+	 * reviewboard 테이블에서 review_sort가 같은 행을 조회한다. (user 테이블과 join)
+	 * @param conn			DB 연결 객체
+	 * @param reviewSort	게시판 구분 번호
+	 * @return	조회 결과 리스트
+	 */
+	List<ReviewUserJoin> selectReviewBySort(Connection conn, int reviewSort);
 
 
 	

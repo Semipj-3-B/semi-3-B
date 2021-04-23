@@ -9,6 +9,7 @@ import dao.face.LoginDao;
 import dao.impl.LoginDaoImpl;
 import dto.Usertb;
 import service.face.LoginService;
+import util.HashNMacUtil;
 
 public class LoginServiceImpl implements LoginService {
 	
@@ -20,8 +21,14 @@ public class LoginServiceImpl implements LoginService {
 
 	Usertb user = new Usertb();
 	
+	//id, 비밀번호 파라미터값 저장
 	user.setUserId(req.getParameter("id"));
-	user.setUserPw(req.getParameter("pw"));
+	try {
+		//비밀번호 Sha256 해쉬코드 암호화 처리
+		user.setUserPw(HashNMacUtil.EncBySha256(req.getParameter("pw")));
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
 	
 		return user;
 	}
@@ -31,6 +38,7 @@ public class LoginServiceImpl implements LoginService {
 
 		conn = JDBCTemplate.getConnection();
 		
+		//유저의 id, 비밀번호가 일치하는지 조회
 		int res = loginDao.selectCntByUserId(conn, param);
 		
 		if(res > 0) return true;
@@ -43,6 +51,7 @@ public class LoginServiceImpl implements LoginService {
 
 		conn = JDBCTemplate.getConnection();
 		
+		//유저의 정보조회
 		Usertb res = loginDao.selectUser(conn, param);
 		
 		return res;

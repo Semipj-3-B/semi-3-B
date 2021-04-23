@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import dto.DiscoverBoard;
 import dto.FindBoard;
 import dto.Product;
+import dto.ReviewUserJoin;
 import dto.Usertb;
 import util.AdminPaging;
 import util.Paging;
@@ -103,6 +104,20 @@ public interface AdminService {
 	 * @return		카테고리 값에 따른 조회 결과
 	 */
 	List<DiscoverBoard> getDiscListByMap(Map<String, String> map);
+
+	/**
+	 * 페이징 처리와 함께 후기 목록을 가져온다.
+	 * @param apaging	페이징 정보 객체
+	 * @return	후기 게시글의 목록
+	 */
+	List<ReviewUserJoin> getReviewList(AdminPaging apaging);
+
+	/**
+	 * 후기 게시판에서 구분번호가 같은 게시글 목록을 가져온다.
+	 * @param reviewSort	후기 게시판 구분 번호
+	 * @return	같은 종류의 후기 게시글 목록
+	 */
+	List<ReviewUserJoin> getReviewBySort(int reviewSort);
 
 
 
