@@ -127,6 +127,8 @@ function viewDiscover(data) {
 	console.log(dList)
 	
 	$("table").empty()
+	$("#paging").empty()
+	$(".contents").css({'border': 'none'})
 	var html = ''
 		html += "<tr><th style='width: 5%'></th>"
 		html += "<th style='width: 10%'>글번호</th>"

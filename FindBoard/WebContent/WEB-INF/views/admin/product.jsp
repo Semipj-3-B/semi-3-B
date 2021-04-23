@@ -69,6 +69,8 @@ function viewProducts(data) {
 	console.log(pList)
 	
 	$("table").empty()
+	$("#paging").empty()
+	$(".contents").css({'border': 'none'})
 	var html = ''
 		html += "<tr><th style='width: 5%'></th>"
 		html += "<th style='width: 10%'>상품ID</th>"

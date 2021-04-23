@@ -71,7 +71,7 @@ $(document).ready(function () {
 	</table>
 	<input type="hidden" id="findno" name="findno" />
 	</form>	
-	<div><%@ include file="/WEB-INF/views/admin/paging.jsp" %></div>
+	<div id="paging"><%@ include file="/WEB-INF/views/admin/paging.jsp" %></div>
 	</div>
 </div>
 
@@ -127,6 +127,8 @@ function viewFind(data) {
 	console.log(fList)
 	
 	$("table").empty()
+	$("#paging").empty()
+	$(".contents").css({'border': 'none'})
 	var html = ''
 		html += "<tr><th style='width: 5%'></th>"
 		html += "<th style='width: 10%'>글번호</th>"
