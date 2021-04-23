@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 import common.JDBCTemplate;
 import dao.face.AdminDao;
 import dao.impl.AdminDaoImpl;
+import dto.DiscoverBoard;
 import dto.FindBoard;
 import dto.Product;
 import dto.Usertb;
@@ -65,7 +66,6 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public List<FindBoard> getFindList(AdminPaging apaging) {
-		
 		return adminDao.selectFindBoard(JDBCTemplate.getConnection(), apaging);
 	}
 
@@ -85,7 +85,6 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public List<Product> getProductList(AdminPaging apaging) {
-		
 		return adminDao.selectProduct(JDBCTemplate.getConnection(), apaging);
 	}
 
@@ -128,8 +127,8 @@ public class AdminServiceImpl implements AdminService {
 		Connection conn = JDBCTemplate.getConnection();
 		List<FindBoard> fList = null;
 		
-		String pet = map.get("pet"); //val 또는 null 1
-		String loc = map.get("loc"); //val 또는 null 3
+		String pet = map.get("pet"); //val 또는 null
+		String loc = map.get("loc"); //val 또는 null
 		
 		final String[] pets = {"dog", "cat", "etc"};
 		final String[] locs = {"서울특별시", "경기도", "강원도", "충청북도", "충청남도"
@@ -171,6 +170,61 @@ public class AdminServiceImpl implements AdminService {
 		}
 	
 		return fList;
+	}
+
+	@Override
+	public List<DiscoverBoard> getDiscList(AdminPaging apaging) {
+		return adminDao.selectDiscoverBoard(JDBCTemplate.getConnection(), apaging);
+	}
+	
+	@Override
+	public List<DiscoverBoard> getDiscListByMap(Map<String, String> map) {
+		Connection conn = JDBCTemplate.getConnection();
+		List<DiscoverBoard> dList = null;
+		
+		String pet = map.get("pet"); //val 또는 null
+		String loc = map.get("loc"); //val 또는 null
+		
+		final String[] pets = {"dog", "cat", "etc"};
+		final String[] locs = {"서울특별시", "경기도", "강원도", "충청북도", "충청남도"
+				, "경상북도", "경상남도", "전라북도", "전라남도", "대전광역시"
+				, "광주광역시", "인천광역시", "부산광역시", "대구광역시"
+				, "울산광역시", "세종시", "제주시"};
+		
+		//pet, loc 모두 값이 존재하는 경우
+		if(pet != null && !"".equals(pet) && loc != null && !"".equals(loc) ) {
+			int value1 = Integer.parseInt(pet) - 1;
+			int value2 = Integer.parseInt(loc) - 1;
+			
+			for(int i = 0; i < pets.length; i++) {
+				if(i == value1) pet = pets[i];
+			}
+			for(int i = 0; i < locs.length; i++) {
+				if(i == value2) loc = locs[i];
+			}
+			
+			map.put("pet", pet);
+			map.put("loc", loc);
+			dList = adminDao.selectDiscByMap(conn, map);
+			
+		} else if (pet != null && !"".equals(pet)) {//pet 값만 존재하는 경우
+			if(loc == null || "".equals(loc)) {
+				int value1 = Integer.parseInt(pet) - 1;
+				for(int i = 0; i < pets.length; i++) {
+					if(i == value1) pet = pets[i];
+				}
+				dList = adminDao.selectDiscByPet(conn, pet);
+			}
+			
+		} else {
+			int value2 = Integer.parseInt(loc) - 1;
+			for(int i = 0; i < locs.length; i++) { //loc 값만 존재하는 경우
+				if(i == value2) loc = locs[i];
+			}
+			dList = adminDao.selectDiscByLoc(conn, loc);
+		}
+	
+		return dList;
 	}
 
 }

@@ -10,6 +10,7 @@ import java.util.Map;
 
 import common.JDBCTemplate;
 import dao.face.AdminDao;
+import dto.DiscoverBoard;
 import dto.FindBoard;
 import dto.Product;
 import dto.Usertb;
@@ -393,5 +394,143 @@ public class AdminDaoImpl implements AdminDao {
 			JDBCTemplate.close(ps);
 		}
 		return fList;
+	}
+
+	@Override
+	public List<DiscoverBoard> selectDiscoverBoard(Connection conn, AdminPaging apaging) {
+		String sql = "";
+		sql += "SELECT * FROM (";
+		sql += " 	SELECT rownum rnum, D.* FROM (";
+		sql += "		SELECT discover_no, user_no, title, content, views FROM discoverboard";
+		sql += " 		ORDER BY discover_no DESC";
+		sql += "	) D";
+		sql += " ) ";
+		sql += " WHERE rnum BETWEEN ? AND ?";
+		
+		List<DiscoverBoard> discList = new ArrayList<DiscoverBoard>();
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, apaging.getStartNo());
+			ps.setInt(2, apaging.getEndNo());
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				DiscoverBoard d = new DiscoverBoard();
+				
+				d.setDiscoverNo(rs.getInt("discover_no"));
+				d.setUserNo(rs.getInt("user_no"));
+				d.setTitle(rs.getString("title"));
+				d.setContent(rs.getString("content"));
+				d.setViews(rs.getInt("views"));
+				
+				discList.add(d);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rs);
+			JDBCTemplate.close(ps);
+		}
+		
+		return discList;
+	}
+
+	@Override
+	public List<DiscoverBoard> selectDiscByMap(Connection conn, Map<String, String> map) {
+		String sql = "";
+		sql += "SELECT discover_no, user_no, title, content, views FROM discoverboard";
+		sql += " WHERE pet_kinds = ? AND loc = ?";
+		sql += " ORDER BY discover_no DESC";
+		
+		List<DiscoverBoard> dList = new ArrayList<DiscoverBoard>();
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, map.get("pet"));
+			ps.setString(2, map.get("loc"));
+			
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				DiscoverBoard d = new DiscoverBoard();
+				
+				d.setDiscoverNo(rs.getInt("discover_no"));
+				d.setUserNo(rs.getInt("user_no"));
+				d.setTitle(rs.getString("title"));
+				d.setContent(rs.getString("content"));
+				d.setViews(rs.getInt("views"));
+				
+				dList.add(d);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rs);
+			JDBCTemplate.close(ps);
+		}
+		return dList;
+	}
+
+	@Override
+	public List<DiscoverBoard> selectDiscByPet(Connection conn, String pet) {
+		String sql = "";
+		sql += "SELECT discover_no, user_no, title, content, views FROM discoverboard";
+		sql += " WHERE pet_kinds = ?";
+		sql += " ORDER BY discover_no DESC";
+		
+		List<DiscoverBoard> dList = new ArrayList<DiscoverBoard>();
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, pet);
+			
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				DiscoverBoard d = new DiscoverBoard();
+				
+				d.setDiscoverNo(rs.getInt("discover_no"));
+				d.setUserNo(rs.getInt("user_no"));
+				d.setTitle(rs.getString("title"));
+				d.setContent(rs.getString("content"));
+				d.setViews(rs.getInt("views"));
+				
+				dList.add(d);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rs);
+			JDBCTemplate.close(ps);
+		}
+		return dList;
+	}
+
+	@Override
+	public List<DiscoverBoard> selectDiscByLoc(Connection conn, String loc) {
+		String sql = "";
+		sql += "SELECT discover_no, user_no, title, content, views FROM discoverboard";
+		sql += " WHERE loc = ?";
+		sql += " ORDER BY discover_no DESC";
+		List<DiscoverBoard> dList = new ArrayList<DiscoverBoard>();
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, loc);
+			
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				DiscoverBoard d = new DiscoverBoard();
+				
+				d.setDiscoverNo(rs.getInt("discover_no"));
+				d.setUserNo(rs.getInt("user_no"));
+				d.setTitle(rs.getString("title"));
+				d.setContent(rs.getString("content"));
+				d.setViews(rs.getInt("views"));
+				
+				dList.add(d);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rs);
+			JDBCTemplate.close(ps);
+		}
+		return dList;
 	}
 }

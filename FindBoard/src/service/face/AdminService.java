@@ -90,5 +90,20 @@ public interface AdminService {
 	 */
 	List<FindBoard> getFindListByMap(Map<String, String> map);
 
+	/**
+	 * 페이징 처리와 함께 발견 게시판의 게시글 목록을 가져온다.
+	 * @param apaging	페이징 정보 객체
+	 * @return	발견 게시판의 전체 게시글 목록
+	 */
+	List<DiscoverBoard> getDiscList(AdminPaging apaging);
+
+	/**
+	 * pet 또는 loc에 따른 조회 데이터를 가져온다.
+	 * @param map	pet, loc 데이터가 담긴 전달 파라미터
+	 * @return		카테고리 값에 따른 조회 결과
+	 */
+	List<DiscoverBoard> getDiscListByMap(Map<String, String> map);
+
+
 
 }

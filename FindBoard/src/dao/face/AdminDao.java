@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.util.List;
 import java.util.Map;
 
+import dto.DiscoverBoard;
 import dto.FindBoard;
 import dto.Product;
 import dto.Usertb;
@@ -105,6 +106,39 @@ public interface AdminDao {
 	 * @return			조회 결과 리스트
 	 */
 	List<FindBoard> selectFindByLoc(Connection conn, String loc);
+
+	/**
+	 * discoverboard 테이블을 전체 조회한다.
+	 * @param conn		DB 연결 객체
+	 * @param apaging	페이징 정보 객체
+	 * @return			조회 결과 리스트
+	 */
+	List<DiscoverBoard> selectDiscoverBoard(Connection conn, AdminPaging apaging);
+
+	/**
+	 * discoverboard 테이블에서 pet, loc 값과 일치하는 목록을 조회한다.
+	 * @param conn	DB 연결 객체
+	 * @param map	pet, loc 값을 가진 Map
+	 * @return		조회 결과 리스트
+	 */
+	List<DiscoverBoard> selectDiscByMap(Connection conn, Map<String, String> map);
+
+	/**
+	 * discoverboard 테이블에서 pet 값이 일치하는 목록을 조회한다.
+	 * @param conn	DB 연결 객체
+	 * @param pet	pet 값을 가진 전달 파라미터
+	 * @return		조회 결과 리스트
+	 */
+	List<DiscoverBoard> selectDiscByPet(Connection conn, String pet);
+
+	/**
+	 * discoverboard 테이블에서 loc 값이 일치하는 목록을 조회한다.
+	 * @param conn	DB 연결 객체
+	 * @param loc	loc 값을 가진 전달 파라미터
+	 * @return		조회 결과 리스트
+	 */	
+	List<DiscoverBoard> selectDiscByLoc(Connection conn, String loc);
+
 
 	
 	
