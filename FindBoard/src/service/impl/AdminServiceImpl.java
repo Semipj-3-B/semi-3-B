@@ -13,6 +13,7 @@ import dao.impl.AdminDaoImpl;
 import dto.FindBoard;
 import dto.Product;
 import dto.Usertb;
+import oracle.net.aso.p;
 import service.face.AdminService;
 import util.AdminPaging;
 
@@ -91,6 +92,23 @@ public class AdminServiceImpl implements AdminService {
 	public List<Product> getProdListByCateId(AdminPaging apaging, Product p) {
 		Connection conn = JDBCTemplate.getConnection();
 		return adminDao.selectProductByCateId(conn, apaging, p);
+	}
+
+	@Override
+	public void deleteProduct(HttpServletRequest req) {
+		String param = req.getParameter("prodId");
+		System.out.println("param: " + param);
+		
+		Product product = null;
+		if(param != null && !"".equals(param)) {
+			product = new Product();
+			product.setProductId(Integer.parseInt(param));
+		}
+		
+		Connection conn = JDBCTemplate.getConnection();
+		int result = adminDao.deleteProdByCateId(conn, product);
+		if(result > 0) JDBCTemplate.commit(conn);
+		else JDBCTemplate.rollback(conn);
 	}
 
 }

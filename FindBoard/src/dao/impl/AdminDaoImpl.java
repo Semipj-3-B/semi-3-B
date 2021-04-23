@@ -279,4 +279,25 @@ public class AdminDaoImpl implements AdminDao {
 		
 		return pList;
 	}
+
+	@Override
+	public int deleteProdByCateId(Connection conn, Product product) {
+		String sql = "";
+		sql += "DELETE FROM product";
+		sql += " WHERE product_id = ?";
+		
+		int result = -1;
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, product.getProductId());
+			
+			result = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(ps);
+		}
+		return result;
+	}
 }

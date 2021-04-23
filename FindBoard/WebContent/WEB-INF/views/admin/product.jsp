@@ -8,7 +8,10 @@
 <script type="text/javascript">
 $(document).ready(function () {
 	var prodId = 0
+	
+	//카테고리 미선택시 동작
 	getProdId()
+	btnsEvent()
 	
 	$("#product").css({
 		'background-color': 'white'
@@ -31,6 +34,19 @@ $(document).ready(function () {
 		})
 	})
 	
+})
+
+//체크된 radio의 상품 ID 얻어오기
+function getProdId() {
+	$("input[type=radio]").change(function () {
+		prodId = $(this).val()
+		$("#prodId").attr("value", prodId)
+		$(".funBtns").attr("disabled", false)
+	})
+}
+
+//버튼 이벤트
+function btnsEvent() {
 	//수정하기
 	$(".prodmod").click(function () {
 		 window.open("/product/edit?productId="+prodId, "_blank", "width=400px height=200px" )
@@ -44,23 +60,13 @@ $(document).ready(function () {
 			return false
 		}
 	})
-})
-
-//체크된 radio의 상품 ID 얻어오기
-function getProdId() {
-	$("input[type=radio]").change(function () {
-		prodId = $(this).val()
-		$("#prodId").attr("value", prodId)
-		$(".funBtns").attr("disabled", false)
-	})
 }
-
 //카테고리별 목록 조회 
 function viewProducts(data) {
-	console.log("성공")
 	var pList = JSON.parse(JSON.stringify(data))
 	console.log(pList)
 	
+	$("table").empty()
 	var html = ''
 		html += "<tr><th style='width: 5%'></th>"
 		html += "<th style='width: 10%'>상품ID</th>"
@@ -80,6 +86,7 @@ function viewProducts(data) {
 	}	
 		$("table").append(html)
 		getProdId()
+		btnsEvent()
 }
 </script>	
 	<form action="/admin/product" method="post">

@@ -74,6 +74,14 @@ public interface AdminDao {
 	 */
 	List<Product> selectProductByCateId(Connection conn, AdminPaging apaging, Product categoryId);
 
+	/**
+	 * 상품 ID로 상품 DB를 삭제한다.
+	 * @param conn		DB 연결 객체
+	 * @param product	상품 ID가 담긴 Product 개체
+	 * @return	업데이트 행
+	 */
+	int deleteProdByCateId(Connection conn, Product product);
+
 	
 	
 

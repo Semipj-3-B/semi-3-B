@@ -50,7 +50,7 @@ public interface AdminService {
 
 	/**
 	 * 게시글을 삭제한다.
-	 * @param req	찾기 게시판의 게시글 번호가 담긴 객체
+	 * @param req	찾기 게시판의 게시글 번호가 담긴 요청 파라미터
 	 */
 	void deleteFind(HttpServletRequest req);
 
@@ -64,9 +64,15 @@ public interface AdminService {
 	/**
 	 * 같은 카테고리의 상품 목록을 가져온다.
 	 * @param apaging	페이징 정보 객체
-	 * @param p	카테고리ID를 저장한 전달 파라미터
+	 * @param p		카테고리ID를 저장한 전달 파라미터
 	 * @return	같은 카테고리의 상품 목록
 	 */
 	List<Product> getProdListByCateId(AdminPaging apaging, Product p);
+
+	/**
+	 * 상품을 삭제한다.
+	 * @param req 상품 ID가 담긴 요청 파라미터
+	 */
+	void deleteProduct(HttpServletRequest req);
 
 }

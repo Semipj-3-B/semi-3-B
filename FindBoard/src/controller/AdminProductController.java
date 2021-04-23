@@ -35,7 +35,7 @@ public class AdminProductController extends HttpServlet {
 		
 		//ajax로 요청 들어왔을 때
 		String param = req.getParameter("categoryId");
-		System.out.println("param: " + param);
+		System.out.println("select: " + param);
 		if(param != null && !"".equals(param)) {
 			p = new Product();
 			p.setCategoryId(Integer.parseInt(param));
@@ -54,6 +54,7 @@ public class AdminProductController extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
+		adminService.deleteProduct(req);
+		resp.sendRedirect("/admin/product");
 	}
 }
