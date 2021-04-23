@@ -56,7 +56,7 @@ $(document).ready(function () {
 	})
 	$("#discovery").click(function () {
 		$("form").attr("onsubmit", "return false")
-		location.href="/admin/discovery"
+		location.href="/admin/discover"
 	})
 	$("#review").click(function () {
 		$("form").attr("onsubmit", "return false")
