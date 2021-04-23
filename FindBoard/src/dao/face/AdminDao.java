@@ -2,6 +2,7 @@ package dao.face;
 
 import java.sql.Connection;
 import java.util.List;
+import java.util.Map;
 
 import dto.FindBoard;
 import dto.Product;
@@ -81,6 +82,30 @@ public interface AdminDao {
 	 * @return	업데이트 행
 	 */
 	int deleteProdByCateId(Connection conn, Product product);
+
+	/**
+	 * findboard 테이블에서 pet, loc 값과 일치하는 목록을 조회한다.
+	 * @param conn		DB 연결 객체
+	 * @param map		pet, loc 값을 가진 Map
+	 * @return			조회 결과 리스트
+	 */
+	List<FindBoard> selectFindByMap(Connection conn, Map<String, String> map);
+
+	/**
+	 * findboard 테이블에서 pet 값이 일치하는 목록을 조회한다.
+	 * @param conn		DB 연결 객체
+	 * @param pet		pet 값을 가진 전달 파라미터
+	 * @return			조회 결과 리스트
+	 */
+	List<FindBoard> selectFindByPet(Connection conn, String pet);
+
+	/**
+	 * findboard 테이블에서 loc 값이 일치하는 목록을 조회한다.
+	 * @param conn		DB 연결 객체
+	 * @param loc		loc 값을 가진 전달 파라미터
+	 * @return			조회 결과 리스트
+	 */
+	List<FindBoard> selectFindByLoc(Connection conn, String loc);
 
 	
 	

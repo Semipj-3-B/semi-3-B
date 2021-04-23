@@ -4,7 +4,10 @@
 
 <% List<Product> pList = (List<Product>) request.getAttribute("productList"); %>
 <%@ include file="/WEB-INF/views/admin/common.jsp" %>
-
+<style type="text/css">
+table {width: 900px;}
+th, td { text-align:center;}
+</style>
 <script type="text/javascript">
 $(document).ready(function () {
 	var prodId = 0
@@ -49,10 +52,7 @@ function getProdId() {
 function btnsEvent() {
 	//수정하기
 	$(".prodmod").click(function () {
-		 window.open("/product/edit?productId="+prodId, "_blank", "width=400px height=200px" )
-	})
-	
-	//삭제하기
+		 window.open("/product/edit?productId="+prodId, "_blank", "width=400px height=200px")
 	$(".proddel").click(function () {
 		if(confirm("상품을 삭제하시겠습니까?")) {
 			$("form").submit()
@@ -102,7 +102,7 @@ function viewProducts(data) {
 		<th style="width: 10%">상품ID</th>
 		<th style="width: 20%">상품명</th>
 		<th style="width: 15%">단가</th>
-		<th style="width: 15%">상세페이지</th>
+		<th style="width: 10%">상세페이지</th>
 		<th style="width: 10%">DB</th>
 	</tr>
 	<% for(int i = 0; i < pList.size(); i++) { %>

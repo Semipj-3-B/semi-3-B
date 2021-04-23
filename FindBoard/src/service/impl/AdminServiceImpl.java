@@ -2,6 +2,7 @@ package service.impl;
 
 import java.sql.Connection;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -109,6 +110,68 @@ public class AdminServiceImpl implements AdminService {
 		int result = adminDao.deleteProdByCateId(conn, product);
 		if(result > 0) JDBCTemplate.commit(conn);
 		else JDBCTemplate.rollback(conn);
+	}
+
+	@Override
+	public boolean isAjaxReq(HttpServletRequest req) {
+		boolean flag = false;
+		String petparam = req.getParameter("pet");
+		String locparam = req.getParameter("loc");
+		
+		if(petparam != null && !"".equals(petparam)) flag = true;
+		if(locparam != null && !"".equals(locparam)) flag = true;
+		
+		return flag;
+	}
+
+	@Override
+	public List<FindBoard> getFindListByMap(Map<String, String> map) {
+		Connection conn = JDBCTemplate.getConnection();
+		List<FindBoard> fList = null;
+		
+		String pet = map.get("pet"); //val 또는 null 1
+		String loc = map.get("loc"); //val 또는 null 3
+		
+		final String[] pets = {"dog", "cat", "etc"};
+		final String[] locs = {"서울특별시", "경기도", "강원도", "충청북도", "충청남도"
+				, "경상북도", "경상남도", "전라북도", "전라남도", "대전광역시"
+				, "광주광역시", "인천광역시", "부산광역시", "대구광역시"
+				, "울산광역시", "세종시", "제주시"};
+		
+		//pet, loc 모두 값이 존재하는 경우
+		if(pet != null && !"".equals(pet) && loc != null && !"".equals(loc) ) {
+			int value1 = Integer.parseInt(pet) - 1;
+			int value2 = Integer.parseInt(loc) - 1;
+			
+			for(int i = 0; i < pets.length; i++) {
+				if(i == value1) pet = pets[i];
+			}
+			for(int i = 0; i < locs.length; i++) {
+				if(i == value2) loc = locs[i];
+			}
+			
+			map.put("pet", pet);
+			map.put("loc", loc);
+			fList = adminDao.selectFindByMap(conn, map);
+			
+		} else if (pet != null && !"".equals(pet)) {//pet 값만 존재하는 경우
+			if(loc == null || "".equals(loc)) {
+				int value1 = Integer.parseInt(pet) - 1;
+				for(int i = 0; i < pets.length; i++) {
+					if(i == value1) pet = pets[i];
+				}
+				fList = adminDao.selectFindByPet(conn, pet);
+			}
+			
+		} else {
+			int value2 = Integer.parseInt(loc) - 1;
+			for(int i = 0; i < locs.length; i++) { //loc 값만 존재하는 경우
+				if(i == value2) loc = locs[i];
+			}
+			fList = adminDao.selectFindByLoc(conn, loc);
+		}
+	
+		return fList;
 	}
 
 }

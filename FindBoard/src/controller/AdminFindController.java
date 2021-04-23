@@ -2,7 +2,9 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,11 +12,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 import dto.FindBoard;
 import dto.Usertb;
 import service.face.AdminService;
 import service.impl.AdminServiceImpl;
 import util.AdminPaging;
+import util.Paging;
 
 @WebServlet("/admin/find")
 public class AdminFindController extends HttpServlet {
@@ -24,12 +29,30 @@ public class AdminFindController extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		AdminPaging apaging = adminService.getPaging(req);
-		List<FindBoard> findList = adminService.getFindList(apaging);
+		req.setCharacterEncoding("UTF-8");
 
-		req.setAttribute("findList", findList);
-		req.setAttribute("apaging", apaging);
-		req.getRequestDispatcher("/WEB-INF/views/admin/find.jsp").forward(req, resp);
+		Gson gson = null;
+		List<FindBoard> findList = null;
+		
+		boolean flag = adminService.isAjaxReq(req);
+		if(flag) {
+			gson = new Gson();
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("pet", req.getParameter("pet"));
+			map.put("loc", req.getParameter("loc"));
+			findList = adminService.getFindListByMap(map);
+			
+			resp.setContentType("application/json; charset=utf-8");
+			PrintWriter out = resp.getWriter();
+			out.print(gson.toJson(findList));
+			
+		} else {
+			AdminPaging apaging = adminService.getPaging(req);
+			findList = adminService.getFindList(apaging);
+			req.setAttribute("apaging", apaging);
+			req.setAttribute("findList", findList);
+			req.getRequestDispatcher("/WEB-INF/views/admin/find.jsp").forward(req, resp);
+		}
 	}
 
 	@Override

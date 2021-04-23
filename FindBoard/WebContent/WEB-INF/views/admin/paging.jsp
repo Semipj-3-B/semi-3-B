@@ -18,7 +18,7 @@
 .pagination>li>a {color: #EA9A56;}
 </style>
 
-<div class="page text-center" style="height: 40px;">
+<div class="text-center" >
 	<ul class ="pagination pagination-sm">
 	
 		<!-- 첫 페이지로 이동 ← -->

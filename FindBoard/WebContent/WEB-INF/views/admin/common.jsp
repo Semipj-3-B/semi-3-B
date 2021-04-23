@@ -24,7 +24,6 @@
 	transition-duration: 0.4s;
 	background-color: #EBC680;
 	color: white;
-	
 }
 
 .btns:hover {
@@ -42,9 +41,6 @@
 .funBtns:hover {
 	background-color: #A48654;
 	color: white;
-
-table {width: 900px;}
-th, td { text-align:center;}
 </style>
 
 <script type="text/javascript">

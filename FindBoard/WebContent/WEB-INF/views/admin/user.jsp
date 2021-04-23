@@ -5,6 +5,10 @@
 <% List<Usertb> userList = (List<Usertb>) request.getAttribute("userList"); %>
 <%@ include file="/WEB-INF/views/admin/common.jsp" %>
 
+<style type="text/css">
+table {width: 900px;}
+th, td { text-align:center;}
+</style>
 <script type="text/javascript">
 $(document).ready(function () {
 	$("#user").css({

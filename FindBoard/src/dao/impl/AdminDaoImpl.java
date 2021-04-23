@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import common.JDBCTemplate;
 import dao.face.AdminDao;
@@ -299,5 +300,104 @@ public class AdminDaoImpl implements AdminDao {
 			JDBCTemplate.close(ps);
 		}
 		return result;
+	}
+
+	@Override
+	public List<FindBoard> selectFindByMap(Connection conn, Map<String, String> map) {
+		String sql = "";
+		sql += "SELECT find_no, user_no, title, content, views FROM findboard";
+		sql += " WHERE pet_kinds = ? AND loc = ?";
+		sql += " ORDER BY find_no DESC";
+		
+		List<FindBoard> fList = new ArrayList<FindBoard>();
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, map.get("pet"));
+			ps.setString(2, map.get("loc"));
+			
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				FindBoard f = new FindBoard();
+				
+				f.setFindNo(rs.getInt("find_no"));
+				f.setUserNo(rs.getInt("user_no"));
+				f.setTitle(rs.getString("title"));
+				f.setContent(rs.getString("content"));
+				f.setViews(rs.getInt("views"));
+				
+				fList.add(f);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rs);
+			JDBCTemplate.close(ps);
+		}
+		return fList;
+	}
+
+	@Override
+	public List<FindBoard> selectFindByPet(Connection conn, String pet) {
+		String sql = "";
+		sql += "SELECT find_no, user_no, title, content, views FROM findboard";
+		sql += " WHERE pet_kinds = ?";
+		sql += " ORDER BY find_no DESC";
+		
+		List<FindBoard> fList = new ArrayList<FindBoard>();
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, pet);
+			
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				FindBoard f = new FindBoard();
+				
+				f.setFindNo(rs.getInt("find_no"));
+				f.setUserNo(rs.getInt("user_no"));
+				f.setTitle(rs.getString("title"));
+				f.setContent(rs.getString("content"));
+				f.setViews(rs.getInt("views"));
+				
+				fList.add(f);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rs);
+			JDBCTemplate.close(ps);
+		}
+		return fList;
+	}
+
+	@Override
+	public List<FindBoard> selectFindByLoc(Connection conn, String loc) {
+		String sql = "";
+		sql += "SELECT find_no, user_no, title, content, views FROM findboard";
+		sql += " WHERE loc = ?";
+		sql += " ORDER BY find_no DESC";
+		List<FindBoard> fList = new ArrayList<FindBoard>();
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, loc);
+			
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				FindBoard f = new FindBoard();
+				
+				f.setFindNo(rs.getInt("find_no"));
+				f.setUserNo(rs.getInt("user_no"));
+				f.setTitle(rs.getString("title"));
+				f.setContent(rs.getString("content"));
+				f.setViews(rs.getInt("views"));
+				
+				fList.add(f);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rs);
+			JDBCTemplate.close(ps);
+		}
+		return fList;
 	}
 }

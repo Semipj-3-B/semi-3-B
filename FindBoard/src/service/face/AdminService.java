@@ -1,6 +1,7 @@
 package service.face;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -74,5 +75,19 @@ public interface AdminService {
 	 * @param req 상품 ID가 담긴 요청 파라미터
 	 */
 	void deleteProduct(HttpServletRequest req);
+
+	/**
+	 * ajax 요청 파라미터의 유무를 판별한다.
+	 * @param req	요청 파라미터
+	 * @return	ajax면 true, 아니면 false
+	 */
+	boolean isAjaxReq(HttpServletRequest req);
+
+	/**
+	 * pet 또는 loc에 따른 조회 데이터를 가져온다.
+	 * @param map	pet, loc 데이터가 담긴 전달 파라미터
+	 * @return		카테고리 값에 따른 조회 결과
+	 */
+	List<FindBoard> getFindListByMap(Map<String, String> map);
 
 }
