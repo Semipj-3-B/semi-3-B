@@ -71,7 +71,7 @@ $(document).ready(function () {
 	</table>
 	<input type="hidden" id="findno" name="findno" />
 	</form>	
-	<div id="paging"><%@ include file="/WEB-INF/views/admin/paging.jsp" %></div>
+	<div id="paging"><%@ include file="/WEB-INF/views/layout/adminPaging.jsp" %></div>
 	</div>
 </div>
 

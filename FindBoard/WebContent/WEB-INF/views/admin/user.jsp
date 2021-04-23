@@ -62,6 +62,6 @@ $(document).ready(function () {
 	</table>
 	<input type="hidden" id="userno" name="userno" />
 	</form>
-	<div><%@ include file="/WEB-INF/views/admin/paging.jsp" %></div>
+	<div><%@ include file="/WEB-INF/views/layout/adminPaging.jsp" %></div>
 	</div>
 </div>

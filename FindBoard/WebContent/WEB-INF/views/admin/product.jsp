@@ -122,6 +122,6 @@ function viewProducts(data) {
 	</table>
 	<input type="hidden" id="prodId" name="prodId" />
 	</form>
-	<div><%@ include file="/WEB-INF/views/admin/paging.jsp" %></div>
+	<div><%@ include file="/WEB-INF/views/layout/adminPaging.jsp" %></div>
 	</div>
 </div>
