@@ -155,7 +155,7 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li class="active topMenuLi"><a href="/find/list">반려동물 찾기 <span class="sr-only">(current)</span></a></li>
-        <li class="topMenuLi"><a href="#">유기동물 발견</a></li>
+        <li class="topMenuLi"><a href="/discover/list">유기동물 발견</a></li>
         <li class="topMenuLi"><a href="/product">스토어</a></li>
         <li class="topMenuLi"><a href="#">커뮤니티</a>
            <ul class="submenu nav">

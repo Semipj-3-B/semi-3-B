@@ -97,7 +97,7 @@ public interface FindBoardDao {
 	 * @param conn	DB 연결 객체
 	 * @return	findboard_seq.nextval
 	 */
-	int selectFindno(Connection conn);
+	public int selectFindno(Connection conn);
 
 	
 	/**
@@ -106,7 +106,7 @@ public interface FindBoardDao {
 	 * @param findBoard	새 게시글 데이터가 담긴 전달 파라미터
 	 * @return		삽입된 행의 수
 	 */
-	int insert(Connection conn, FindBoard findBoard);
+	public int insert(Connection conn, FindBoard findBoard);
 
 	
 	/**
@@ -115,7 +115,7 @@ public interface FindBoardDao {
 	 * @param findImges	첨부파일 데이터가 담긴 전달 파라미터
 	 * @return		삽입된 행의 수
 	 */
-	int insertImg(Connection conn, List<FindImg> findImges);
+	public int insertImg(Connection conn, List<FindImg> findImges);
 
 
 	/**
