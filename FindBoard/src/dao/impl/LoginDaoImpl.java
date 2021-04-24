@@ -73,6 +73,7 @@ public class LoginDaoImpl implements LoginDao {
 				user.setUserId(rs.getString("user_id"));
 				user.setNick(rs.getString("nick"));
 				user.setUserNo(rs.getInt("user_no"));
+				user.setEmail(rs.getString("email"));
 			}
 		
 		} catch (SQLException e) {

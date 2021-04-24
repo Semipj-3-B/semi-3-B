@@ -50,6 +50,7 @@ public class LoginController extends HttpServlet {
 			session.setAttribute("userid", res.getUserId());
 			session.setAttribute("userno", res.getUserNo());
 			session.setAttribute("nick", res.getNick());
+			session.setAttribute("email", res.getEmail());
 			
 			//로그인 완료시 메인으로 리다이렉트
 			resp.sendRedirect("/main?autologin=" + autologin + "&rememberid=" + rememberid);
