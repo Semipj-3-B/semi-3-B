@@ -484,6 +484,7 @@ public class DiscoverBoardDaoImpl implements DiscoverBoardDao {
 		sql += "	update_date = sysdate";
 		sql += " WHERE discover_no = ?";
 		
+		System.out.println("DAO - update 도착");
 		
 		//DB 객체
 		PreparedStatement ps = null; 
@@ -511,7 +512,7 @@ public class DiscoverBoardDaoImpl implements DiscoverBoardDao {
 				e.printStackTrace();
 			}
 		}
-		
+		System.out.println("DAO - res = " + res);
 		return res;
 	}
 	@Override

@@ -35,7 +35,7 @@ public class DiscoverReadController extends HttpServlet {
 		req.setAttribute("eamil", discoverBoardService.getemail(viewDiscoverBoard));
 		req.setAttribute("viewDiscoverBoard", viewDiscoverBoard);
 		
-		System.out.println("viewDiscoverBoard = "+ viewDiscoverBoard);
+//		System.out.println("viewDiscoverBoard = "+ viewDiscoverBoard);
 		
 		List<DiscoverImg> discoverImg = discoverBoardService.viewFile(viewDiscoverBoard);
 		req.setAttribute("discoverImg", discoverImg);

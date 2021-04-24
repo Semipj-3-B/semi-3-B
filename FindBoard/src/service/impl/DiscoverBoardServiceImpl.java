@@ -55,12 +55,18 @@ public class DiscoverBoardServiceImpl implements DiscoverBoardService {
 		
 		DiscoverBoard discoverNo = new DiscoverBoard();
 		
+		
 		String param = req.getParameter("DiscoverNo");
+		
+		System.out.println("param = "+ param);
+		
 		if(param != null && !"".equals(param)) {
 			
 			discoverNo.setDiscoverNo( Integer.parseInt(param) );
 			
 		}
+		
+		System.out.println("service 의 discoverNo = " + discoverNo);
 		
 		return discoverNo;
 	}
@@ -421,8 +427,10 @@ public class DiscoverBoardServiceImpl implements DiscoverBoardService {
 			//요청 데이터 처리
 			if(item.isFormField()) {
 				
+				System.out.println("service 의 discoverNo = " + item.getFieldName() );
+				
 				try {
-					if( "discoverNo".equals( item.getFieldName() ) ) {
+					if( "DiscoverNo".equals( item.getFieldName() ) ) {
 						discoverBoard.setDiscoverNo( Integer.parseInt(item.getString() ));
 					}
 					if( "title".equals( item.getFieldName() ) ) {
@@ -522,7 +530,7 @@ public class DiscoverBoardServiceImpl implements DiscoverBoardService {
 
 		}
 			
-		
+		System.out.println("discoverBoard = " + discoverBoard);
 		
 		if(isNewFile) {
 			//이전파일삭제		

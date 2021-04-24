@@ -309,15 +309,15 @@ table table tr td img{
 
 <div class="container">
 
-<h3>반려동물 찾기</h3>
+<h3>반려동물 발견</h3>
 <hr>
 
 <!-- //enctype="multipart/form-data" 파일 업로드 처리-->
 <form action="/discover/update" method="post" enctype="multipart/form-data" >
 
 <input type ="hidden" name ="DiscoverNo" id ="DiscoverNo" value="<%=request.getParameter("DiscoverNo") %>" />
-<input type="hidden" id="nick" value="<%=request.getAttribute("nick") %>">
-<input type="hidden" id="userno" value="<%=session.getAttribute("userno")%>">
+<%-- <input type="hidden" id="nick" value="<%=request.getAttribute("nick") %>"> --%>
+<%-- <input type="hidden" id="userno" value="<%=session.getAttribute("userno")%>"> --%>
 	
 <div>
 <div id="findheader"><input type ="text" name = "title" id="title" value="<%=b.getTitle() %>"/></div>
@@ -329,7 +329,7 @@ table table tr td img{
 	<div id="findinfo1">반려동물 종류 : <%=b.getPetKinds() %></div>
 	<div id="findinfo1">반려동물 이름 : <%=b.getPetName() %></div>
 	<div id="findinfo1">반려동물 나이 : <%=b.getPetAge() %></div>
-	<div id="findinfo1">잃어버린 위치 : <%=b.getLoc() %></div>
+	<div id="findinfo1">발견한 위치 : <%=b.getLoc() %></div>
 	<div id="findinfo1">이메일 : <%=request.getAttribute("email") %></div>
 </div>
 
