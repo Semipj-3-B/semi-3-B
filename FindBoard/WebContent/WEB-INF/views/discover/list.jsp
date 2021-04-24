@@ -13,6 +13,9 @@
 <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script> -->
 
 
+
+
+
 <script type="text/javascript">
 
 	
@@ -122,9 +125,13 @@ function search(){
 				</select>
 				<input type="button" id="search" onclick="search();" value="조회"/>
 			</div>
+
+
+<%-- 		<% if( (boolean)session.getAttribute("login") ){ %> --%>
 			<div class="right_box">
 				<p><a href="/discover/add" title="글 등록하기">등록하기</a></p>
 			</div>
+<%-- 			<% } %> --%>
 		</div>
 		<%	for(int i=0; i<list.size(); i++) { %>
 			<div class="pet_list">
@@ -134,6 +141,9 @@ function search(){
 				<p><%=list.get(i).getPetKinds() %></p>
 			</div>
 		<% } %>
+<%-- 			<h1><%=session.getAttribute("login")%></h1> --%>
+			
 	</div>
 <%@ include file="/WEB-INF/views/layout/paging.jsp" %>
+<%-- <%@ include file="/WEB-INF/views/layout/paging.jsp" %> --%>
 <%@ include file="/WEB-INF/views/layout/footer.jsp" %>
