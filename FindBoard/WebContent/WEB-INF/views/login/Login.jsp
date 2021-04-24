@@ -1,8 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
-   
-    
 <!DOCTYPE html>
 <html>
 <head>
@@ -87,7 +84,7 @@ body {
 	background : none;
 	margin: 40px auto;
 	text-align: center;
-	border : 2px solid #cccc13;
+	border : 2px solid #EA9A56;
 	padding: 14px 40px;
 	outline: none;
 	border-radius: 24px;
@@ -95,43 +92,79 @@ body {
 	cursor: pointer;
  } 
  
-.box input[type = "submit"]:hover {
-	background: #FFC091;
-}
+.box input[type = "submit"]:hover {background: #FFC091;}
 
- .box input[type = "button"]:hover {
- 	background: #cccc13;
- }
+.box input[type = "button"]:hover {background: #EA9A56;}
  
- #loginspan {
- 	color : red;
- }
-
+#loginspan {color : red;}
+ 
+.link {color : #A48654; text-decoration: none; font-size: small;}
+.link:link {color : #A48654; text-decoration: none;}
+.link:visited {color : #A48654; text-decoration: none;}
+.link:hover {color : #A48654; text-decoration: none;}
+.link:active {color : #A48654; text-decoration: none;}
+.stick {color : #A48654;}
 
 </style>
-
-
 
 </head>
 <body>
 
+<% 	
+
+	String value = "";
+	if(request.getCookies() != null) {
+	
+	Cookie[] cookies = request.getCookies();
+	
+		for(Cookie c : cookies) {
+		
+		if("userid".equals(c.getName())) {
+			value = c.getValue();
+		}
+	} 
+	
+	}%>
+
 <form action="/login/login" method="post" class="box">
 
-<h1>Login</h1>
+	<h1>Login</h1>
+	
+	<label for="id">아이디</label><br>
+	<input type="text" id="id" name="id" <% if(!"".equals(value)) { %>
+	
+	value="<%=value %>"
+	
+	<% } %>/>
+	
+	<label for="pw">비밀번호</label><br>
+	<input type="password" id="pw" name="pw" />
+	
+	<label for="autologin">자동 로그인</label>
+	<input type="checkbox" id="autologin" name="autologin" />
+	
+	<label for="rememberid">아이디 저장</label>
+	<input type="checkbox" id="rememberid" name="rememberid" /> <br>
+	
+	<span id="loginspan"></span>
+	
+	<a href="/main"><input type="button" id="cancle" value="main" /></a>
+	<input type="submit" id="submit" value="login"/>
+	
+	<div style="border-top: 1px solid #A48654;">
+	
+	<a href="/login/terms" class="link">회원가입</a>
+	<span class="stick">│</span>
+	<a href="/login/findid" class="link">아이디 찾기</a>
+	<span class="stick">│</span>
+	<a href="/login/findpw" class="link">비밀번호 찾기</a>
 
+</div>
 
-
-<label for="id">아이디</label><br>
-<input type="text" id="id" name="id" />
-
-<label for="pw">비밀번호</label><br>
-<input type="password" id="pw" name="pw" /><br>
-<span id="loginspan"></span>
-
-<input type="button" id="cancle" value="cancle" onclick='history.go(-1)' />
-<input type="submit" id="submit" value="login"/>
+<%  %>
 
 </form>
+
 
 </body>
 </html>

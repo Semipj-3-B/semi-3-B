@@ -1,13 +1,15 @@
-<%@page import="dto.FindImg"%>
-<%@page import="dto.FindBoard"%>
+<%@page import="dto.DiscoverImg"%>
+<%@page import="dto.DiscoverBoard"%>
 <%@page import="dto.Usertb"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
+
+<% List<DiscoverImg> discoverImg = (List) request.getAttribute("discoverImg"); %>  
 <%  Usertb u = (Usertb) request.getAttribute("param"); %>
-<%	FindBoard b = (FindBoard) request.getAttribute("viewFindBoard"); %>
-<%	List<FindImg> findImg = (List) request.getAttribute("findImg"); %>
+<%	DiscoverBoard b = (DiscoverBoard) request.getAttribute("viewDiscoverBoard"); %>
+
 
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
 
@@ -311,10 +313,12 @@ table table tr td img{
 <hr>
 
 <!-- //enctype="multipart/form-data" 파일 업로드 처리-->
-<form action="/find/update" method="post" enctype="multipart/form-data" >
+<form action="/discover/update" method="post" enctype="multipart/form-data" >
 
-<input type = "hidden" name = "FindNo"  value="<%=request.getParameter("FindNo") %>" />
-
+<input type ="hidden" name ="DiscoverNo" id ="DiscoverNo" value="<%=request.getParameter("DiscoverNo") %>" />
+<input type="hidden" id="nick" value="<%=request.getAttribute("nick") %>">
+<input type="hidden" id="userno" value="<%=session.getAttribute("userno")%>">
+	
 <div>
 <div id="findheader"><input type ="text" name = "title" id="title" value="<%=b.getTitle() %>"/></div>
 <div id="findheader1"><%=request.getAttribute("nick") %></div>
@@ -334,7 +338,7 @@ table table tr td img{
 
 <%-- <% int changeimg = 0; %> --%>
 
-<% int i = findImg.size(); %>
+<% int i = discoverImg.size(); %>
 <%-- <% int i = 0; %> --%>
 
 <%-- <%	if(  changeimg <= 1 ) { %> --%>
@@ -349,7 +353,7 @@ table table tr td img{
 		
 	<%}	if(i < 2 && i > 0) {%>
 	
-	<div id="mainimg" class="mainimg"><img src="/upload/<%=findImg.get(0).getStoredImg() %>" id="mainimages"/></div>
+	<div id="mainimg" class="mainimg"><img src="/upload/<%=discoverImg.get(0).getStoredImg() %>" id="mainimages"/></div>
 	<div class="subimg-grid">
 		<div id="subimg1"><img id="subimages"></div>
 		<div id="subimg2"><img id="subimages"></div>
@@ -358,28 +362,28 @@ table table tr td img{
 	
 	<%}	if(i < 3 && i > 1) {%>
 
-	<div id="mainimg" class="mainimg"><img src="/upload/<%=findImg.get(0).getStoredImg() %>" id="mainimages"/></div>
+	<div id="mainimg" class="mainimg"><img src="/upload/<%=discoverImg.get(0).getStoredImg() %>" id="mainimages"/></div>
 	<div class="subimg-grid">
-		<div id="subimg1"><img src="/upload/<%=findImg.get(1).getStoredImg() %>" id="subimages"/></div>
+		<div id="subimg1"><img src="/upload/<%=discoverImg.get(1).getStoredImg() %>" id="subimages"/></div>
 		<div id="subimg2"><img id="subimages"></div>
 		<div id="subimg3"><img id="subimages"></div>
 	</div>
 	
 	<%}	if(i < 4 && i > 2) {%>
 		
-	<div id="mainimg" class="mainimg"><img src="/upload/<%=findImg.get(0).getStoredImg() %>" id="mainimages"/></div>
+	<div id="mainimg" class="mainimg"><img src="/upload/<%=discoverImg.get(0).getStoredImg() %>" id="mainimages"/></div>
 	<div class="subimg-grid">
-		<div id="subimg1"><img src="/upload/<%=findImg.get(1).getStoredImg() %>" id="subimages" /></div>
-		<div id="subimg2"><img src="/upload/<%=findImg.get(2).getStoredImg() %>" id="subimages" /></div>
+		<div id="subimg1"><img src="/upload/<%=discoverImg.get(1).getStoredImg() %>" id="subimages" /></div>
+		<div id="subimg2"><img src="/upload/<%=discoverImg.get(2).getStoredImg() %>" id="subimages" /></div>
 		<div id="subimg3"><img><img id="subimages"></div>
 	</div>	
 	
 	<%}	if(i < 5 && i > 3) {%>
-	<div id="mainimg" class="mainimg"><img src="/upload/<%=findImg.get(0).getStoredImg() %>" id="mainimages"/></div>
+	<div id="mainimg" class="mainimg"><img src="/upload/<%=discoverImg.get(0).getStoredImg() %>" id="mainimages"/></div>
 	<div class="subimg-grid">
-		<div id="subimg1"><img src="/upload/<%=findImg.get(1).getStoredImg() %>"  id="subimages"/></div>
-		<div id="subimg2"><img src="/upload/<%=findImg.get(2).getStoredImg() %>"  id="subimages"/></div>
-		<div id="subimg3"><img src="/upload/<%=findImg.get(3).getStoredImg() %>"  id="subimages"/></div>
+		<div id="subimg1"><img src="/upload/<%=discoverImg.get(1).getStoredImg() %>"  id="subimages"/></div>
+		<div id="subimg2"><img src="/upload/<%=discoverImg.get(2).getStoredImg() %>"  id="subimages"/></div>
+		<div id="subimg3"><img src="/upload/<%=discoverImg.get(3).getStoredImg() %>"  id="subimages"/></div>
 	</div>	
 
 	<% } %><!-- if문 끝 -->

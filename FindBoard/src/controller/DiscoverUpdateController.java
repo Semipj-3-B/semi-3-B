@@ -26,7 +26,11 @@ public class DiscoverUpdateController extends HttpServlet {
 
 		DiscoverBoard discoverno = discoverBoardService.getParam(req);
 		
+		System.out.println("discoverno = " + discoverno);
+		
 		DiscoverBoard viewDiscoverBoard = discoverBoardService.views(discoverno);
+		
+		System.out.println("viewDiscoverBoard = " + viewDiscoverBoard);
 		
 		req.setAttribute("nick", discoverBoardService.getnick(viewDiscoverBoard));
 		req.setAttribute("eamil", discoverBoardService.getemail(viewDiscoverBoard));

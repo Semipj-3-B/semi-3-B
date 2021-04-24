@@ -123,7 +123,7 @@ function search(){
 				<input type="button" id="search" onclick="search();" value="조회"/>
 			</div>
 			<div class="right_box">
-				<p><a href="/find/add" title="글 등록하기">등록하기</a></p>
+				<p><a href="/discover/add" title="글 등록하기">등록하기</a></p>
 			</div>
 		</div>
 		<%	for(int i=0; i<list.size(); i++) { %>

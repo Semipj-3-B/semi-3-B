@@ -301,7 +301,7 @@ public class DiscoverBoardDaoImpl implements DiscoverBoardDao {
 	@Override
 	public int selectDiscoverno(Connection conn) {
 		String sql = "";
-		sql += "SELECT dicoverboard_seq.nextval FROM dual";
+		sql += "SELECT discoverboard_seq.nextval FROM dual";
 		
 		int discoverno = -1;
 		
@@ -357,7 +357,7 @@ public class DiscoverBoardDaoImpl implements DiscoverBoardDao {
 	@Override
 	public int insertImg(Connection conn, List<DiscoverImg> discoverImages) {
 		String sql = "";
-		sql += "INSERT INTO discoverimg (image_no, find_no, origin_img, stored_img)";
+		sql += "INSERT INTO discoverimg (image_no, discover_no, origin_img, stored_img)";
 		sql += " VALUES (discoverimg_seq.nextval, ?, ?, ?)";
 		
 		int result = -1;

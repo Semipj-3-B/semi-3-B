@@ -13,11 +13,15 @@ public class Usertb {
 	private String gender;
 	private String email;
 	private String phone;
+	private int postnum;
+	private String addr;
+	private String addrDetail;
 	@Override
 	public String toString() {
 		return "Usertb [userNo=" + userNo + ", userId=" + userId + ", userPw=" + userPw + ", nick=" + nick + ", year="
 				+ year + ", month=" + month + ", day=" + day + ", name=" + name + ", gender=" + gender + ", email="
-				+ email + ", phone=" + phone + "]";
+				+ email + ", phone=" + phone + ", postnum=" + postnum + ", addr=" + addr + ", addrDetail=" + addrDetail
+				+ "]";
 	}
 	public int getUserNo() {
 		return userNo;
@@ -85,7 +89,24 @@ public class Usertb {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-
+	public int getPostnum() {
+		return postnum;
+	}
+	public void setPostnum(int postnum) {
+		this.postnum = postnum;
+	}
+	public String getAddr() {
+		return addr;
+	}
+	public void setAddr(String addr) {
+		this.addr = addr;
+	}
+	public String getAddrDetail() {
+		return addrDetail;
+	}
+	public void setAddrDetail(String addrDetail) {
+		this.addrDetail = addrDetail;
+	}
 	
 	
 }

@@ -36,6 +36,10 @@ public class LoginController extends HttpServlet {
 		//입력정보와 유저정보가 일치하는지 조회
 		boolean flag = loginService.login(param);
 		
+		String autologin = req.getParameter("autologin");
+		String rememberid = req.getParameter("rememberid");
+		
+	
 		if(flag) {
 			//유저 정보 조회
 			Usertb res = loginService.loginUser(param);
@@ -48,7 +52,7 @@ public class LoginController extends HttpServlet {
 			session.setAttribute("nick", res.getNick());
 			
 			//로그인 완료시 메인으로 리다이렉트
-			resp.sendRedirect("/main?autologin=" + req.getParameter("autologin") + "&rememberid=" + req.getParameter("rememberid") + "&userid=" + res.getUserId());
+			resp.sendRedirect("/main?autologin=" + autologin + "&rememberid=" + rememberid);
 			
 		} else {
 			//입력정보와 유저정보가 일치하지 않을시 메시지 전달

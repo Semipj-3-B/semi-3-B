@@ -203,7 +203,7 @@ function commentUpdate(commentno) {
 	
 	$.ajax({
 		type: 'post',
-		url: '/find/commentupdate',
+		url: '/discover/commentupdate',
 		data: { 'commentno' : commentno
 				,'comment' : comment},
 		success : function() {
