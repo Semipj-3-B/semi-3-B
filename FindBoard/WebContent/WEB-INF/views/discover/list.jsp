@@ -12,7 +12,22 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
 <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script> -->
 
-
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	$("#btnWrite").click(function() {
+		<% if( session.getAttribute("login") == null ) {%>
+	
+			alert('로그인을 해주세요')
+			return false
+		
+		<% } else { %>
+			location.href="/discover/add";
+		<% } %>
+		});
+	
+});
+</script>
 
 
 
@@ -67,7 +82,7 @@ function search(){
 		margin-left:10px;
 	}
 	#container .click_box .right_box{width:90px; height:40px; float:right; text-align:center;}
-	#container .click_box .right_box p{display:block; 
+	#container .click_box .right_box p button{display:block; 
 		width:80px; 
 		height:25px; 
 		background-color:green;
@@ -75,7 +90,13 @@ function search(){
 		line-height:25px;
 		border-radius:6px 6px 6px 6px;
 	}
-	#container .click_box .right_box p a{color:#eee;}
+/* 	#container .click_box .right_box p button{color:#eee;} */
+	#btnWrite {
+		color:#eee;
+		border : 0;
+		outline: 0;
+		
+	}
 	
 	#container .pet_list{width:150px; 
 	
@@ -127,11 +148,10 @@ function search(){
 			</div>
 
 
-<%-- 		<% if( (boolean)session.getAttribute("login") ){ %> --%>
 			<div class="right_box">
-				<p><a href="/discover/add" title="글 등록하기">등록하기</a></p>
+				<p><button  id="btnWrite" >글 쓰기</button></p>
 			</div>
-<%-- 			<% } %> --%>
+
 		</div>
 		<%	for(int i=0; i<list.size(); i++) { %>
 			<div class="pet_list">
@@ -145,5 +165,6 @@ function search(){
 			
 	</div>
 <%@ include file="/WEB-INF/views/layout/paging.jsp" %>
-<%-- <%@ include file="/WEB-INF/views/layout/paging.jsp" %> --%>
+
+
 <%@ include file="/WEB-INF/views/layout/footer.jsp" %>
