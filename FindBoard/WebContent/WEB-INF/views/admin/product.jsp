@@ -55,12 +55,18 @@ function btnsEvent() {
 		 window.open("/product/edit?productId="+prodId, "_blank", "width=400px height=200px")
 	})
 	
+	//삭제하기
 	$(".proddel").click(function () {
 		if(confirm("상품을 삭제하시겠습니까?")) {
 			$("form").submit()
 		} else {
 			return false
 		}
+	})
+	
+	//작성하기
+	$("#write").click(function () {
+		window.open("/product/write", "_blank")
 	})
 }
 //카테고리별 목록 조회 
@@ -100,6 +106,7 @@ function viewProducts(data) {
 		<option value="2">악세서리</option>
 		<option value="3">폰케이스</option>
 	</select>
+	<button type="button" id="write">제품 등록</button>
 	<table class="table">
 	<tr>
 		<th style="width: 5%"></th>

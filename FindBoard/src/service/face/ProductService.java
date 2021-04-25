@@ -32,4 +32,11 @@ public interface ProductService {
 	 */
 	List<ProductImg> viewImg(Product viewProduct);
 
+	
+	/**
+	 * 상품을 등록한다.
+	 * @param req	상품 정보가 담긴 요청 파라미터
+	 */
+	void write(HttpServletRequest req);
+
 }

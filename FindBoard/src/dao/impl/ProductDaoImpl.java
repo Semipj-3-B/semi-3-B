@@ -90,6 +90,87 @@ public class ProductDaoImpl implements ProductDao {
 		return null;
 	}
 
+	@Override
+	public int selectproductId(Connection conn) {
+		String sql = "";
+		sql += "SELECT product_seq.nextval FROM dual";
+		
+		int prodId = -1;
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				prodId = rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rs);
+			JDBCTemplate.close(ps);
+		}
+		return prodId;
+	}
+
+
+	@Override
+	public int insert(Connection conn, Product product) {
+		String sql = "";
+		sql += "INSERT INTO product (product_id, category_id, product_name, price, content)";
+		sql += " VALUES (?, ?, ?, ?, ?)";
+		
+		int result = -1;
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1, product.getProductId());
+			ps.setInt(2, product.getCategoryId());
+			ps.setString(3, product.getProductName());
+			ps.setInt(4, product.getPrice());
+			ps.setString(5, product.getContent());
+			
+			result = ps.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(ps);
+		}
+		
+		return result;
+	}
+
+
+	@Override
+	public int insertImg(Connection conn, List<ProductImg> productImgs) {
+		String sql = "";
+		sql += "INSERT INTO product_img (image_no, product_id, origin_img, stored_img)";
+		sql += " VALUES (product_img_seq.nextval, ?, ?, ?)";
+
+		int result = -1;
+		int res = 0;
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			for(int i = 0; i < productImgs.size(); i++) {
+				ps.setInt(1, productImgs.get(i).getProductId());
+				ps.setString(2, productImgs.get(i).getOriginImg());
+				ps.setString(3, productImgs.get(i).getStoredImg());
+			
+				res += ps.executeUpdate();
+			}//for() END
+			
+			result = res;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(ps);
+		}
+		
+		return result;
+	}
+
 	
 
 
