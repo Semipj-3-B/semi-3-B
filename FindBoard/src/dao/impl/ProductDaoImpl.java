@@ -116,6 +116,7 @@ public class ProductDaoImpl implements ProductDao {
 
 	@Override
 	public int insert(Connection conn, Product product) {
+		
 		String sql = "";
 		sql += "INSERT INTO product (product_id, category_id, product_name, price, content)";
 		sql += " VALUES (?, ?, ?, ?, ?)";
@@ -138,6 +139,7 @@ public class ProductDaoImpl implements ProductDao {
 			JDBCTemplate.close(ps);
 		}
 		
+		System.out.println("DAO의 result 값 = " + result);
 		return result;
 	}
 

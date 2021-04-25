@@ -26,6 +26,6 @@ public class ProductWriteController extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		productService.write(req);
-		resp.sendRedirect("/product");
+		resp.sendRedirect("/admin/product");
 	}
 }

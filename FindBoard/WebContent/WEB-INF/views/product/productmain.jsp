@@ -126,7 +126,7 @@
 <%-- 			/find/read?FindNo=<%=list.get(i).getFindNo() %> --%>
 			<div id="product_img">
 				<ul class="img_box">
-					<li><a href="/product/detail?productId<%=list.get(0).getProductId %>" title="제품이미지1"><img src="http://i.imgur.com/i7sW1WN.jpg" alt="제품이미지1"/></a></li>
+<%-- 					<li><a href="/product/detail?productId<%=list.get(0).getProductId %>" title="제품이미지1"><img src="http://i.imgur.com/i7sW1WN.jpg" alt="제품이미지1"/></a></li> --%>
 					<li><a href="#" title="제품이미지1"><img src="http://i.imgur.com/i7sW1WN.jpg" alt="제품이미지1"/></a></li>
 					<li><a href="#" title="제품이미지1"><img src="http://i.imgur.com/i7sW1WN.jpg" alt="제품이미지1"/></a></li>
 					<li><a href="#" title="제품이미지1"><img src="http://i.imgur.com/i7sW1WN.jpg" alt="제품이미지1"/></a></li>

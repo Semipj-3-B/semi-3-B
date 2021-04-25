@@ -25,18 +25,18 @@ public class ProductDetailController extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		
-//		//상품 아이디로 상품정보 얻어오기
-//		Product productid = productService.getProdByProdId(req);
-//		
-//		System.out.println("productid 확인 = " + productid);
-//		
-//		//게시글번호로 게시글 상세보기
-//		Product viewProduct = productService.views(productid);
-//		
-//		System.out.println("게시글 번호로 게시글 상세보기정보 = " + viewProduct);
-//		
-//		//상세보기 조회결과 전달
-//		req.setAttribute("viewProduct", viewProduct);
+		//상품 아이디로 상품정보 얻어오기
+		Product productid = productService.getProdByProdId(req);
+		
+		System.out.println("productid 확인 = " + productid);
+		
+		//게시글번호로 게시글 상세보기
+		Product viewProduct = productService.views(productid);
+		
+		System.out.println("게시글 번호로 게시글 상세보기정보 = " + viewProduct);
+		
+		//상세보기 조회결과 전달
+		req.setAttribute("viewProduct", viewProduct);
 //		
 //		
 //		List<ProductImg> productImg = productService.viewImg(viewProduct);

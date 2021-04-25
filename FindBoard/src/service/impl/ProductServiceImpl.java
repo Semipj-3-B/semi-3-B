@@ -261,10 +261,14 @@ public class ProductServiceImpl implements ProductService {
 		System.out.println("저장이름: " + productImgs.get(1).getStoredImg());
 		System.out.println("========================");
 		
+		System.out.println("product의 존재 유뮤 = " + product);
+		
 		if(product != null) {
 			if(productDao.insert(conn, product) > 0) {
+				System.out.println("서비스 부분 = insert로 넘어가냐");
 				JDBCTemplate.commit(conn);
 			} else {
+				System.out.println("서비스 부분 = insert로 못 넘어가냐");
 				JDBCTemplate.rollback(conn);
 			}
 		}

@@ -1,5 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%@page import="dto.Product" %>
+<%@page import="dto.ProductImg" %>
+<%@page import="java.util.List"%>
+
+<% Product p = (Product) request.getAttribute("viewProduct");%>
+<% List<ProductImg> productImg = (List)request.getAttribute("productImg");%>  %>
+    
+    
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
 
 <!-- iamport 1.1.5 라이브러리 추가 -->
@@ -8,21 +17,57 @@
 <!-- jQuery 2.2.4 라이브러리 추가 -->
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 
+
+
 <script type="text/javascript">
 
-	$(document).ready(function() {
-		var chk = $("#chk")
-		
-		// iamport 변수 초기화
-		var IMP = window.IMP;
-		IMP.init('imp60723568');	// 가맹점 식별코드, 회원가입해서 직접 넣어야합니다
+$(document).ready(function() {
 	
-		// 결제 모듈 불러오기
-		$(".pay").click(function() {
+	// iamport 변수 초기화
+	var IMP = window.IMP;
+	IMP.init('imp60723568');	// 가맹점 식별코드, 회원가입해서 직접 넣어야합니다			
+				
+// 		<form action="#" method="get" name = "CheckAgreement"  >
+// 			<input type="radio" id="chk" name="chk" /> 동의 사항 확인
+// 		</form>
+	
+	// 결제 모듈 불러오기
+	$(".pay").click(function() {
+		
+
 			
-				requestPayment();
-		});
-	});
+// 		function chk(){
+			
+// 			var 
+			
+// 			var num = 0;
+			
+// 			if(req == true){ num = 1; }
+			
+// 			if( num == 1 ) {			
+				
+// 			requestPayment();			
+				
+// 			} else {
+// 				alert("동의사항 확인 해주세요");
+// 			}
+// 		}	/* chk() 끝 */
+
+	var chk1 = document.CheckAgreement.chk.checked;
+	
+	console.log(chk1);
+	
+	if(!chk1){
+		alert('동의사항확인을 확인해주세요');
+		return false;
+	} else {
+			requestPayment();					
+	}
+	
+
+	});/* pay 끝 */
+	
+});
 	
 	// 결제 요청 - 결제 모듈 불러오기
 	function requestPayment() {
@@ -52,7 +97,7 @@
 		        // 결제 완료 처리 로직
 				//[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
 				jQuery.ajax({
-					url: "/pay/complete", //cross-domain error가 발생하지 않도록 동일한 도메인으로 전송
+					url: "/product/paycomplete", //cross-domain error가 발생하지 않도록 동일한 도메인으로 전송
 					type: 'POST',
 					dataType: 'json',
 					data: {
@@ -176,16 +221,17 @@
 			<div class="product_box">
 				<div class="product_img" >
 			      <p class="img_box"><img src="http://i.imgur.com/viuPHoS.gif" /></p>
-			      <p><a href="#" title="상세보기">상품 상세보기</a></p>
+<%-- 			      <p><a href="/product/detail?productId<%=p.getProductId() %>" title="상세보기">상품 상세보기</a></p> --%>
+			      <p><a href="" title="상세보기">상품 상세보기</a></p>
 		   		</div>
 		   		
 		   		<div class="product_text">
 		   			<table>
 		   				<tr class="br_bot">
 		   					<th>상품/옵션 정보</th>
-		   					<th>수량</th>
+<!-- 		   					<th>수량</th> -->
 		   					<th>금액</th>
-		   					<th>배송비</th>
+<!-- 		   					<th>배송비</th> -->
 		   				</tr>
 		   				
 		   				<tr>
@@ -197,7 +243,7 @@
 		   			</table>
 		   			<div class="price">
 		   				<p>상품금액 </p>
-		   				<p>배송비</p>
+<!-- 		   				<p>배송비</p> -->
 		   				<p>총 결제 금액</p>
 		   			</div>
 		   		</div>	
@@ -211,13 +257,13 @@
 					"해당 상품 자체"와 관계없는 글, 양도, 광고성, 욕설, 비방, 도배 등의 글은 예고 없이 이동, 노출제한, 삭제 등의 조치가 취해질 수 있습니다.<br/>
 					공개 게시판이므로 전화번호, 메일 주소 등 고객님의 소중한 개인정보는 절대 남기지 말아주세요.<br/>
 				</p>
-				<form action="#" method="get">
-					<input type="radio" id="chk" name="chk"/> 동의 사항 확인
-				</form>
+ 				<form action="#" method="get" name = "CheckAgreement"  >
+ 					<input type="radio" id="chk" name="chk" /> 동의 사항 확인
+ 				</form>
 			</div>
 			<div class="info_box">
 				<h5>배송 정보</h5>
-				<form action="#" method="get">
+				<form action="/product/paycomplete" method="post">
 					<label name="recipient">받으실 분</label>
 					<input type="text" name="recipient"/><br/>
 					

@@ -58,24 +58,24 @@
 	
 </style>
 
-<% int i = productImg.size(); %>
+<%-- <% int i = productImg.size(); %> --%>
 	<div id="container">
 		<div class="product_box">
 			<ul class="support">
 				<li>수익금액 일부는 후원금으로 사용됩니다.</li>
 			</ul>
 			<div class="product_img">
-<!-- 				<p><img src="http://i.imgur.com/i7sW1WN.jpg" alt="제품이미지1"/></p> -->
-				<p><img src="//<%=productImg.get(0).getStoredImg() %>" alt="제품이미지1"/></p>
+				<p><img src="http://i.imgur.com/i7sW1WN.jpg" alt="제품이미지1"/></p>
+<%-- 				<p><img src="//<%=productImg.get(0).getStoredImg() %>" alt="제품이미지1"/></p> --%>
 				
 			</div>
 			<div class="product_price">
-<!-- 				<p>판매 금액 : 1,000원</p> -->
-<!-- 				<p>배송비 : 2,500원</p> -->
-<!-- 				<p>원산지 : 한국</p> -->
-<!-- 				<p>소재 : 면</p> -->
-				<p> <%-- 상품이름 --%><%= p.getProductName() %></p>
-				<p>판매 금액 : <%= p.getPrice() %></p>
+				<p>판매 금액 : 1,000원</p>
+				<p>배송비 : 2,500원</p>
+				<p>원산지 : 한국</p>
+				<p>소재 : 면</p>
+<%-- 				<p> 상품이름<%= p.getProductName() %></p> --%>
+<%-- 				<p>판매 금액 : <%= p.getPrice() %></p> --%>
 
 				<div class="l_basket">
 					<a href="#" title="장바구니">장바구니</a>
@@ -86,6 +86,7 @@
 			</div>
 			<div class="product_txBox">
 				<p>상품정보</p>
+<%-- 			<p><img src="//<%=productImg.get(1).getStoredImg() %>" /></p> --%>
 			</div>
 		</div>
 	</div>

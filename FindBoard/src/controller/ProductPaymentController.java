@@ -21,11 +21,26 @@ public class ProductPaymentController extends HttpServlet {
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		req.getRequestDispatcher("/WEB-INF/views/product/productpay.jsp").forward(req, resp);
 		
 		//상품 아이디로 상품정보 얻어오기
 		Product productid = productService.getProdByProdId(req);
 		
+		System.out.println("productid 확인 = " + productid);
+		
+		//게시글번호로 게시글 상세보기
+		Product viewProduct = productService.views(productid);
+		
+		System.out.println("게시글 번호로 게시글 상세보기정보 = " + viewProduct);
+		
+//		List<ProductImg> productImg = productService.viewImg(viewProduct);
+//		
+//		System.out.println( "전달할 상품 이미지 정보 = " + productImg);
+//		
+//		//이미지 전달 
+//		req.setAttribute("productImg", productImg);
+		
+		req.getRequestDispatcher("/WEB-INF/views/product/productpay.jsp").forward(req, resp);
+	
 	}
 	
 
