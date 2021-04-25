@@ -88,7 +88,7 @@ function getFindno() {
 //수정, 삭제 버튼 이벤트
 function handleBtns() {
 	$(".finddet").click(function () {
-		 window.open("/find/read?FindNo="+findno, "_blank", "width=400px height=200px" )
+		 window.open("/find/read?FindNo="+findno)
 	})
 	
 	$(".finddel").click(function () {

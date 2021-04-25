@@ -88,7 +88,7 @@ function getDiscoverno() {
 //수정, 삭제 버튼 이벤트
 function handleBtns() {
 	$(".discdet").click(function () {
-		 window.open("/discover/read?DiscoverNo="+discoverno, "_blank", "width=400px height=200px" )
+		 window.open("/discover/read?DiscoverNo="+discoverno)
 	})
 	
 	$(".discdel").click(function () {

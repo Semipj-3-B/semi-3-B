@@ -68,7 +68,7 @@ function getReviewno() {
 //수정, 삭제 버튼 이벤트
 function handleBtns() {
 	$(".revdet").click(function () {
-		 window.open("/review/view?reviewNo="+reviewno, "_blank", "width=400px height=200px" )
+		 window.open("/review/view?reviewNo="+reviewno)
 	})
 	
 	$(".revdel").click(function () {
