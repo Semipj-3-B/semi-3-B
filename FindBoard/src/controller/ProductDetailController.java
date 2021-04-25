@@ -37,14 +37,14 @@ public class ProductDetailController extends HttpServlet {
 		
 		//상세보기 조회결과 전달
 		req.setAttribute("viewProduct", viewProduct);
-//		
-//		
-//		List<ProductImg> productImg = productService.viewImg(viewProduct);
-//		
-//		System.out.println( "전달할 상품 이미지 정보 = " + productImg);
-//		
-//		//이미지 전달 
-//		req.setAttribute("productImg", productImg);
+		
+		
+		List<ProductImg> productImg = productService.viewImg(viewProduct);
+		
+		System.out.println( "전달할 상품 이미지 정보 = " + productImg);
+		
+		//이미지 전달 
+		req.setAttribute("productImg", productImg);
 		
 		req.getRequestDispatcher("/WEB-INF/views/product/productdetail.jsp")
 			.forward(req, resp);

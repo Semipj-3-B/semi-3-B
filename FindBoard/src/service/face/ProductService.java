@@ -7,8 +7,23 @@ import javax.servlet.http.HttpServletRequest;
 
 import dto.Product;
 import dto.ProductImg;
+import util.ProductPaging;
 
 public interface ProductService {
+	
+	/**
+	 * 상품페이지의 페이징얻기
+	 * @param req
+	 * @return
+	 */
+	ProductPaging getPaping(HttpServletRequest req);
+	
+	/**
+	 * 상품의 페이지 리스트 정보
+	 * @param paging
+	 * @return
+	 */
+	List<Product> getList(ProductPaging paging);
 
 	/**
 	 * 상품 ID추출
@@ -38,5 +53,14 @@ public interface ProductService {
 	 * @param req	상품 정보가 담긴 요청 파라미터
 	 */
 	void write(HttpServletRequest req);
+	
+	/**
+	 * 
+	 * @param product
+	 * @return
+	 */
+	List<ProductImg> viewMainImg(List<Product> product);
+	
+
 
 }

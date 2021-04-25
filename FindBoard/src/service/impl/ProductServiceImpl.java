@@ -21,10 +21,35 @@ import dao.impl.ProductDaoImpl;
 import dto.Product;
 import dto.ProductImg;
 import service.face.ProductService;
+import util.ProductPaging;
 
 public class ProductServiceImpl implements ProductService {
 
 	private ProductDao productDao = new ProductDaoImpl();
+	
+	
+	@Override
+	public ProductPaging getPaping(HttpServletRequest req) {
+		
+		
+		String param = req.getParameter("curPage");
+		int curPage = 0;
+		
+		if( param != null && !"".equals(param) ) {
+			curPage = Integer.parseInt(param);
+		}
+		
+		int totalCount = productDao.selectCntAll(JDBCTemplate.getConnection() );
+		
+		ProductPaging paging = new ProductPaging(totalCount, curPage);
+		
+		return paging;
+	}
+	
+	@Override
+	public List<Product> getList(ProductPaging paging) {
+		return productDao.selectAll(JDBCTemplate.getConnection(), paging);
+	}
 	
 	@Override
 	public Product getProdByProdId(HttpServletRequest req) {
@@ -33,9 +58,9 @@ public class ProductServiceImpl implements ProductService {
 		Product productId = new Product();
 		
 		//전달된 ProductId 검증하기
-		String param = req.getParameter("ProductId");
+		String param = req.getParameter("productId");
 		
-		System.out.println("ProductId: " + param);
+		System.out.println("productId: " + param);
 		
 
 		if(param != null && !"".equals(param)) {
@@ -58,6 +83,16 @@ public class ProductServiceImpl implements ProductService {
 		
 		return productview;
 	}
+	
+	/**
+	 * 썸네일 구하기인데 모르겠다
+	 */
+	@Override
+	public List<ProductImg> viewMainImg(List<Product> product) {
+		
+		return productDao.selectMainImg(JDBCTemplate.getConnection(), product);
+	}
+
 
 	@Override
 	public List<ProductImg> viewImg(Product viewProduct) {
@@ -282,5 +317,10 @@ public class ProductServiceImpl implements ProductService {
 		}
 		
 	}
+
+
+
+
+
 
 }

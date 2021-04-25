@@ -6,7 +6,7 @@
 <%@page import="java.util.List"%>
 
 <% Product p = (Product) request.getAttribute("viewProduct");%>
-<% List<ProductImg> productImg = (List)request.getAttribute("productImg");%>  %>
+<% List<ProductImg> productImg = (List)request.getAttribute("productImg");%>  
     
     
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
@@ -220,30 +220,31 @@ $(document).ready(function() {
 		<div id="payment">
 			<div class="product_box">
 				<div class="product_img" >
-			      <p class="img_box"><img src="http://i.imgur.com/viuPHoS.gif" /></p>
+			      <p class="img_box"><img src="/uploadProd/<%=productImg.get(0).getStoredImg() %>" /></p>
 <%-- 			      <p><a href="/product/detail?productId<%=p.getProductId() %>" title="상세보기">상품 상세보기</a></p> --%>
-			      <p><a href="" title="상세보기">상품 상세보기</a></p>
+			      <p><a href="/product/detail?productId=<%=productImg.get(0).getProductId() %>" title="상세보기">상품 상세보기</a></p>
 		   		</div>
 		   		
 		   		<div class="product_text">
 		   			<table>
 		   				<tr class="br_bot">
 		   					<th>상품/옵션 정보</th>
-<!-- 		   					<th>수량</th> -->
+		   					<th>수량</th>
 		   					<th>금액</th>
-<!-- 		   					<th>배송비</th> -->
+		   					<th>배송비</th>
 		   				</tr>
-		   				
+		   				<!-- for문으로 장바구니 담긴거 계산 -->
 		   				<tr>
 		   					<td>상품이름</td>
 		   					<td>n개</td>
 		   					<td>0원</td>
-		   					<td>0원</td>
+		   					<td>2000원</td>
 		   				</tr>
+		   				
 		   			</table>
 		   			<div class="price">
 		   				<p>상품금액 </p>
-<!-- 		   				<p>배송비</p> -->
+		   				<p>배송비</p>
 		   				<p>총 결제 금액</p>
 		   			</div>
 		   		</div>	

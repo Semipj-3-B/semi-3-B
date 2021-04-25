@@ -6,18 +6,39 @@
 <%@page import="java.util.List"%>
 
 <% Product p = (Product) request.getAttribute("viewProduct");%>
-<% List<ProductImg> productImg = (List)request.getAttribute("productImg");%>  %>
+<% List<ProductImg> productImg = (List)request.getAttribute("productImg");%>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
+
+
+
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	//목록버튼 동작
+	$("#btnList").click(function() {
+		$(location).attr("href", "/find/list");
+	});
+
+	
+	//결제버튼
+	$("#btnUpdate").click(function() {
+		$(location).attr("href", "/product/pay?productId=<%=p.getProductId() %>");
+	});
+
+
+});
+</script>
+
 
 <style type="text/css">
 	a:link, a:visited{text-decoration:none; color:#fff;}
 
-	#container{width:900px; margin:0 auto; overflow:hidden;}
+	#container{width:900px; margin:0 auto; overflow:auto;}
 	
 	
 	#container .product_box{width:100%; border:1px solid #ccc; height:800px;}
 	
-	#container .product_box .support{width:100%; margin:0; overflow:hidden;}
+	#container .product_box .support{width:100%; margin:0; overflow:auto;}
 	#container .product_box .support li{
 		float:right;
 		padding:10px 90px 0 0;
@@ -56,37 +77,67 @@
 		font-size:20px;	
 	}
 	
+
+	#container .product_box .product_txBox img{ width:100%; height:100%;}
+	
+	.container {
+	width:850px; clear:both; 
+		margin:0 auto;
+		text-align:center; 
+
+	overflow: auto;
+	}
+	
+	#container::-webkit-scrollbar {
+		width: 10px;
+	}
+	#container::-webkit-scrollbar-thumb {
+    	background-color: #2f3542;
+    	border-radius: 10px;
+    	background-clip: padding-box;
+    	border: 2px solid transparent;
+	}
+	#container::-webkit-scrollbar-track {
+    	background-color: grey;
+    	border-radius: 10px;
+    	box-shadow: inset 0px 0px 5px white;
+	}
+
 </style>
 
-<%-- <% int i = productImg.size(); %> --%>
+<% int i = productImg.size(); %>
 	<div id="container">
 		<div class="product_box">
 			<ul class="support">
 				<li>수익금액 일부는 후원금으로 사용됩니다.</li>
 			</ul>
 			<div class="product_img">
-				<p><img src="http://i.imgur.com/i7sW1WN.jpg" alt="제품이미지1"/></p>
-<%-- 				<p><img src="//<%=productImg.get(0).getStoredImg() %>" alt="제품이미지1"/></p> --%>
-				
+<!-- 				<p><img src="http://i.imgur.com/i7sW1WN.jpg" alt="제품이미지1"/></p> -->
+				<p><img src="/uploadProd/<%=productImg.get(0).getStoredImg() %>" alt="제품이미지1"/></p>
+
 			</div>
 			<div class="product_price">
-				<p>판매 금액 : 1,000원</p>
-				<p>배송비 : 2,500원</p>
-				<p>원산지 : 한국</p>
-				<p>소재 : 면</p>
-<%-- 				<p> 상품이름<%= p.getProductName() %></p> --%>
-<%-- 				<p>판매 금액 : <%= p.getPrice() %></p> --%>
+<!-- 				<p>판매 금액 : 1,000원</p> -->
+<!-- 				<p>배송비 : 2,500원</p> -->
+<!-- 				<p>원산지 : 한국</p> -->
+<!-- 				<p>소재 : 면</p> -->
+				<p>상품이름 : <%= p.getProductName() %></p>
+				<p>판매 금액 : <%= p.getPrice() %></p>
 
 				<div class="l_basket">
 					<a href="#" title="장바구니">장바구니</a>
 				</div>
 				<div class="r_price">
-					<a href="/product/pay" title="바로 구매">바로구매</a>
+<!-- 					<a href="/product/pay" title="바로 구매">바로구매</a> -->
+					<button id="btnUpdate">구매하기</button>
 				</div>
 			</div>
+			
 			<div class="product_txBox">
 				<p>상품정보</p>
-<%-- 			<p><img src="//<%=productImg.get(1).getStoredImg() %>" /></p> --%>
+				<div class = "container">
+					<img src="/uploadProd/<%=productImg.get(1).getStoredImg() %>" />
+				</div>
 			</div>
 		</div>
 	</div>

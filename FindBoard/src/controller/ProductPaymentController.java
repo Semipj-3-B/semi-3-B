@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dto.Product;
+import dto.ProductImg;
 import service.face.ProductService;
 import service.impl.ProductServiceImpl;
 
@@ -32,14 +34,18 @@ public class ProductPaymentController extends HttpServlet {
 		
 		System.out.println("게시글 번호로 게시글 상세보기정보 = " + viewProduct);
 		
-//		List<ProductImg> productImg = productService.viewImg(viewProduct);
-//		
-//		System.out.println( "전달할 상품 이미지 정보 = " + productImg);
-//		
-//		//이미지 전달 
-//		req.setAttribute("productImg", productImg);
+		//상세보기 조회결과 전달
+		req.setAttribute("viewProduct", viewProduct);
 		
-		req.getRequestDispatcher("/WEB-INF/views/product/productpay.jsp").forward(req, resp);
+		List<ProductImg> productImg = productService.viewImg(viewProduct);
+		
+		System.out.println( "전달할 상품 이미지 정보 = " + productImg);
+		
+		//이미지 전달 
+		req.setAttribute("productImg", productImg);
+		
+		req.getRequestDispatcher("/WEB-INF/views/product/productpay.jsp")
+			.forward(req, resp);
 	
 	}
 	

@@ -1,6 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
+
+<%@page import="dto.Product" %>
+<%@page import="dto.ProductImg" %>
+<%@page import="java.util.List"%>
+
+<% List<Product> product = (List)request.getAttribute("product");%>
+
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
+
+<!-- jQuery 2.2.4 -->
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
+<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script> -->
+
+
 <script type="text/javascript">
 	
 	$(function(){
@@ -41,6 +55,36 @@
 
 
 </script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	$("#fir").on('click', function() {
+		firlist();
+	})
+	
+	$("#sec").on('click', function() {
+		seclist();
+	})
+	
+	$("#thi").on('click', function() {
+		thilist();
+	})
+	
+	$("#for").on('click', function() {
+		forlist();
+	})
+	
+})
+
+
+
+
+
+
+
+</script>
+
 	
 <style>
 		*{margin:0; padding:0;}
@@ -118,26 +162,28 @@
 			</ul>
 		<div id="product">
 			<ul id="pro_cate">
-				<li class="fir"><h3><a href="#" title="전체보기">전체보기</a></h3></li>
-				<li class="sec"><h4><a href="#" title="반려동물">반려동물</a></h4></li>
-				<li class="sec"><h4><a href="#" title="악세서리">악세서리</a></h4></li>
-				<li class="sec"><h4><a href="#" title="폰케이스">폰케이스</a></h4></li>
+				<li class="fir"><h3><a id="fir" title="전체보기">전체보기</a></h3></li>
+				<li class="sec"><h4><a id="sec" title="반려동물">반려동물</a></h4></li>
+				<li class="sec"><h4><a id="thi" title="악세서리">악세서리</a></h4></li>
+				<li class="sec"><h4><a id="for" title="폰케이스">폰케이스</a></h4></li>
 			</ul>
-<%-- 			/find/read?FindNo=<%=list.get(i).getFindNo() %> --%>
+<%-- 			<p><%=productImg.size() %><p> --%>
 			<div id="product_img">
 				<ul class="img_box">
-<%-- 					<li><a href="/product/detail?productId<%=list.get(0).getProductId %>" title="제품이미지1"><img src="http://i.imgur.com/i7sW1WN.jpg" alt="제품이미지1"/></a></li> --%>
-					<li><a href="#" title="제품이미지1"><img src="http://i.imgur.com/i7sW1WN.jpg" alt="제품이미지1"/></a></li>
-					<li><a href="#" title="제품이미지1"><img src="http://i.imgur.com/i7sW1WN.jpg" alt="제품이미지1"/></a></li>
-					<li><a href="#" title="제품이미지1"><img src="http://i.imgur.com/i7sW1WN.jpg" alt="제품이미지1"/></a></li>
-					<li><a href="#" title="제품이미지1"><img src="http://i.imgur.com/i7sW1WN.jpg" alt="제품이미지1"/></a></li>
-					<li><a href="#" title="제품이미지1"><img src="http://i.imgur.com/i7sW1WN.jpg" alt="제품이미지1"/></a></li>
-					<li><a href="#" title="제품이미지1"><img src="http://i.imgur.com/i7sW1WN.jpg" alt="제품이미지1"/></a></li>
-					<li><a href="#" title="제품이미지1"><img src="http://i.imgur.com/i7sW1WN.jpg" alt="제품이미지1"/></a></li>
-					<li><a href="#" title="제품이미지1"><img src="http://i.imgur.com/i7sW1WN.jpg" alt="제품이미지1"/></a></li>
-					<li><a href="#" title="제품이미지1"><img src="http://i.imgur.com/i7sW1WN.jpg" alt="제품이미지1"/></a></li>
-					<li><a href="#" title="제품이미지1"><img src="http://i.imgur.com/i7sW1WN.jpg" alt="제품이미지1"/></a></li>
-					<li><a href="#" title="제품이미지1"><img src="http://i.imgur.com/i7sW1WN.jpg" alt="제품이미지1"/></a></li>
+			<% for( int i=0; i<product.size(); i++) { %>
+				<li><a href="/product/detail?productId=<%=product.get(i).getProductId() %>" ><img src="" alt="제품이미지1"/></a></li>
+<!-- 					<li><a href="#" title="제품이미지1"><img src="http://i.imgur.com/i7sW1WN.jpg" alt="제품이미지1"/></a></li> -->
+<!-- 					<li><a href="#" title="제품이미지1"><img src="http://i.imgur.com/i7sW1WN.jpg" alt="제품이미지1"/></a></li> -->
+<!-- 					<li><a href="#" title="제품이미지1"><img src="http://i.imgur.com/i7sW1WN.jpg" alt="제품이미지1"/></a></li> -->
+<!-- 					<li><a href="#" title="제품이미지1"><img src="http://i.imgur.com/i7sW1WN.jpg" alt="제품이미지1"/></a></li> -->
+<!-- 					<li><a href="#" title="제품이미지1"><img src="http://i.imgur.com/i7sW1WN.jpg" alt="제품이미지1"/></a></li> -->
+<!-- 					<li><a href="#" title="제품이미지1"><img src="http://i.imgur.com/i7sW1WN.jpg" alt="제품이미지1"/></a></li> -->
+<!-- 					<li><a href="#" title="제품이미지1"><img src="http://i.imgur.com/i7sW1WN.jpg" alt="제품이미지1"/></a></li> -->
+<!-- 					<li><a href="#" title="제품이미지1"><img src="http://i.imgur.com/i7sW1WN.jpg" alt="제품이미지1"/></a></li> -->
+<!-- 					<li><a href="#" title="제품이미지1"><img src="http://i.imgur.com/i7sW1WN.jpg" alt="제품이미지1"/></a></li> -->
+<!-- 					<li><a href="#" title="제품이미지1"><img src="http://i.imgur.com/i7sW1WN.jpg" alt="제품이미지1"/></a></li> -->
+<!-- 					<li><a href="#" title="제품이미지1"><img src="http://i.imgur.com/i7sW1WN.jpg" alt="제품이미지1"/></a></li> -->
+			<% } %>
 				</ul>
 			</div>
 			

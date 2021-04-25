@@ -47,6 +47,8 @@ public class FindListController extends HttpServlet {
 		//페이징을 적용한 게시글 전체 조회
 		List<FindBoard> findboardList = findboardService.getList(paging,map);
 		
+		System.out.println("find/list의 findboardList = " + findboardList);
+		
 
 		//페이징 객체를 MODEL값으로 전달
 		req.setAttribute("paging", paging);

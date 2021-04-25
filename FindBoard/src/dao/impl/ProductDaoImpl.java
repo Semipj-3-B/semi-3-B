@@ -12,11 +12,99 @@ import dao.face.ProductDao;
 
 import dto.Product;
 import dto.ProductImg;
+import util.ProductPaging;
 
 public class ProductDaoImpl implements ProductDao {
 
 	private PreparedStatement ps = null;
 	private ResultSet rs = null;
+	
+	
+	
+	@Override
+	public List<Product> selectAll(Connection conn, ProductPaging paging) {
+		
+		String sql = "";
+		sql += "SELECT * FROM (";
+		sql += " 	SELECT rownum rnum, P.* FROM (";
+		sql += " 		SELECT";
+		sql += " 			product_id, category_id, product_name, price, content";
+		sql += " 		FROM product";
+		sql += " 		ORDER BY product_id DESC";
+		sql += "	) P";
+		sql += " ) product";
+		sql += " WHERE rnum BETWEEN ? AND ?";
+		
+		
+		List<Product> productList = new ArrayList<>();
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			
+			ps.setInt( 1, paging.getStartNo() );
+			ps.setInt( 2, paging.getEndNo() );
+			
+			rs = ps.executeQuery();
+			
+			while ( rs.next() ) {
+				
+				Product p = new Product();
+				
+				p.setProductId( rs.getInt("product_Id") );
+				p.setCategoryId( rs.getInt("category_Id") );
+				p.setProductName( rs.getString("product_Name") );
+				p.setPrice( rs.getInt("price") );
+				p.setContent( rs.getString("content") );
+				
+				productList.add(p);
+				
+				
+			}
+			
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		} finally {
+			// DB객체 닫기
+			JDBCTemplate.close(rs);
+			JDBCTemplate.close(ps);
+		}
+		
+		
+		
+		return productList;
+	}
+
+
+	
+	
+	@Override
+	public int selectCntAll(Connection conn) {
+		
+		String sql = "";
+		sql += "SELECT count(*) cnt FROM product";
+		
+		int cnt = 0;
+		
+		try {
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			
+			while(rs.next() ) {
+				cnt = rs.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rs);
+			JDBCTemplate.close(ps);
+		}
+		
+		
+		return cnt;
+	}
+
 	
 	@Override
 	public Product selectProdByProdId(Connection conn, Product productid) {
@@ -55,9 +143,12 @@ public class ProductDaoImpl implements ProductDao {
 		//SQL
 		String sql = "";
 		sql += "SELECT * FROM product_img";
-		sql += "WHERE product_id = ?";
+		sql += " WHERE product_id = ?";
+
 		
 		List<ProductImg> productImg = new ArrayList<>();
+		
+		System.out.println("dao의 productId = " + viewProduct.getProductId() );
 		
 		try {
 			ps = connection.prepareStatement(sql);
@@ -87,7 +178,53 @@ public class ProductDaoImpl implements ProductDao {
 			JDBCTemplate.close(ps);
 		}
 		
-		return null;
+		return productImg;
+	}
+	
+	@Override
+	public List<ProductImg> selectMainImg(Connection connection, List<Product> product) {
+		//SQL
+		String sql = "";
+		sql += "SELECT * FROM product_img";
+		sql += " WHERE product_id = ?";
+
+		
+		List<ProductImg> productImg = new ArrayList<>();
+		
+//		게시글수
+		int i = 0;
+		
+		System.out.println("dao의 productId = " + product.get(i).getProductId() );
+		
+		try {
+			ps = connection.prepareStatement(sql);
+		
+			ps.setInt(1, product.get(i).getProductId() );
+		
+			rs = ps.executeQuery();
+			
+			while(rs.next() ) {
+				ProductImg pi = new ProductImg();
+				
+				pi.setProductId( rs.getInt("product_Id") );
+				pi.setImageNo( rs.getInt("image_No") );
+				pi.setOriginImg( rs.getString("origin_Img") );
+				pi.setStoredImg( rs.getString("stored_Img") );
+				
+				//결과값 저장
+				productImg.add(pi);
+				
+			}
+			
+		}  catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			//DB객체 닫기
+			JDBCTemplate.close(rs);
+			JDBCTemplate.close(ps);
+		}
+		
+		return productImg;
 	}
 
 	@Override
@@ -172,6 +309,13 @@ public class ProductDaoImpl implements ProductDao {
 		
 		return result;
 	}
+
+
+
+
+
+
+
 
 	
 
