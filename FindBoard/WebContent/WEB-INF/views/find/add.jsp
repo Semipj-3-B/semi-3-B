@@ -263,7 +263,7 @@ textarea {
 
 </style>
 
-<div class="container">
+<div class="container"  style="width:1200px;">
 <form action="/find/add" method="post" enctype="multipart/form-data">
 
 <input type ="hidden" name ="FindNo" id ="FindNo" value="<%=request.getParameter("FindNo") %>" />

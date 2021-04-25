@@ -324,9 +324,9 @@ height : 70px;
 
 
 
-<div class="container">
+<div class="container"  style="width:1200px;">
 
-<h1>반려동물 찾기</h1>
+<h1>유기동물 발견</h1>
 <hr>
 
 <input type ="hidden" name ="DiscoverNo" id ="DiscoverNo" value="<%=request.getParameter("DiscoverNo") %>" />
