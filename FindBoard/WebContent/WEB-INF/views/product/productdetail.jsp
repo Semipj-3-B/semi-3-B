@@ -1,6 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+<%@page import="dto.Product" %>
+<%@page import="dto.ProductImg" %>
+<%@page import="java.util.List"%>
+
+<% Product p = (Product) request.getAttribute("viewProduct");%>
+<% List<ProductImg> productImg = (List)request.getAttribute("productImg");%>  %>
 <%@ include file="/WEB-INF/views/layout/header.jsp" %>
+
 <style type="text/css">
 	a:link, a:visited{text-decoration:none; color:#fff;}
 
@@ -49,25 +57,31 @@
 	}
 	
 </style>
+
+<% int i = productImg.size(); %>
 	<div id="container">
 		<div class="product_box">
 			<ul class="support">
 				<li>수익금액 일부는 후원금으로 사용됩니다.</li>
 			</ul>
 			<div class="product_img">
-				<p><img src="http://i.imgur.com/i7sW1WN.jpg" alt="제품이미지1"/></p>
+<!-- 				<p><img src="http://i.imgur.com/i7sW1WN.jpg" alt="제품이미지1"/></p> -->
+				<p><img src="//<%=productImg.get(0).getStoredImg() %>" alt="제품이미지1"/></p>
 				
 			</div>
 			<div class="product_price">
-				<p>판매 금액 : 1,000원</p>
-				<p>배송비 : 2,500원</p>
-				<p>원산지 : 한국</p>
-				<p>소재 : 면</p>
+<!-- 				<p>판매 금액 : 1,000원</p> -->
+<!-- 				<p>배송비 : 2,500원</p> -->
+<!-- 				<p>원산지 : 한국</p> -->
+<!-- 				<p>소재 : 면</p> -->
+				<p> <%-- 상품이름 --%><%= p.getProductName() %></p>
+				<p>판매 금액 : <%= p.getPrice() %></p>
+
 				<div class="l_basket">
 					<a href="#" title="장바구니">장바구니</a>
 				</div>
 				<div class="r_price">
-					<a href="#" title="바로 구매">바로구매</a>
+					<a href="/product/pay" title="바로 구매">바로구매</a>
 				</div>
 			</div>
 			<div class="product_txBox">
@@ -75,5 +89,6 @@
 			</div>
 		</div>
 	</div>
+
 </body>
 </html>

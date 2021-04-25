@@ -123,10 +123,10 @@
 				<li class="sec"><h4><a href="#" title="악세서리">악세서리</a></h4></li>
 				<li class="sec"><h4><a href="#" title="폰케이스">폰케이스</a></h4></li>
 			</ul>
-			
+<%-- 			/find/read?FindNo=<%=list.get(i).getFindNo() %> --%>
 			<div id="product_img">
 				<ul class="img_box">
-					<li><a href="#" title="제품이미지1"><img src="http://i.imgur.com/i7sW1WN.jpg" alt="제품이미지1"/></a></li>
+					<li><a href="/product/detail?productId<%=list.get(0).getProductId %>" title="제품이미지1"><img src="http://i.imgur.com/i7sW1WN.jpg" alt="제품이미지1"/></a></li>
 					<li><a href="#" title="제품이미지1"><img src="http://i.imgur.com/i7sW1WN.jpg" alt="제품이미지1"/></a></li>
 					<li><a href="#" title="제품이미지1"><img src="http://i.imgur.com/i7sW1WN.jpg" alt="제품이미지1"/></a></li>
 					<li><a href="#" title="제품이미지1"><img src="http://i.imgur.com/i7sW1WN.jpg" alt="제품이미지1"/></a></li>

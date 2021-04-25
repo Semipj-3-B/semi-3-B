@@ -6,14 +6,17 @@ public class Product {
 	private int categoryId;
 	private String productName;
 	private int price;
+	private String content;
+	
+	
 	
 	@Override
 	public String toString() {
 		return "Product [productId=" + productId + ", categoryId=" + categoryId + ", productName=" + productName
-				+ ", price=" + price + "]";
+				+ ", price=" + price + ", content=" + content + "]";
 	}
 	
-	//getter, setter
+	
 	public int getProductId() {
 		return productId;
 	}
@@ -38,5 +41,12 @@ public class Product {
 	public void setPrice(int price) {
 		this.price = price;
 	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
+	
 	
 }

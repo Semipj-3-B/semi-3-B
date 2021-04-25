@@ -17,7 +17,7 @@
 $(document).ready(function() {
 	// iamport 변수 초기화
 	var IMP = window.IMP;
-	IMP.init('imp06064630');	// 가맹점 식별코드, 회원가입해서 직접 넣어야합니다
+	IMP.init('imp60723568');	// 가맹점 식별코드, 회원가입해서 직접 넣어야합니다
 
 	// 결제 모듈 불러오기
 	$("#pay").click(function() {
@@ -38,7 +38,7 @@ function requestPayment() {
 	    buyer_tel : '010-1234-5678', //주문자연락처 - 필수항목, 누락되면 PG사전송 시 오류 발생
 	    buyer_addr : '서울특별시 강남구 삼성동', //주문자주소 - 선택항목
 	    buyer_postcode : '123-456', //주문자우편번호 - 선택항목
-	    m_redirect_url : 'https://www.yourdomain.com/payments/complete' //모바일결제후 이동페이지 - 선택항목, 모바일에서만 동작
+// 	    m_redirect_url : 'https://www.yourdomain.com/payments/complete' //모바일결제후 이동페이지 - 선택항목, 모바일에서만 동작
 	    
 	}, function(rsp) { // callback - 결제 이후 호출됨, 이곳에서 DB에 저장하는 로직을 작성한다
 	    if ( rsp.success ) { // 결제 성공 로직
