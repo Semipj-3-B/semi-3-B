@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import common.JDBCTemplate;
 import dao.face.LoginDao;
 import dao.impl.LoginDaoImpl;
+import dto.Admin;
 import dto.Usertb;
 import service.face.LoginService;
 import util.HashNMacUtil;
@@ -55,5 +56,32 @@ public class LoginServiceImpl implements LoginService {
 		Usertb res = loginDao.selectUser(conn, param);
 		
 		return res;
+	}
+
+	@Override
+	public Admin getParameter(HttpServletRequest req) {
+		Admin admin = new Admin();
+		
+		admin.setAdminId(req.getParameter("id"));
+		try {
+			admin.setAdminPw(HashNMacUtil.EncBySha256(req.getParameter("pw")));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return admin;
+	}
+
+
+	@Override
+	public boolean login(Admin adminParam) {
+		int res = loginDao.selectCntByAdminId(JDBCTemplate.getConnection(), adminParam);
+		
+		if(res > 0) return true;
+		else return false;
+	}
+
+	@Override
+	public Admin loginAdmin(Admin adminParam) {
+		return loginDao.selectAdmin(JDBCTemplate.getConnection(), adminParam);
 	}
 }
