@@ -19,12 +19,36 @@ $(document).ready(function() {
 		$(location).attr("href", "/find/list");
 	});
 
-	
-	//결제버튼
-	$("#btnUpdate").click(function() {
-		$(location).attr("href", "/product/pay?productId=<%=p.getProductId() %>");
-	});
 
+
+
+	$("#btnPay").click(function() {
+		<% if( session.getAttribute("login") == null ) {%>
+		
+			alert('로그인을 해주세요')
+			return false
+			
+		<% } else { %>
+		$(location).attr("href", "/product/pay?productId=<%=p.getProductId() %>");
+		<% } %>
+
+		
+	});
+	
+
+	
+	$("#btnbasket").click(function() {
+		<% if( session.getAttribute("login") == null ) {%>
+		
+			alert('로그인을 해주세요')
+			return false
+			
+		<% } else { %>
+		$(location).attr("href", "/mypage/basket?productId=<%=p.getProductId() %>");
+		<% } %>
+
+		
+	});
 
 });
 </script>
@@ -123,13 +147,14 @@ $(document).ready(function() {
 <!-- 				<p>소재 : 면</p> -->
 				<p>상품이름 : <%= p.getProductName() %></p>
 				<p>판매 금액 : <%= p.getPrice() %></p>
+				<p>배송비 : <%=p.getContent() %></p>
 
 				<div class="l_basket">
-					<a href="#" title="장바구니">장바구니</a>
+					<button id="btnbasket">장바구니</button>
 				</div>
 				<div class="r_price">
 <!-- 					<a href="/product/pay" title="바로 구매">바로구매</a> -->
-					<button id="btnUpdate">구매하기</button>
+					<button id="btnPay">구매하기</button>
 				</div>
 			</div>
 			
